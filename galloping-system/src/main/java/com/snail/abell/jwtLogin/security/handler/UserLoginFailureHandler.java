@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserLoginFailureHandler implements AuthenticationFailureHandler {
     /**
      * 登录失败返回结果
-     * @Author Sans
+     * @Author Abell
      * @CreateTime 2019/10/3 9:12
      */
     @Override

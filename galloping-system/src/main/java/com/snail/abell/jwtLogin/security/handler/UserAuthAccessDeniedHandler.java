@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserAuthAccessDeniedHandler implements AccessDeniedHandler{
     /**
      * 暂无权限返回结果
-     * @Author Sans
+     * @Author Abell
      * @CreateTime 2019/10/3 8:41
      */
     @Override

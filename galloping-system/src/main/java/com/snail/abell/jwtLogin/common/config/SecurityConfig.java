@@ -86,8 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     /**
      * 配置security的控制逻辑
-     * @Author Sans
-     * @CreateTime 2019/10/1 16:56
+     * @Author Abell
+     * @CreateTime 2022/7/17
      * @Param  http 请求
      */
     @Override

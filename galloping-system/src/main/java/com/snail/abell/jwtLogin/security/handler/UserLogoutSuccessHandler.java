@@ -13,15 +13,15 @@ import java.util.Map;
 
 /**
  * 登出成功处理类
- * @Author Sans
- * @CreateTime 2019/10/3 9:42
+ * @Author Abell
+ * @CreateTime 2022/7/17
  */
 @Component
 public class UserLogoutSuccessHandler implements LogoutSuccessHandler {
     /**
      * 用户登出返回结果
      * 这里应该让前端清除掉Token
-     * @Author Sans
+     * @Author Abell
      * @CreateTime 2019/10/3 9:50
      */
     @Override

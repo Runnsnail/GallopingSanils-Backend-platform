@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserAuthenticationEntryPointHandler implements AuthenticationEntryPoint {
     /**
      * 用户未登录返回结果
-     * @Author Sans
+     * @Author Abell
      * @CreateTime 2019/10/3 9:01
      */
     @Override

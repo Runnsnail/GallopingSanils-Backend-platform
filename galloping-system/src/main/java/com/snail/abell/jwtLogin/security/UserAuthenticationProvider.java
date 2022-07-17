@@ -23,8 +23,8 @@ import java.util.Set;
 
 /**
  * 自定义登录验证
- * @Author Sans
- * @CreateTime 2019/10/1 19:11
+ * @Author Abell
+ * @CreateTime 2022/7/17
  */
 @Component
 public class UserAuthenticationProvider implements AuthenticationProvider {
