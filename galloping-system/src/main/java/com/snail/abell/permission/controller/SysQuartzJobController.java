@@ -1,0 +1,41 @@
+package com.snail.abell.permission.controller;
+
+import com.snail.abell.permission.entity.SysQuartzJob;
+import com.snail.abell.permission.service.SysQuartzJobService;
+import io.swagger.annotations.Api;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+/**
+ * 定时任务(SysQuartzJob)表控制层
+ *
+ * @author Abell
+ * @since 2022-06-05 11:51:28
+ */
+@Api(tags = "定时任务")
+@Validated
+@RestController
+@RequestMapping("/sysQuartzJob")
+public class SysQuartzJobController {
+    /**
+     * 服务对象
+     */
+    @Resource
+    private SysQuartzJobService sysQuartzJobService;
+
+    /**
+     * 通过主键查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
+    @GetMapping("selectOne")
+    public SysQuartzJob selectOne(Long id) {
+        return this.sysQuartzJobService.queryById(id);
+    }
+
+}

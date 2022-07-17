@@ -1,0 +1,45 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "type": "com.snail.abell.config.FileProperties",
+      "sourceType": "com.snail.abell.config.FileProperties"
+    },
+    {
+      "name": "file.linux",
+      "type": "com.snail.abell.config.FileProperties$ElPath",
+      "sourceType": "com.snail.abell.config.FileProperties"
+    },
+    {
+      "name": "file.mac",
+      "type": "com.snail.abell.config.FileProperties$ElPath",
+      "sourceType": "com.snail.abell.config.FileProperties"
+    },
+    {
+      "name": "file.path",
+      "type": "com.snail.abell.config.FileProperties$ElPath",
+      "sourceType": "com.snail.abell.config.FileProperties",
+      "sourceMethod": "getPath()"
+    },
+    {
+      "name": "file.windows",
+      "type": "com.snail.abell.config.FileProperties$ElPath",
+      "sourceType": "com.snail.abell.config.FileProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.avatar-max-size",
+      "type": "java.lang.Long",
+      "description": "头像大小限制",
+      "sourceType": "com.snail.abell.config.FileProperties"
+    },
+    {
+      "name": "file.max-size",
+      "type": "java.lang.Long",
+      "description": "文件大小限制",
+      "sourceType": "com.snail.abell.config.FileProperties"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="TemplatesSettings">
+    <option name="templateConfigs">
+      <TemplateContext>
+        <option name="generateConfig">
+          <GenerateConfig>
+            <option name="annotationType" value="MYBATIS_PLUS2" />
+            <option name="basePackage" value="generator" />
+            <option name="basePath" value="src/main/java/com/snail/abell/permission" />
+            <option name="encoding" value="UTF-8" />
+            <option name="extraClassSuffix" value="" />
+            <option name="ignoreFieldPrefix" value="" />
+            <option name="ignoreFieldSuffix" value="" />
+            <option name="ignoreTablePrefix" value="" />
+            <option name="ignoreTableSuffix" value="" />
+            <option name="moduleName" value="galloping-system" />
+            <option name="modulePath" value="$PROJECT_DIR$/galloping-system" />
+            <option name="moduleUIInfoList">
+              <list>
+                <ModuleInfoGo>
+                  <option name="basePath" value="${domain.basePath}" />
+                  <option name="configName" value="mapperInterface" />
+                  <option name="encoding" value="${domain.encoding}" />
+                  <option name="fileName" value="${domain.fileName}Mapper" />
+                  <option name="fileNameWithSuffix" value="${domain.fileName}Mapper.java" />
+                  <option name="modulePath" value="$PROJECT_DIR$/galloping-system" />
+                  <option name="packageName" value="${domain.basePackage}.mapper" />
+                </ModuleInfoGo>
+                <ModuleInfoGo>
+                  <option name="basePath" value="src/main/resources" />
+                  <option name="configName" value="mapperXml" />
+                  <option name="encoding" value="${domain.encoding}" />
+                  <option name="fileName" value="${domain.fileName}Mapper" />
+                  <option name="fileNameWithSuffix" value="${domain.fileName}Mapper.xml" />
+                  <option name="modulePath" value="$PROJECT_DIR$/galloping-system" />
+                  <option name="packageName" value="mapper" />
+                </ModuleInfoGo>
+                <ModuleInfoGo>
+                  <option name="basePath" value="${domain.basePath}" />
+                  <option name="configName" value="serviceImpl" />
+                  <option name="encoding" value="${domain.encoding}" />
+                  <option name="fileName" value="${domain.fileName}ServiceImpl" />
+                  <option name="fileNameWithSuffix" value="${domain.fileName}ServiceImpl.java" />
+                  <option name="modulePath" value="$PROJECT_DIR$/galloping-system" />
+                  <option name="packageName" value="${domain.basePackage}.service.impl" />
+                </ModuleInfoGo>
+                <ModuleInfoGo>
+                  <option name="basePath" value="${domain.basePath}" />
+                  <option name="configName" value="serviceInterface" />
+                  <option name="encoding" value="${domain.encoding}" />
+                  <option name="fileName" value="${domain.fileName}Service" />
+                  <option name="fileNameWithSuffix" value="${domain.fileName}Service.java" />
+                  <option name="modulePath" value="$PROJECT_DIR$/galloping-system" />
+                  <option name="packageName" value="${domain.basePackage}.service" />
+                </ModuleInfoGo>
+              </list>
+            </option>
+            <option name="needsComment" value="true" />
+            <option name="relativePackage" value="" />
+            <option name="superClass" value="" />
+            <option name="tableUIInfoList">
+              <list>
+                <TableUIInfo>
+                  <option name="className" value="SysDept" />
+                  <option name="tableName" value="sys_dept" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysDict" />
+                  <option name="tableName" value="sys_dict" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysDictDetail" />
+                  <option name="tableName" value="sys_dict_detail" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysJob" />
+                  <option name="tableName" value="sys_job" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysLog" />
+                  <option name="tableName" value="sys_log" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysMenu" />
+                  <option name="tableName" value="sys_menu" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysQuartzJob" />
+                  <option name="tableName" value="sys_quartz_job" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysQuartzLog" />
+                  <option name="tableName" value="sys_quartz_log" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysRole" />
+                  <option name="tableName" value="sys_role" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysRolesDepts" />
+                  <option name="tableName" value="sys_roles_depts" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysRolesMenus" />
+                  <option name="tableName" value="sys_roles_menus" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysUser" />
+                  <option name="tableName" value="sys_user" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysUsersJobs" />
+                  <option name="tableName" value="sys_users_jobs" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="SysUsersRoles" />
+                  <option name="tableName" value="sys_users_roles" />
+                </TableUIInfo>
+              </list>
+            </option>
+            <option name="templatesName" value="mybatis-plus2" />
+            <option name="useActualColumnAnnotationInject" value="true" />
+            <option name="useLombokPlugin" value="true" />
+          </GenerateConfig>
+        </option>
+        <option name="moduleName" value="galloping-system" />
+        <option name="projectPath" value="$PROJECT_DIR$" />
+        <option name="templateName" value="mybatis-plus2" />
+      </TemplateContext>
+    </option>
+  </component>
+</project>

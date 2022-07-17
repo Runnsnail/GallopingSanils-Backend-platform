@@ -1,0 +1,27 @@
+{
+  "name" : "SysUsersJobs",
+  "originTableName" : "sys_users_jobs",
+  "comment" : null,
+  "fullColumn" : [ {
+    "name" : "userId",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "ktShortType" : "Long",
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "jobId",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "ktShortType" : "Long",
+    "custom" : false,
+    "ext" : { }
+  } ],
+  "pkColumn" : null,
+  "otherColumn" : null,
+  "savePackageName" : "com.snail.abell.permission",
+  "savePath" : "./galloping-common/src/main/java/com/snail/abell/permission",
+  "saveModelName" : "galloping-common"
+}

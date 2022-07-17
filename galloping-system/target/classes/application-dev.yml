@@ -1,0 +1,156 @@
+# 数据源配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/galloping_snail?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    druid:
+      # 主库数据源
+#       master:
+#         url: jdbc:mysql://localhost:3306/galloping?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+#         username: root
+#         password: root
+      # 从库数据源
+#       slave:
+#         # 从数据源开关/默认关闭
+#         enabled: false
+#         url:
+#         username:
+#         password:
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      statViewServlet:
+        enabled: true
+        url-pattern: /monitor/druid/*
+      filter:
+        stat:
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 2000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+
+  thymeleaf:
+      enabled: true  #开启thymeleaf视图解析
+      encoding: utf-8  #编码
+      prefix: classpath:/templates/html/ltr/vertical-menu-template-dark/  #前缀
+      cache: false  #是否使用缓存
+      mode: HTML  #严格的HTML语法模式
+      suffix: .html  #后缀名
+
+  security:
+      user:
+        name: test
+        password: test
+
+mybatis-plus:
+  configuration:
+  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启SQL语句打印
+  mapper-locations: classpath:mapper/*.xml
+
+
+
+
+
+# 登录相关配置
+login:
+  # 登录缓存
+  cache-enable: true
+  #  是否限制单用户登录
+  single-login: false
+
+
+#jwt
+jwt:
+  # 在线用户key
+  online-key: online-token-
+  # 密匙KEY
+  secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+  # HeaderKEY
+  tokenHeader: Authorization
+  # Token前缀字符
+  tokenPrefix: Abell-
+  # 过期时间 单位秒 1天后过期=86400 7天后过期=604800
+  expiration: 86400
+  # 配置不需要认证的接口
+  antMatchers: /index/**,/login/**,/favicon.ico,/swagger-ui/**,/css/**, /js/**,/images/**,/templates/**,/swagger-resources/**,/swagger-ui/**,/v3/**,/error,/doc.html,/webjars/**
+
+
+pagehelper:
+ helper-dialect: mysql
+ reasonable: true
+ support-methods-arguments: true
+ params: count=countSql
+
+logging:
+  config: classpath:log4j2.xml
+#是否允许生成代码，生产环境设置为false
+generator:
+  enabled: true
+
+#是否开启 swagger-ui
+swagger:
+  enabled: true
+
+# IP 本地解析
+ip:
+  local-parsing: true
+
+# 文件存储路径
+file:
+  mac:
+    path: ~/file/
+    avatar: ~/avatar/
+  linux:
+    path: /home/abell/file/
+    avatar: /home/abell/avatar/
+  windows:
+    path: C:\abell\file\
+    avatar: C:\abell\avatar\
+  # 文件大小 /M
+  maxSize: 100
+  avatarMaxSize: 5
+
+task:
+  pool:
+    # 核心线程池大小
+    core-pool-size: 10
+    # 最大线程数
+    max-pool-size: 30
+    # 活跃时间
+    keep-alive-seconds: 60
+    # 队列容量
+    queue-capacity: 50
+
+log:
+  level:
+#日志级别从低到高分为：
+#  配置TRACE < DEBUG < INFO < WARN < ERROR < FATAL
+    root: INFO
+    my: DEBUG
+  file: logs/admin-server.log
+  maxsize: 10MB
+
+
+

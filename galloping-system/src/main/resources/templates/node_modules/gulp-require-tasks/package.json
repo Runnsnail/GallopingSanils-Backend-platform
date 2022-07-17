@@ -1,0 +1,33 @@
+{
+  "name": "gulp-require-tasks",
+  "version": "1.2.1",
+  "description": "Loads Gulp tasks from directories and individual files",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/betsol/gulp-require-tasks.git"
+  },
+  "keywords": [
+    "gulp",
+    "require",
+    "task",
+    "tasks",
+    "gulpfile",
+    "split",
+    "recursive",
+    "load"
+  ],
+  "author": "Slava Fomin II <s.fomin@betsol.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/betsol/gulp-require-tasks/issues"
+  },
+  "homepage": "https://github.com/betsol/gulp-require-tasks#readme",
+  "engines": {
+    "node": ">=4.8"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "require-directory": "^2.1.1"
+  }
+}

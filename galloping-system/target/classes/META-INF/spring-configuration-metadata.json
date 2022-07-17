@@ -1,0 +1,42 @@
+{
+  "groups": [
+    {
+      "name": "jwt",
+      "type": "com.snail.abell.jwtLogin.common.config.JWTConfig",
+      "sourceType": "com.snail.abell.jwtLogin.common.config.JWTConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "jwt.ant-matchers",
+      "type": "java.lang.String",
+      "description": "不需要认证的接口",
+      "sourceType": "com.snail.abell.jwtLogin.common.config.JWTConfig"
+    },
+    {
+      "name": "jwt.expiration",
+      "type": "java.lang.Integer",
+      "description": "过期时间",
+      "sourceType": "com.snail.abell.jwtLogin.common.config.JWTConfig"
+    },
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "密钥KEY",
+      "sourceType": "com.snail.abell.jwtLogin.common.config.JWTConfig"
+    },
+    {
+      "name": "jwt.token-header",
+      "type": "java.lang.String",
+      "description": "TokenKey",
+      "sourceType": "com.snail.abell.jwtLogin.common.config.JWTConfig"
+    },
+    {
+      "name": "jwt.token-prefix",
+      "type": "java.lang.String",
+      "description": "Token前缀字符",
+      "sourceType": "com.snail.abell.jwtLogin.common.config.JWTConfig"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MyBatisGeneratorConfiguration">
+    <option name="globalConfig">
+      <GlobalConfig>
+        <option name="comment" value="true" />
+        <option name="domainPackage" value="" />
+        <option name="examplePackage" value="" />
+        <option name="examplePostfix" value="Example" />
+        <option name="mapperPackage" value="" />
+        <option name="mapperPostfix" value="Mapper" />
+        <option name="moduleRootPath" value="$PROJECT_DIR$" />
+        <option name="resourcePath" value="src/main/resources" />
+        <option name="sourcePath" value="src/main/java" />
+        <option name="tablePrefix" value="" />
+        <option name="useExample" value="true" />
+        <option name="xmlPackage" value="mapper" />
+      </GlobalConfig>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.snail.abell.permission.dto.ProjectPageDtoMapper">
+    <resultMap id="BaseResultMap" type="com.snail.abell.permission.vo.ProjectPageDto">
+        <!--@mbg.generated-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="page_name" jdbcType="VARCHAR" property="pageName"/>
+        <result column="is_enable" jdbcType="INTEGER" property="isEnable"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result property="projectName" column="project_name"/>
+        <collection property="pageElementList" column="id" ofType="com.snail.abell.webUI.entity.TPageElement"
+                    fetchType="eager" select="com.rabbit.dao.PageElementMapper.findByPageId"/>
+    </resultMap>
+
+    <select id="selectDtoByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        t_project_page.*,sys_project.project_name
+        from t_project_page left join sys_project on t_project_page.project_id = sys_project.id
+        where t_project_page.id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findDtoByAll" resultMap="BaseResultMap">
+        select
+        t_project_page.*,sys_project.project_name
+        from t_project_page left join sys_project on t_project_page.project_id = sys_project.id
+        where 1=1
+        <if test="id != null">
+            and id=#{id,jdbcType=BIGINT}
+        </if>
+        <if test="projectId != null and projectId != ''">
+            and project_id=#{projectId,jdbcType=VARCHAR}
+        </if>
+        <if test="pageName != null and pageName != ''">
+            and page_name like concat('%',#{pageName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="isEnable != null">
+            and is_enable=#{isEnable,jdbcType=INTEGER}
+        </if>
+        <if test="remark != null and remark != ''">
+            and remark=#{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="createBy != null and createBy != ''">
+            and create_by=#{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time=#{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateBy != null and updateBy != ''">
+            and update_by=#{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time=#{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        order by create_time desc
+    </select>
+
+
+    <select id="findDtoByProjectIdAndPageName" resultMap="BaseResultMap">
+        select
+            t_project_page.*,
+            sys_project.project_name
+        from t_project_page
+            left join sys_project on t_project_page.project_id = sys_project.id
+        where project_id = #{projectId,jdbcType=BIGINT} and page_name = #{pageName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findDtoByProjectIdAndPageNameAndIdNot" resultMap="BaseResultMap">
+        select
+            t_project_page.*,
+            sys_project.project_name
+        from t_project_page
+            left join sys_project on t_project_page.project_id = sys_project.id
+        where project_id = #{projectId,jdbcType=BIGINT} and page_name = #{pageName,jdbcType=VARCHAR} and
+              t_project_page.id <![CDATA[<>]]>
+              #{notId,jdbcType=BIGINT}
+    </select>
+
+    <select id="findDtoByProjectId" resultMap="BaseResultMap">
+        select
+            t_project_page.*,
+            sys_project.project_name
+        from t_project_page
+            left join sys_project on t_project_page.project_id = sys_project.id
+        where project_id = #{projectId,jdbcType=BIGINT}
+    </select>
+</mapper>
+
