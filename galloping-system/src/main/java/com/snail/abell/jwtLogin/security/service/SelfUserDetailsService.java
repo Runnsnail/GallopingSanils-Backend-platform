@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import java.util.regex.*;
 
 /**
  * SpringSecurity用户的业务实现
@@ -30,8 +31,15 @@ public class SelfUserDetailsService implements UserDetailsService {
      */
     @Override
     public SelfUserEntity loadUserByUsername(String username) throws UsernameNotFoundException {
-        // 查询用户信息
-        SysUser sysUser =sysUserService.selectUserByName(username);
+        String regex = "^([a-zA-Z0-9]*[-_]?[a-zA-Z0-9]+)*@([a-zA-Z0-9]*[-_]?[a-zA-Z0-9]+)+[\\.][A-Za-z]{2,3}([\\.][A-Za-z]{2})?$";
+        SysUser sysUser;
+        if (match(regex,username)) {
+            // 查询用户信息
+             sysUser =sysUserService.selectUserByEmail(username);
+        }else {
+             sysUser =sysUserService.selectUserByName(username);
+        }
+
         if (sysUser!=null){
             // 组装参数
             SelfUserEntity selfUserEntity = new SelfUserEntity();
@@ -40,4 +48,16 @@ public class SelfUserDetailsService implements UserDetailsService {
         }
         return null;
     }
+
+
+    private static boolean match( String regex ,String str ){
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher( str );
+
+        return matcher.matches();
+
+    }
+
 }

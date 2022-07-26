@@ -30,6 +30,6 @@ public class UserLogoutSuccessHandler implements LogoutSuccessHandler {
         resultData.put("code","200");
         resultData.put("msg", "登出成功");
         SecurityContextHolder.clearContext();
-        ResultUtil.responseJson(response,ResultUtil.resultSuccess(resultData));
+        ResultUtil.responseJson(response, ResultUtil.resultSuccess(resultData));
     }
 }

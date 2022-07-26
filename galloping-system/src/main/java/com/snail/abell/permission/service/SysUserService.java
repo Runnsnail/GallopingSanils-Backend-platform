@@ -60,6 +60,8 @@ public interface SysUserService extends IService<SysUser>{
 
   SysUser selectUserByName(String username);
 
+  SysUser selectUserByEmail(String email);
+
   List<SysRole> selectSysRoleByUserId(Long userId);
 
   List<SysMenu> selectSysMenuByUserId(Long userId);

@@ -1761,11 +1761,33 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END: Page JS-->
 
     <script>
+      $(function(){
+        doList();
+      });
+      function doList(){
+        debugger
+        var Authorization = localStorage.getItem("Authorization")
+        $.ajax({
+          type:"GET",
+          url:"/api/menus/build",
+         beforeSend : function(request) {
+           request.setRequestHeader("Authorization",Authorization)
+         },
+          datatype: "json",
+          success:function(data){
+            debugger
+            if (data.code == 200) {
+              // localStorage.setItem('Authorization', data.token)
+            }
+          }
+        })
+      }
       $(window).on('load',  function(){
         if (feather) {
           feather.replace({ width: 14, height: 14 });
         }
-      })
+       })
+
     </script>
   </body>
   <!-- END: Body-->

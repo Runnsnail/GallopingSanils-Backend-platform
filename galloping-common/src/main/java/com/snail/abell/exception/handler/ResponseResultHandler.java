@@ -24,7 +24,9 @@ import java.util.Objects;
  */
 @RestControllerAdvice
 public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
-  /* 使用统一返回体的标识 */
+  /**
+   *  使用统一返回体的标识
+   *  */
           private static final String RESPONSE_RESULT_ANNOTATION = "RESPONSE-RESULT-ANNOTATION";
 
   @Override

@@ -14,7 +14,7 @@
         <result property="menuSort" column="menu_sort" jdbcType="INTEGER"/>
         <result property="icon" column="icon" jdbcType="VARCHAR"/>
         <result property="path" column="path" jdbcType="VARCHAR"/>
-        <result property="iFrame" column="i_frame" jdbcType="OTHER"/>
+        <result property="iframe" column="i_frame" jdbcType="OTHER"/>
         <result property="cache" column="cache" jdbcType="OTHER"/>
         <result property="hidden" column="hidden" jdbcType="OTHER"/>
         <result property="permission" column="permission" jdbcType="VARCHAR"/>
@@ -76,8 +76,8 @@
             <if test="path != null and path != ''">
                 and path = #{path}
             </if>
-            <if test="iFrame != null">
-                and i_frame = #{iFrame}
+            <if test="iframe != null">
+                and i_frame = #{iframe}
             </if>
             <if test="cache != null">
                 and cache = #{cache}
@@ -106,7 +106,7 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="menuId" useGeneratedKeys="true">
         insert into galloping_snail.sys_menu(pid, sub_count, type, title, name, component, menu_sort, icon, path, i_frame, cache, hidden, permission, create_by, update_by, create_time, update_time)
-        values (#{pid}, #{subCount}, #{type}, #{title}, #{name}, #{component}, #{menuSort}, #{icon}, #{path}, #{iFrame}, #{cache}, #{hidden}, #{permission}, #{createBy}, #{updateBy}, #{createTime}, #{updateTime})
+        values (#{pid}, #{subCount}, #{type}, #{title}, #{name}, #{component}, #{menuSort}, #{icon}, #{path}, #{iframe}, #{cache}, #{hidden}, #{permission}, #{createBy}, #{updateBy}, #{createTime}, #{updateTime})
     </insert>
 
     <!--通过主键修改数据-->
@@ -140,8 +140,8 @@
             <if test="path != null and path != ''">
                 path = #{path},
             </if>
-            <if test="iFrame != null">
-                i_frame = #{iFrame},
+            <if test="iframe != null">
+                i_frame = #{iframe},
             </if>
             <if test="cache != null">
                 cache = #{cache},

@@ -29,6 +29,7 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
      */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
+
         // 组装JWT
         SelfUserEntity selfUserEntity =  (SelfUserEntity) authentication.getPrincipal();
         String token = JWTTokenUtil.createAccessToken(selfUserEntity);

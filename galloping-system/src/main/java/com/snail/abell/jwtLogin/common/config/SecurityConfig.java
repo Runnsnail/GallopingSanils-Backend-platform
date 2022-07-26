@@ -103,7 +103,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 配置登录地址
                 .formLogin()
-                .loginProcessingUrl("/logins/userLogin")
+                //自定义登录页面
+                .loginPage("/html-customizer/ltr/vertical-menu-template-dark/auth-login-cover.html")
+                .loginProcessingUrl("/login/userlogin")
+                //表单中的用户名项
+                .usernameParameter("loginEmail")
+                //表单中的密码项
+                .passwordParameter("loginPassword")
+                //登录成功后的路劲
+                .defaultSuccessUrl("/html-customizer/ltr/vertical-menu-template-dark/dashboard-ecommerce.html",true).permitAll()
+                //登录失败后的路劲
+                //.failureForwardUrl("/html-customizer/ltr/vertical-menu-template-dark/auth-register-basic.html")
                 // 配置登录成功自定义处理类
                 .successHandler(userLoginSuccessHandler)
                 // 配置登录失败自定义处理类
@@ -111,9 +121,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 配置登出地址
                 .logout()
-                .logoutUrl("/login/userLogout")
+                .logoutUrl("/logins/userLogout")
                 // 配置用户登出自定义处理类
                 .logoutSuccessHandler(userLogoutSuccessHandler)
+                .deleteCookies()
                 .and()
                 // 配置没有权限自定义处理类
                 .exceptionHandling().accessDeniedHandler(userAuthAccessDeniedHandler)

@@ -50,7 +50,8 @@ spring:
         wall:
           config:
             multi-statement-allow: true
-
+  resources:
+    static-locations: classpath:/templates/
   thymeleaf:
       enabled: true  #开启thymeleaf视图解析
       encoding: utf-8  #编码
@@ -94,7 +95,7 @@ jwt:
   # 过期时间 单位秒 1天后过期=86400 7天后过期=604800
   expiration: 86400
   # 配置不需要认证的接口
-  antMatchers: /index/**,/login/**,/favicon.ico,/swagger-ui/**,/css/**, /js/**,/images/**,/templates/**,/swagger-resources/**,/swagger-ui/**,/v3/**,/error,/doc.html,/webjars/**
+  antMatchers: /templates/**,/app-assets/**,/favicon.ico,/swagger-ui/**,/css/**, /js/**,/images/**,/html-customizer/**,/swagger-resources/**,/swagger-ui/**,/v3/**,/error,/doc.html,/webjars/**,/assets/**
 
 
 pagehelper:

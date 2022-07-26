@@ -106,6 +106,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao,SysUser> implemen
     }
 
     @Override
+    public SysUser selectUserByEmail(String email) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper();
+        queryWrapper.eq(SysUser ::getEmail, email);
+        return this.sysUserDao.selectOne(queryWrapper);
+    }
+
+    @Override
     public List<SysRole> selectSysRoleByUserId(Long userId) {
         return this.sysUserDao.selectSysRoleByUserId(userId);
     }

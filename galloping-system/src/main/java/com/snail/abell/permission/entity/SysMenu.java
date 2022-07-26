@@ -1,5 +1,7 @@
 package com.snail.abell.permission.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,12 +18,13 @@ import java.util.Date;
  * @since 2022-06-05 11:51:28
  */
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(description = "")
+@ApiModel(description = "菜单实体类")
 @Data
 @SuppressWarnings("serial")
 public class SysMenu extends Model<SysMenu> implements Serializable {
     private static final long serialVersionUID = 223473916371748259L;
 
+    @TableId(value = "menu_id")
     @ApiModelProperty("ID")
     private Long menuId;
 
@@ -53,7 +56,8 @@ public class SysMenu extends Model<SysMenu> implements Serializable {
     private String path;
 
     @ApiModelProperty("是否外链")
-    private Boolean iFrame;
+    @TableField(value = "i_frame")
+    private Boolean iframe;
 
     @ApiModelProperty("缓存")
     private Boolean cache;

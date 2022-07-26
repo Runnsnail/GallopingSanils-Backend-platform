@@ -1,5 +1,5 @@
 /*
- *  Copyright 
+ *  Copyright
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ public class SecurityUtils {
      */
     public static Long getCurrentUserId() {
         UserDetails userDetails = getCurrentUser();
-        return new JSONObject(new JSONObject(userDetails).get("user")).get("id", Long.class);
+        return new JSONObject(userDetails).get("userId", Long.class);
     }
 
     /**

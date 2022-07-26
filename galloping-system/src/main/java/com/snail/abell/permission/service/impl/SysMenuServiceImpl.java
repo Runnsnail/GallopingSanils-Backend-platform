@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.snail.abell.permission.dao.SysMenuDao;
+import com.snail.abell.permission.dao.SysUsersRolesDao;
 import com.snail.abell.permission.dto.MenuDto;
 import com.snail.abell.permission.dto.MenuMetaVo;
 import com.snail.abell.permission.entity.SysMenu;
@@ -36,6 +37,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
     private SysMenuDao sysMenuDao;
     @Resource
     private SysMenuService sysMenuService;
+    @Resource
+    private SysUsersRolesDao sysUsersRolesDao;
     @Resource
     private SysRolesMenusService sysRolesMenusService;
     @Resource
@@ -102,10 +105,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
     @Override
     public List<MenuDto> findByUser(Long currentUserId) {
         //查询当前用户的角色
-        SysUsersRoles sysUsersRoles = sysUsersRolesService.getById(currentUserId);
+        SysUsersRoles sysUsersRoles = sysUsersRolesDao.queryById(currentUserId);
         List<SysRolesMenus> rolesList =sysRolesMenusService.lambdaQuery().eq(SysRolesMenus::getRoleId, sysUsersRoles.getRoleId()).list();
         Set<Long> menuIds = rolesList.stream().map(SysRolesMenus::getMenuId).collect(Collectors.toSet());
         List<SysMenu> menuList = sysMenuService.listByIds(menuIds);
+        List<MenuDto> aa = menuList.stream().map(menuMapper::toDto).collect(Collectors.toList());
         return menuList.stream().map(menuMapper::toDto).collect(Collectors.toList());
     }
 
