@@ -1,20 +1,22 @@
 package com.snail.abell.permission.dto;
 
+import com.snail.abell.apiInterface.TreeNode;
 import com.snail.abell.base.BaseDTO;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+
 /**
  * @author Abell
  * @date 2020/6/6
  * @description
  */
 @Data
-public class MenuDto extends BaseDTO implements Serializable {
+public class MenuDto extends BaseDTO implements TreeNode<Long>, Serializable {
 
-    private Long id;
+    private Long menuId;
 
     private List<MenuDto> children;
 
@@ -34,7 +36,7 @@ public class MenuDto extends BaseDTO implements Serializable {
 
     private Integer subCount;
 
-    private Boolean iFrame;
+    private Boolean iframe;
 
     private Boolean cache;
 
@@ -57,19 +59,39 @@ public class MenuDto extends BaseDTO implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        MenuDto menuDto = (MenuDto) o;
-        return Objects.equals(id, menuDto.id);
+    public Long id() {
+        return this.menuId;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public Long parentId() {
+        return this.pid;
     }
+
+    @Override
+    public boolean root() {
+        return  Objects.equals(this.pid, null);
+    }
+
+    @Override
+    public void setChildren(List children) {
+        this.children = children;
+    }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) {
+//            return true;
+//        }
+//        if (o == null || getClass() != o.getClass()) {
+//            return false;
+//        }
+//        MenuDto menuDto = (MenuDto) o;
+//        return Objects.equals(menuId, menuDto.menuId);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(menuId);
+//    }
 }

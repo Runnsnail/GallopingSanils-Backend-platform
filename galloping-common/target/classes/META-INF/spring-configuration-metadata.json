@@ -35,50 +35,10 @@
       "sourceType": "com.snail.abell.config.FileProperties"
     },
     {
-      "name": "file.linux.avatar",
-      "type": "java.lang.String",
-      "sourceType": "com.snail.abell.config.FileProperties$ElPath"
-    },
-    {
-      "name": "file.linux.path",
-      "type": "java.lang.String",
-      "sourceType": "com.snail.abell.config.FileProperties$ElPath"
-    },
-    {
-      "name": "file.mac.avatar",
-      "type": "java.lang.String",
-      "sourceType": "com.snail.abell.config.FileProperties$ElPath"
-    },
-    {
-      "name": "file.mac.path",
-      "type": "java.lang.String",
-      "sourceType": "com.snail.abell.config.FileProperties$ElPath"
-    },
-    {
       "name": "file.max-size",
       "type": "java.lang.Long",
       "description": "文件大小限制",
       "sourceType": "com.snail.abell.config.FileProperties"
-    },
-    {
-      "name": "file.path.avatar",
-      "type": "java.lang.String",
-      "sourceType": "com.snail.abell.config.FileProperties$ElPath"
-    },
-    {
-      "name": "file.path.path",
-      "type": "java.lang.String",
-      "sourceType": "com.snail.abell.config.FileProperties$ElPath"
-    },
-    {
-      "name": "file.windows.avatar",
-      "type": "java.lang.String",
-      "sourceType": "com.snail.abell.config.FileProperties$ElPath"
-    },
-    {
-      "name": "file.windows.path",
-      "type": "java.lang.String",
-      "sourceType": "com.snail.abell.config.FileProperties$ElPath"
     }
   ],
   "hints": []

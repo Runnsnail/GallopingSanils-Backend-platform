@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-07-26T22:17:49+0800",
+    date = "2022-07-30T20:11:37+0800",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 1.8.0_191 (Oracle Corporation)"
 )
 @Component
@@ -24,6 +24,7 @@ public class MenuMapperImpl implements MenuMapper {
 
         SysMenu sysMenu = new SysMenu();
 
+        sysMenu.setMenuId( dto.getMenuId() );
         sysMenu.setPid( dto.getPid() );
         sysMenu.setSubCount( dto.getSubCount() );
         sysMenu.setType( dto.getType() );
@@ -32,6 +33,7 @@ public class MenuMapperImpl implements MenuMapper {
         sysMenu.setMenuSort( dto.getMenuSort() );
         sysMenu.setIcon( dto.getIcon() );
         sysMenu.setPath( dto.getPath() );
+        sysMenu.setIframe( dto.getIframe() );
         sysMenu.setCache( dto.getCache() );
         sysMenu.setHidden( dto.getHidden() );
         sysMenu.setPermission( dto.getPermission() );
@@ -59,6 +61,7 @@ public class MenuMapperImpl implements MenuMapper {
         if ( entity.getUpdateTime() != null ) {
             menuDto.setUpdateTime( new Timestamp( entity.getUpdateTime().getTime() ) );
         }
+        menuDto.setMenuId( entity.getMenuId() );
         menuDto.setType( entity.getType() );
         menuDto.setPermission( entity.getPermission() );
         menuDto.setTitle( entity.getTitle() );
@@ -67,6 +70,7 @@ public class MenuMapperImpl implements MenuMapper {
         menuDto.setComponent( entity.getComponent() );
         menuDto.setPid( entity.getPid() );
         menuDto.setSubCount( entity.getSubCount() );
+        menuDto.setIframe( entity.getIframe() );
         menuDto.setCache( entity.getCache() );
         menuDto.setHidden( entity.getHidden() );
         menuDto.setIcon( entity.getIcon() );

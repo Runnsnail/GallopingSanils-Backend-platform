@@ -1,6 +1,8 @@
 package com.snail.abell.permission.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.snail.abell.apiInterface.ResponseResult;
 import com.snail.abell.exception.BadRequestException;
 import com.snail.abell.logInterface.Log;
@@ -9,8 +11,8 @@ import com.snail.abell.permission.dto.MenuDto;
 import com.snail.abell.permission.entity.SysMenu;
 import com.snail.abell.permission.service.SysMenuService;
 import com.snail.abell.permission.vo.MenuMapper;
-import com.snail.abell.utils.PageUtil;
 import com.snail.abell.utils.SecurityUtils;
+import com.snail.abell.utils.TreeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,7 @@ public class SysMenuController {
 
     @Autowired
     private SysMenuDao menuDao;
+    @Autowired
     private MenuMapper menuMapper;
     private static final String ENTITY_NAME = "menu";
 
@@ -52,7 +55,8 @@ public class SysMenuController {
     @ApiOperation("获取前端所需菜单")
     public Object buildMenus() {
         List<MenuDto> menuDtoList = menuService.findByUser(SecurityUtils.getCurrentUserId());
-        List<MenuDto> menuDtos = menuService.buildTree(menuDtoList);
+        // List<MenuDto> menuDtos = menuService.buildTree(menuDtoList);
+        List<MenuDto> menuDtos = TreeUtils.generateTrees(menuDtoList);
         return menuService.buildMenus(menuDtos);
     }
 
@@ -78,9 +82,12 @@ public class SysMenuController {
     @GetMapping
     @ApiOperation("查询菜单")
     @PreAuthorize("@el.check('menu:list')")
-    public ResponseEntity<Object> queryMenu(MenuDto criteria) throws Exception {
-        List<MenuDto> menuDtoList = menuService.queryAll(criteria, true);
-        return new ResponseEntity<>(PageUtil.toPage(menuDtoList, menuDtoList.size()), HttpStatus.OK);
+    public List<SysMenu> queryMenu(@RequestParam(value = "pageNum") int pageNum, @RequestParam(value = "pageSize") int pageSize) throws Exception {
+        Page<SysMenu> page = new Page<>(pageNum, pageSize);
+        QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("pid",null);
+        queryWrapper.orderByDesc("menu_id");
+        return this.menuDao.selectPage(page, queryWrapper).getRecords();
     }
 
     @ApiOperation("查询菜单:根据ID获取同级与上级数据")

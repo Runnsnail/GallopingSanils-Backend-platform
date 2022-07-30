@@ -17,6 +17,9 @@ import com.snail.abell.permission.service.SysUsersRolesService;
 import com.snail.abell.permission.vo.MenuMapper;
 import com.snail.abell.permission.vo.MenuVo;
 import com.snail.abell.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,9 +33,10 @@ import java.util.stream.Collectors;
  * @since 2022-06-05 11:51:28
  */
 @Service
-public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implements SysMenuService {
+public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> implements  SysMenuService {
 
-    private  MenuMapper menuMapper;
+    @Autowired
+    private MenuMapper menuMapper;
     @Resource
     private SysMenuDao sysMenuDao;
     @Resource
@@ -42,7 +46,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
     @Resource
     private SysRolesMenusService sysRolesMenusService;
     @Resource
-    private SysUsersRolesService  sysUsersRolesService;
+    private SysUsersRolesService sysUsersRolesService;
+
+    private static final Logger logger = LoggerFactory.getLogger(SysMenuServiceImpl.class);
 
     /**
      * 通过ID查询单条数据
@@ -59,7 +65,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
      * 查询多条数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     @Override
@@ -75,7 +81,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
      */
     @Override
     public int insert(SysMenu sysMenu) {
-        int num =  this.sysMenuDao.insert(sysMenu);
+        int num = this.sysMenuDao.insert(sysMenu);
         return num;
     }
 
@@ -106,10 +112,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
     public List<MenuDto> findByUser(Long currentUserId) {
         //查询当前用户的角色
         SysUsersRoles sysUsersRoles = sysUsersRolesDao.queryById(currentUserId);
-        List<SysRolesMenus> rolesList =sysRolesMenusService.lambdaQuery().eq(SysRolesMenus::getRoleId, sysUsersRoles.getRoleId()).list();
+        List<SysRolesMenus> rolesList = sysRolesMenusService.lambdaQuery().eq(SysRolesMenus::getRoleId, sysUsersRoles.getRoleId()).list();
         Set<Long> menuIds = rolesList.stream().map(SysRolesMenus::getMenuId).collect(Collectors.toSet());
         List<SysMenu> menuList = sysMenuService.listByIds(menuIds);
         List<MenuDto> aa = menuList.stream().map(menuMapper::toDto).collect(Collectors.toList());
+        aa.forEach(log -> logger.info(String.valueOf(log)));
         return menuList.stream().map(menuMapper::toDto).collect(Collectors.toList());
     }
 
@@ -122,59 +129,60 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
                 trees.add(menuDTO);
             }
             for (MenuDto it : menuDtoList) {
-                if (menuDTO.getId().equals(it.getPid())) {
-                    if (menuDTO.getChildren() == null) {
-                        menuDTO.setChildren(new ArrayList<>());
-                    }
+                if (menuDTO.getMenuId().equals(it.getPid())) {
+                    menuDTO.setChildren(new ArrayList<>());
                     menuDTO.getChildren().add(it);
-                    ids.add(it.getId());
+                    ids.add(it.getMenuId());
                 }
             }
+
+
         }
-        if(trees.size() == 0){
-            trees = menuDtoList.stream().filter(s -> !ids.contains(s.getId())).collect(Collectors.toList());
+        if (trees.size() == 0) {
+            trees = menuDtoList.stream().filter(s -> !ids.contains(s.getMenuId())).collect(Collectors.toList());
         }
+        trees.forEach(System.out ::println);
         return trees;
     }
 
     @Override
     public List<MenuVo> buildMenus(List<MenuDto> menuDtos) {
         List<MenuVo> list = new LinkedList<>();
-        menuDtos.forEach(menuDTO -> {
-                    if (menuDTO!=null){
-                        List<MenuDto> menuDtoList = menuDTO.getChildren();
+        menuDtos.forEach(MenuDto -> {
+                    if (MenuDto != null) {
+                        List<MenuDto> menuDtoList = MenuDto.getChildren();
                         MenuVo menuVo = new MenuVo();
-                        menuVo.setName(ObjectUtil.isNotEmpty(menuDTO.getComponentName())  ? menuDTO.getComponentName() : menuDTO.getTitle());
+                        menuVo.setName(ObjectUtil.isNotEmpty(MenuDto.getComponentName()) ? MenuDto.getComponentName() : MenuDto.getTitle());
                         // 一级目录需要加斜杠，不然会报警告
-                        menuVo.setPath(menuDTO.getPid() == null ? "/" + menuDTO.getPath() :menuDTO.getPath());
-                        menuVo.setHidden(menuDTO.getHidden());
+                        menuVo.setPath(MenuDto.getPid() == null ? "/" + MenuDto.getPath() : MenuDto.getPath());
+                        menuVo.setHidden(MenuDto.getHidden());
                         // 如果不是外链
-                        if(!menuDTO.getIFrame()){
-                            if(menuDTO.getPid() == null){
-                                menuVo.setComponent(StringUtils.isEmpty(menuDTO.getComponent())?"Layout":menuDTO.getComponent());
+                        if (!MenuDto.getIframe()) {
+                            if (MenuDto.getPid() == null) {
+                                menuVo.setComponent(StringUtils.isEmpty(MenuDto.getComponent()) ? "Layout" : MenuDto.getComponent());
                                 // 如果不是一级菜单，并且菜单类型为目录，则代表是多级菜单
-                            }else if(menuDTO.getType() == 0){
-                                menuVo.setComponent(StringUtils.isEmpty(menuDTO.getComponent())?"ParentView":menuDTO.getComponent());
-                            }else if(StringUtils.isNoneBlank(menuDTO.getComponent())){
-                                menuVo.setComponent(menuDTO.getComponent());
+                            } else if (MenuDto.getType() == 0) {
+                                menuVo.setComponent(StringUtils.isEmpty(MenuDto.getComponent()) ? "ParentView" : MenuDto.getComponent());
+                            } else if (StringUtils.isNoneBlank(MenuDto.getComponent())) {
+                                menuVo.setComponent(MenuDto.getComponent());
                             }
                         }
-                        menuVo.setMeta(new MenuMetaVo(menuDTO.getTitle(),menuDTO.getIcon(),!menuDTO.getCache()));
-                        if(CollectionUtil.isNotEmpty(menuDtoList)){
+                        menuVo.setMeta(new MenuMetaVo(MenuDto.getTitle(), MenuDto.getIcon(), !MenuDto.getCache()));
+                        if (CollectionUtil.isNotEmpty(menuDtoList)) {
                             menuVo.setAlwaysShow(true);
                             menuVo.setRedirect("noredirect");
                             menuVo.setChildren(buildMenus(menuDtoList));
                             // 处理是一级菜单并且没有子菜单的情况
-                        } else if(menuDTO.getPid() == null){
+                        } else if (MenuDto.getPid() == null) {
                             MenuVo menuVo1 = new MenuVo();
                             menuVo1.setMeta(menuVo.getMeta());
                             // 非外链
-                            if(!menuDTO.getIFrame()){
+                            if (!MenuDto.getIframe()) {
                                 menuVo1.setPath("index");
                                 menuVo1.setName(menuVo.getName());
                                 menuVo1.setComponent(menuVo.getComponent());
                             } else {
-                                menuVo1.setPath(menuDTO.getPath());
+                                menuVo1.setPath(MenuDto.getPath());
                             }
                             menuVo.setName(null);
                             menuVo.setMeta(null);
@@ -193,7 +201,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
     @Override
     public List<MenuDto> getMenus(Long pid) {
         List<SysMenu> menus;
-        if(pid != null && !pid.equals(0L)){
+        if (pid != null && !pid.equals(0L)) {
             menus = sysMenuService.lambdaQuery().eq(SysMenu::getPid, pid).list();
         } else {
             menus = sysMenuService.list();
@@ -206,7 +214,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
         for (SysMenu menu : menuList) {
             menuSet.add(menu);
             List<SysMenu> menus = sysMenuService.lambdaQuery().eq(SysMenu::getMenuId, menu.getMenuId()).list();
-            if(menus!=null && menus.size()!=0){
+            if (menus != null && menus.size() != 0) {
                 getChildMenus(menus, menuSet);
             }
         }
@@ -220,14 +228,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
 
     @Override
     public List<MenuDto> getSuperior(MenuDto menuDto, List<SysMenu> menus) {
-        if(menuDto.getPid() == null){
+        if (menuDto.getPid() == null) {
             menus.addAll(sysMenuService.list());
             return menuMapper.toDto(menus);
         }
         menus.addAll(menus = sysMenuService.lambdaQuery().eq(SysMenu::getPid, menuDto.getPid()).list());
         LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysMenu::getPid, menuDto.getPid());
-        return getSuperior(menuMapper.toDto(sysMenuService.getOne(queryWrapper,true)), menus);
+        return getSuperior(menuMapper.toDto(sysMenuService.getOne(queryWrapper, true)), menus);
     }
 
     @Override
@@ -235,7 +243,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao,SysMenu> implemen
         for (SysMenu menu : menuSet) {
             // 清理缓存
             LambdaQueryWrapper<SysRolesMenus> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(SysRolesMenus::getMenuId,menu.getMenuId());
+            queryWrapper.eq(SysRolesMenus::getMenuId, menu.getMenuId());
             sysRolesMenusService.remove(queryWrapper);
             sysMenuService.deleteById(menu.getMenuId());
             updateSubCnt(menu.getPid());
