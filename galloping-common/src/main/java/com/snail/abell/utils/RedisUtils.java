@@ -1,5 +1,5 @@
 /*
- *  Copyright 
+ *  Copyright
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils {
     private static final Logger log = LoggerFactory.getLogger(RedisUtils.class);
     private RedisTemplate<Object, Object> redisTemplate;
-    @Value("${jwt.online-key}")
+    @Value("${jwt.onlineKey}")
     private String onlineKey;
 
     public RedisUtils(RedisTemplate<Object, Object> redisTemplate) {

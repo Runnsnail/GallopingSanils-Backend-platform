@@ -36,7 +36,7 @@ public class UserController {
      * 用户端信息
      * @Return Map<String,Object> 返回数据MAP
      */
-    @ApiOperation(value = "用户嘻嘻")
+    @ApiOperation(value = "用户Abell")
     @RequestMapping(value = "/info",method = RequestMethod.GET)
     public Map<String,Object> userLogin(){
         Map<String,Object> result = new HashMap<>();

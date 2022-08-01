@@ -9,7 +9,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-07-26T22:17:42+0800",
+    date = "2022-08-01T11:04:31+0800",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 1.8.0_191 (Oracle Corporation)"
 )
 public class LogMapperImpl implements LogMapper {

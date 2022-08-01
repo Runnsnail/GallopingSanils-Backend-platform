@@ -35,6 +35,8 @@ public class JWTConfig {
     public static String antMatchers;
 
 
+    public static String onlineKey;
+
     public void setSecret(String secret) {
         JWTConfig.secret = secret;
     }
@@ -53,5 +55,8 @@ public class JWTConfig {
 
     public void setAntMatchers(String antMatchers) {
         JWTConfig.antMatchers = antMatchers;
+    }
+    public void setOnlineKey(String onlineKey) {
+        JWTConfig.onlineKey = onlineKey;
     }
 }
