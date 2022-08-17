@@ -1,5 +1,5 @@
 /*
- *  Copyright 
+ *  Copyright
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,8 +15,10 @@
  */
 package com.snail.abell.aspect;
 
+import com.alibaba.fastjson.JSONObject;
 import com.snail.abell.generator.pojo.SysLog;
 import com.snail.abell.generator.service.SysLogService;
+import com.snail.abell.logInterface.Log;
 import com.snail.abell.utils.RequestHolder;
 import com.snail.abell.utils.SecurityUtils;
 import com.snail.abell.utils.StringUtils;
@@ -26,14 +28,16 @@ import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 
 
 @Component
@@ -42,6 +46,8 @@ import javax.servlet.http.HttpServletRequest;
 public class LogAspect {
 
     private final SysLogService logService;
+
+    private final static Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
     ThreadLocal<Long> currentTime = new ThreadLocal<>();
 
@@ -58,6 +64,37 @@ public class LogAspect {
     }
 
     /**
+     * 在切点之前织入
+     * @param joinPoint
+     * @throws Throwable
+     */
+    @Before("logPointcut()")
+    public void doBefore(JoinPoint joinPoint) throws Throwable {
+        // 开始打印请求日志
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+
+        // 获取 @WebLog 注解的描述信息
+        String methodDescription = getAspectLogDescription(joinPoint);
+
+        // 打印请求相关参数
+        logger.info("============= Start =============");
+        // 打印请求 url
+        logger.info("URL            : {}", request.getRequestURL().toString());
+        // 打印描述信息
+        logger.info("Description    : {}", methodDescription);
+        // 打印 Http method
+        logger.info("HTTP Method    : {}", request.getMethod());
+        // 打印调用 controller 的全路径以及执行方法
+        logger.info("Class Method   : {}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
+        // 打印请求的 IP
+        logger.info("IP             : {}", request.getRemoteAddr());
+        // 打印请求入参
+        logger.info("Request Args   : {}", JSONObject.toJSONString(joinPoint.getArgs()));
+    }
+
+
+    /**
      * 配置环绕通知,使用在方法logPointcut()上注册的切入点
      *
      * @param joinPoint join point for advice
@@ -65,6 +102,7 @@ public class LogAspect {
     @Around("logPointcut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result;
+        long startTime = System.currentTimeMillis();
         currentTime.set(System.currentTimeMillis());
         result = joinPoint.proceed();
         //回去当前用户信息
@@ -72,7 +110,10 @@ public class LogAspect {
         SysLog log = new SysLog("INFO",System.currentTimeMillis() - currentTime.get());
         currentTime.remove();
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
-       // logService.save(getUsername(), StringUtils.getBrowser(request), StringUtils.getIp(request),joinPoint, log);
+       // 打印出参
+        logger.info("Response Args  : {}", JSONObject.toJSONString(result));
+        // 执行耗时
+        logger.info("Time-Consuming : {} ms", System.currentTimeMillis() - startTime);
 
         //获取浏览器信息
         String ua = request.getHeader("User-Agent");
@@ -95,6 +136,9 @@ public class LogAspect {
      */
     @AfterThrowing(pointcut = "logPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
+        // 接口结束后换行，方便分割查看
+        logger.info("=================== End =================" + System.lineSeparator());
+
         SysLog log = new SysLog("ERROR",System.currentTimeMillis() - currentTime.get());
         currentTime.remove();
         UserDetails loginUser = SecurityUtils.getCurrentUser();
@@ -119,4 +163,32 @@ public class LogAspect {
             return "";
         }
     }
+
+    /**
+     * 获取切面注解的描述
+     *
+     * @param joinPoint 切点
+     * @return 描述信息
+     * @throws Exception
+     */
+    public String getAspectLogDescription(JoinPoint joinPoint)
+            throws Exception {
+        String targetName = joinPoint.getTarget().getClass().getName();
+        String methodName = joinPoint.getSignature().getName();
+        Object[] arguments = joinPoint.getArgs();
+        Class targetClass = Class.forName(targetName);
+        Method[] methods = targetClass.getMethods();
+        StringBuilder description = new StringBuilder("");
+        for (Method method : methods) {
+            if (method.getName().equals(methodName)) {
+                Class[] clazzs = method.getParameterTypes();
+                if (clazzs.length == arguments.length) {
+                    description.append(method.getAnnotation(Log.class).description());
+                    break;
+                }
+            }
+        }
+        return description.toString();
+    }
+
 }

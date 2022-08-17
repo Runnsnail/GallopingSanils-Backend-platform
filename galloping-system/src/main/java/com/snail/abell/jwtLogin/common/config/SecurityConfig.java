@@ -104,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 配置登录地址
                 .formLogin()
                 //自定义登录页面
-                .loginPage("/html-customizer/ltr/vertical-menu-template-dark/auth-login-cover.html")
+                //.loginPage("/html-customizer/ltr/vertical-menu-template-dark/auth-login-cover.html")
                 .loginProcessingUrl("/login/userlogin")
                 //表单中的用户名项
                 .usernameParameter("loginEmail")

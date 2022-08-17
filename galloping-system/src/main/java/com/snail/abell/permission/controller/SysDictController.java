@@ -56,7 +56,7 @@ public class SysDictController {
 
 
 
-    @Log("新增字典")
+    @Log(description = "新增字典")
     @ApiOperation("新增字典")
     @PostMapping
     @PreAuthorize("@el.check('dict:add')")
@@ -67,7 +67,7 @@ public class SysDictController {
         return sysDictService.save(resources);
     }
 
-    @Log("修改字典")
+    @Log(description = "修改字典")
     @ApiOperation("修改字典")
     @PutMapping
     @PreAuthorize("@el.check('dict:edit')")
@@ -76,7 +76,7 @@ public class SysDictController {
         return sysDictService.updateById(resources);
     }
 
-    @Log("删除字典")
+    @Log(description = "删除字典")
     @ApiOperation("删除字典")
     @DeleteMapping
     @PreAuthorize("@el.check('dict:del')")

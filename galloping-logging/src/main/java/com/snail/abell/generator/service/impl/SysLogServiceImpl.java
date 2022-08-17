@@ -69,7 +69,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         }
         // 描述
         if (log != null) {
-            log.setDescription(aopLog.value());
+            log.setDescription(aopLog.description());
         }
         //类型 0-后台 1-APP
         log.setType(aopLog.type());

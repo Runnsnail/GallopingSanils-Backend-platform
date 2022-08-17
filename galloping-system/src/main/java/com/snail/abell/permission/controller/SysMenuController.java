@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @Validated
 @ResponseResult
 @RestController
-@RequestMapping("/api/menus")
+@RequestMapping("/spi/menus")
 public class SysMenuController {
     /**
      * 服务对象
@@ -50,7 +50,7 @@ public class SysMenuController {
     private MenuMapper menuMapper;
     private static final String ENTITY_NAME = "menu";
 
-
+    @Log(description = "获取前端所需菜单")
     @GetMapping(value = "/build")
     @ApiOperation("获取前端所需菜单")
     public Object buildMenus() {
@@ -105,7 +105,7 @@ public class SysMenuController {
         return new ResponseEntity<>(menuService.getMenus(null), HttpStatus.OK);
     }
 
-    @Log("新增菜单")
+    @Log(description = "新增菜单")
     @ApiOperation("新增菜单")
     @PostMapping
     @PreAuthorize("@el.check('menu:add')")
@@ -118,7 +118,7 @@ public class SysMenuController {
 
     }
 
-    @Log("修改菜单")
+    @Log(description = "修改菜单")
     @ApiOperation("修改菜单")
     @PutMapping
     @PreAuthorize("@el.check('menu:edit')")
@@ -127,7 +127,7 @@ public class SysMenuController {
         return  menuService.update(resources);
     }
 
-    @Log("删除菜单")
+    @Log(description = "删除菜单")
     @ApiOperation("删除菜单")
     @DeleteMapping
     @PreAuthorize("@el.check('menu:del')")

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-08-01T15:18:02+0800",
+    date = "2022-08-14T12:57:10+0800",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 1.8.0_191 (Oracle Corporation)"
 )
 @Component
@@ -46,39 +46,6 @@ public class MenuMapperImpl implements MenuMapper {
     }
 
     @Override
-    public MenuDto toDto(SysMenu entity) {
-        if ( entity == null ) {
-            return null;
-        }
-
-        MenuDto menuDto = new MenuDto();
-
-        menuDto.setCreateBy( entity.getCreateBy() );
-        menuDto.setUpdateBy( entity.getUpdateBy() );
-        if ( entity.getCreateTime() != null ) {
-            menuDto.setCreateTime( new Timestamp( entity.getCreateTime().getTime() ) );
-        }
-        if ( entity.getUpdateTime() != null ) {
-            menuDto.setUpdateTime( new Timestamp( entity.getUpdateTime().getTime() ) );
-        }
-        menuDto.setMenuId( entity.getMenuId() );
-        menuDto.setType( entity.getType() );
-        menuDto.setPermission( entity.getPermission() );
-        menuDto.setTitle( entity.getTitle() );
-        menuDto.setMenuSort( entity.getMenuSort() );
-        menuDto.setPath( entity.getPath() );
-        menuDto.setComponent( entity.getComponent() );
-        menuDto.setPid( entity.getPid() );
-        menuDto.setSubCount( entity.getSubCount() );
-        menuDto.setIframe( entity.getIframe() );
-        menuDto.setCache( entity.getCache() );
-        menuDto.setHidden( entity.getHidden() );
-        menuDto.setIcon( entity.getIcon() );
-
-        return menuDto;
-    }
-
-    @Override
     public List<SysMenu> toEntity(List<MenuDto> dtoList) {
         if ( dtoList == null ) {
             return null;
@@ -100,9 +67,75 @@ public class MenuMapperImpl implements MenuMapper {
 
         List<MenuDto> list = new ArrayList<MenuDto>( entityList.size() );
         for ( SysMenu sysMenu : entityList ) {
-            list.add( toDto( sysMenu ) );
+            list.add( sysMenuToMenuDto( sysMenu ) );
         }
 
         return list;
+    }
+
+    @Override
+    public MenuDto toDto(SysMenu menu) {
+        if ( menu == null ) {
+            return null;
+        }
+
+        MenuDto menuDto = new MenuDto();
+
+        menuDto.setComponentName( menu.getName() );
+        menuDto.setCreateBy( menu.getCreateBy() );
+        menuDto.setUpdateBy( menu.getUpdateBy() );
+        if ( menu.getCreateTime() != null ) {
+            menuDto.setCreateTime( new Timestamp( menu.getCreateTime().getTime() ) );
+        }
+        if ( menu.getUpdateTime() != null ) {
+            menuDto.setUpdateTime( new Timestamp( menu.getUpdateTime().getTime() ) );
+        }
+        menuDto.setMenuId( menu.getMenuId() );
+        menuDto.setType( menu.getType() );
+        menuDto.setPermission( menu.getPermission() );
+        menuDto.setTitle( menu.getTitle() );
+        menuDto.setMenuSort( menu.getMenuSort() );
+        menuDto.setPath( menu.getPath() );
+        menuDto.setComponent( menu.getComponent() );
+        menuDto.setPid( menu.getPid() );
+        menuDto.setSubCount( menu.getSubCount() );
+        menuDto.setIframe( menu.getIframe() );
+        menuDto.setCache( menu.getCache() );
+        menuDto.setHidden( menu.getHidden() );
+        menuDto.setIcon( menu.getIcon() );
+
+        return menuDto;
+    }
+
+    protected MenuDto sysMenuToMenuDto(SysMenu sysMenu) {
+        if ( sysMenu == null ) {
+            return null;
+        }
+
+        MenuDto menuDto = new MenuDto();
+
+        menuDto.setCreateBy( sysMenu.getCreateBy() );
+        menuDto.setUpdateBy( sysMenu.getUpdateBy() );
+        if ( sysMenu.getCreateTime() != null ) {
+            menuDto.setCreateTime( new Timestamp( sysMenu.getCreateTime().getTime() ) );
+        }
+        if ( sysMenu.getUpdateTime() != null ) {
+            menuDto.setUpdateTime( new Timestamp( sysMenu.getUpdateTime().getTime() ) );
+        }
+        menuDto.setMenuId( sysMenu.getMenuId() );
+        menuDto.setType( sysMenu.getType() );
+        menuDto.setPermission( sysMenu.getPermission() );
+        menuDto.setTitle( sysMenu.getTitle() );
+        menuDto.setMenuSort( sysMenu.getMenuSort() );
+        menuDto.setPath( sysMenu.getPath() );
+        menuDto.setComponent( sysMenu.getComponent() );
+        menuDto.setPid( sysMenu.getPid() );
+        menuDto.setSubCount( sysMenu.getSubCount() );
+        menuDto.setIframe( sysMenu.getIframe() );
+        menuDto.setCache( sysMenu.getCache() );
+        menuDto.setHidden( sysMenu.getHidden() );
+        menuDto.setIcon( sysMenu.getIcon() );
+
+        return menuDto;
     }
 }

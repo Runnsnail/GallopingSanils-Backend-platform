@@ -46,6 +46,8 @@ public class MenuDto extends BaseDTO implements TreeNode<Long>, Serializable {
 
     private String icon;
 
+
+
     public Boolean getHasChildren() {
         return subCount > 0;
     }

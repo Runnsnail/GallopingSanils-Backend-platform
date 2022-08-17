@@ -14,7 +14,7 @@ function goLogin(){
         success:function(data){
             if (data.code == 200) {
                 //
-                localStorage.setItem('Authorization', data.token)
+                localStorage.setItem('accessToken', data.token)
                 window.location.href="/html-customizer/ltr/vertical-menu-template-dark/dashboard-ecommerce.html";
             }
         }

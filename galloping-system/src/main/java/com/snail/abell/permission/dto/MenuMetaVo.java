@@ -17,5 +17,7 @@ public class MenuMetaVo implements Serializable {
 
     private String icon;
 
+    private String name;
+
     private Boolean noCache;
 }

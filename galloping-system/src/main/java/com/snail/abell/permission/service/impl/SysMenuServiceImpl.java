@@ -167,7 +167,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
                                 menuVo.setComponent(MenuDto.getComponent());
                             }
                         }
-                        menuVo.setMeta(new MenuMetaVo(MenuDto.getTitle(), MenuDto.getIcon(), !MenuDto.getCache()));
+                        menuVo.setMeta(new MenuMetaVo(MenuDto.getTitle(), MenuDto.getIcon(),MenuDto.getComponentName(),!MenuDto.getCache()));
                         if (CollectionUtil.isNotEmpty(menuDtoList)) {
                             menuVo.setAlwaysShow(true);
                             menuVo.setRedirect("noredirect");

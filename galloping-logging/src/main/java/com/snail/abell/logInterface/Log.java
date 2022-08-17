@@ -10,6 +10,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface Log {
 
-    String value() default "";
+    String description() default "";
     int type() default 0;
 }

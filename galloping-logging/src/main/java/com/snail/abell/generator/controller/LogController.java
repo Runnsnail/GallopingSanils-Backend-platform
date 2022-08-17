@@ -35,7 +35,7 @@ public class LogController {
 
     private final String ERROR_PREFIX = "ERROR";
 
-    @Log("导出数据")
+    @Log(description = "导出数据")
     @ApiOperation("导出数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check()")
@@ -47,7 +47,7 @@ public class LogController {
         logService.download(list, response,INFOR_PREFIX);
     }
 
-    @Log("导出错误数据")
+    @Log(description = "导出错误数据")
     @ApiOperation("导出错误数据")
     @GetMapping(value = "/error/download")
     @PreAuthorize("@el.check()")
@@ -98,7 +98,7 @@ public class LogController {
 
 
     @DeleteMapping(value = "/del/error")
-    @Log("删除所有ERROR日志")
+    @Log(description = "删除所有ERROR日志")
     @ApiOperation("删除所有ERROR日志")
     @PreAuthorize("@el.check()")
     public boolean delAllErrorLog(){
@@ -106,7 +106,7 @@ public class LogController {
     }
 
     @DeleteMapping(value = "/del/info")
-    @Log("删除所有INFO日志")
+    @Log(description = "删除所有INFO日志")
     @ApiOperation("删除所有INFO日志")
     @PreAuthorize("@el.check()")
     public boolean delAllInfoLog(){

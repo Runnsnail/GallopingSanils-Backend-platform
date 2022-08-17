@@ -89,7 +89,7 @@ jwt:
   # 密匙KEY
   secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
   # HeaderKEY
-  tokenHeader: Authorization
+  tokenHeader: accessToken
   # Token前缀字符
   tokenPrefix: Abell-
   # 过期时间 单位秒 1天后过期=86400 7天后过期=604800
