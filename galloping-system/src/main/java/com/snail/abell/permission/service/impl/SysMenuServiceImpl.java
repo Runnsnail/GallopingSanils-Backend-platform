@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.snail.abell.permission.dao.SysMenuDao;
 import com.snail.abell.permission.dao.SysUsersRolesDao;
+import com.snail.abell.permission.dto.BreadOneVo;
+import com.snail.abell.permission.dto.BreadVo;
 import com.snail.abell.permission.dto.MenuDto;
 import com.snail.abell.permission.dto.MenuMetaVo;
 import com.snail.abell.permission.entity.SysMenu;
@@ -152,7 +154,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
                     if (MenuDto != null) {
                         List<MenuDto> menuDtoList = MenuDto.getChildren();
                         MenuVo menuVo = new MenuVo();
-                        menuVo.setName(ObjectUtil.isNotEmpty(MenuDto.getComponentName()) ? MenuDto.getComponentName() : MenuDto.getTitle());
+                        menuVo.setName(ObjectUtil.isNotEmpty(MenuDto.getComponentName()) ? MenuDto.getComponentName() : MenuDto.getPageTitle());
                         // 一级目录需要加斜杠，不然会报警告
                         menuVo.setPath(MenuDto.getPid() == null ? "/" + MenuDto.getPath() : MenuDto.getPath());
                         menuVo.setHidden(MenuDto.getHidden());
@@ -167,7 +169,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
                                 menuVo.setComponent(MenuDto.getComponent());
                             }
                         }
-                        menuVo.setMeta(new MenuMetaVo(MenuDto.getTitle(), MenuDto.getIcon(),MenuDto.getComponentName(),!MenuDto.getCache()));
+                        List Breadcrumb = Arrays.asList(new BreadOneVo(MenuDto.getTextone()), new BreadVo(MenuDto.getTexttwo(),MenuDto.getActive()));
+                        menuVo.setMeta(new MenuMetaVo(MenuDto.getPageTitle(), Breadcrumb,MenuDto.getComponentName()));
                         if (CollectionUtil.isNotEmpty(menuDtoList)) {
                             menuVo.setAlwaysShow(true);
                             menuVo.setRedirect("noredirect");

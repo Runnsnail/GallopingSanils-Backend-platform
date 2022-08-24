@@ -24,9 +24,13 @@ public class MenuDto extends BaseDTO implements TreeNode<Long>, Serializable {
 
     private String permission;
 
-    private String title;
+    private String pageTitle;
 
     private Integer menuSort;
+
+    private String textone;
+
+    private String texttwo;
 
     private String path;
 
@@ -38,13 +42,13 @@ public class MenuDto extends BaseDTO implements TreeNode<Long>, Serializable {
 
     private Boolean iframe;
 
-    private Boolean cache;
+    private Boolean active;
 
     private Boolean hidden;
 
     private String componentName;
 
-    private String icon;
+
 
 
 
@@ -57,7 +61,7 @@ public class MenuDto extends BaseDTO implements TreeNode<Long>, Serializable {
     }
 
     public String getLabel() {
-        return title;
+        return pageTitle;
     }
 
     @Override

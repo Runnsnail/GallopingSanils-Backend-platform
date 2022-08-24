@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Abell
@@ -13,11 +14,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class MenuMetaVo implements Serializable {
 
-    private String title;
+    private String pageTitle;
 
-    private String icon;
+    private List breadcrumb;
 
     private String name;
 
-    private Boolean noCache;
+
 }

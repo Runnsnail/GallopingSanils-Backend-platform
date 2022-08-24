@@ -38,7 +38,8 @@ public class SysMenu extends Model<SysMenu> implements Serializable {
     private Integer type;
 
     @ApiModelProperty("菜单标题")
-    private String title;
+    @TableField(value = "page_Title")
+    private String pageTitle;
 
     @ApiModelProperty("组件名称")
     private String name;
@@ -49,8 +50,16 @@ public class SysMenu extends Model<SysMenu> implements Serializable {
     @ApiModelProperty("排序")
     private Integer menuSort;
 
-    @ApiModelProperty("图标")
-    private String icon;
+    @ApiModelProperty("面包屑一级")
+    @TableField(value = "text_one")
+    private String textone;
+
+    @ApiModelProperty("面包屑二级级")
+    @TableField(value = "text_two")
+    private String texttwo;
+
+    @ApiModelProperty("面包屑二级级")
+    private Boolean active;
 
     @ApiModelProperty("链接地址")
     private String path;
@@ -58,9 +67,6 @@ public class SysMenu extends Model<SysMenu> implements Serializable {
     @ApiModelProperty("是否外链")
     @TableField(value = "i_frame")
     private Boolean iframe;
-
-    @ApiModelProperty("缓存")
-    private Boolean cache;
 
     @ApiModelProperty("隐藏")
     private Boolean hidden;
