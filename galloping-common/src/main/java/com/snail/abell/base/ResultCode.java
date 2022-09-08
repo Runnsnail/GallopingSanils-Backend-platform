@@ -20,7 +20,8 @@ public enum ResultCode {
     TESTSTEP_SAVE_ERROR(10008,"测试步骤保存失败"),
     TESTSTEP_EDIT_ERROR(10009,"测试步骤更新失败"),
     SUITCASE_EXIST_ERROR(10010,"测试用例集已存在"),
-    DELECT_FAILED(10010,"删除失败")
+    DELECT_FAILED(10010,"删除失败"),
+    TEAM_EXIST_ERROR(10011,"团队已存在")
     ;
 
     private Integer code;

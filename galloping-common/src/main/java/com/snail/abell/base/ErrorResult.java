@@ -6,7 +6,10 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * 错误结果
+ *
  * @author Abell
+ * @date 2022/09/04
  */
 @Data
 public class ErrorResult implements Serializable {
