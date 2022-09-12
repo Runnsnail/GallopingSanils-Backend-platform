@@ -9,7 +9,7 @@
     <result column="card_title" jdbcType="VARCHAR" property="cardTitle" />
     <result column="team_description" jdbcType="VARCHAR" property="teamDescription" />
     <result column="team_responsibility" jdbcType="VARCHAR" property="teamResponsibility" />
-    <result column="member" jdbcType="VARCHAR" property="member" />
+    <result column="member" jdbcType="VARCHAR" property="teamMember" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="team_mail" jdbcType="VARCHAR" property="teamMail" />
   </resultMap>

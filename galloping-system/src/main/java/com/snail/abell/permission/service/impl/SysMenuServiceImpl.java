@@ -143,7 +143,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         if (trees.size() == 0) {
             trees = menuDtoList.stream().filter(s -> !ids.contains(s.getMenuId())).collect(Collectors.toList());
         }
-        trees.forEach(System.out ::println);
+//        trees.forEach(System.out ::println);
         return trees;
     }
 

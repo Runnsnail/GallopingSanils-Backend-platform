@@ -34,8 +34,8 @@ public class SysUser extends Model<SysUser> implements Serializable {
     @ApiModelProperty("昵称")
     private String nickName;
 
-    @ApiModelProperty("性别")
-    private String gender;
+    @ApiModelProperty("团队code")
+    private String member;
 
     @ApiModelProperty("手机号码")
     private String phone;

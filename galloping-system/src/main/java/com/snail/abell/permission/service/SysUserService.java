@@ -6,6 +6,8 @@ import com.snail.abell.permission.entity.SysMenu;
 import com.snail.abell.permission.entity.SysRole;
 import com.snail.abell.permission.entity.SysUser;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -65,4 +67,13 @@ public interface SysUserService extends IService<SysUser>{
   List<SysRole> selectSysRoleByUserId(Long userId);
 
   List<SysMenu> selectSysMenuByUserId(Long userId);
+
+  /**
+   * @return 团队成员
+   */
+  ArrayList<HashMap<String, String>> getMembers();
+
+  void updateTeams(ArrayList<HashMap<String, String>> memberList, String memberCode);
+
+  boolean addTeam(String memberCode, String username);
 }

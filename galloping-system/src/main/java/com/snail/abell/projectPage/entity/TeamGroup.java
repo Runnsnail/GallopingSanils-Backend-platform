@@ -59,7 +59,7 @@ public class TeamGroup implements Serializable {
      */
     @TableField(value = "`member`")
     @ApiModelProperty(value="成员名称")
-    private String member;
+    private String teamMember;
 
     /**
      * 创建时间
@@ -76,4 +76,6 @@ public class TeamGroup implements Serializable {
     private String teamMail;
 
     private static final long serialVersionUID = 1L;
+
+
 }

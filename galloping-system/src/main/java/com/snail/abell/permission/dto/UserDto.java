@@ -46,7 +46,7 @@ public class UserDto extends BaseDTO implements Serializable {
 
     private String phone;
 
-    private String gender;
+    private String member;
 
     private String avatarName;
 

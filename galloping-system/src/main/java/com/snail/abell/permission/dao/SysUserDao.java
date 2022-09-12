@@ -72,4 +72,8 @@ public interface SysUserDao extends BaseMapper<SysUser>{
     List<SysRole> selectSysRoleByUserId(Long userId);
 
     List<SysMenu> selectSysMenuByUserId(Long userId);
+
+    void updateTeams(@Param("memberNames") List<String> memberNames,@Param("memberCode") String memberCode);
+
+    int addTeam(@Param("memberCode")String memberCode,@Param("username") String username);
 }

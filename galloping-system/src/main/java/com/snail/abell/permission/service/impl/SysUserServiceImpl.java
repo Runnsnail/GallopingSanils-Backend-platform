@@ -13,7 +13,7 @@ import com.snail.abell.permission.vo.UserMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 /**
  * 系统用户(SysUser)表服务实现类
@@ -120,6 +120,37 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao,SysUser> implemen
     @Override
     public List<SysMenu> selectSysMenuByUserId(Long userId) {
         return this.sysUserDao.selectSysMenuByUserId(userId);
+    }
+
+    @Override
+    public ArrayList<HashMap<String, String>> getMembers() {
+
+        ArrayList<HashMap<String, String>> members = new ArrayList<HashMap<String, String>>();
+        QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.isNull("member");
+        List<SysUser> menuList = this.sysUserDao.selectList(queryWrapper);
+        for (SysUser sysUser:menuList) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("member",sysUser.getUsername());
+            members.add(map);
+        }
+        return members;
+    }
+
+    @Override
+    public void updateTeams(ArrayList<HashMap<String, String>> memberList, String memberCode) {
+        List<String> memberNames = new ArrayList<>();
+        for (Map memberMap: memberList) {
+            String value = memberMap.get("member").toString();
+            memberNames.add(value);
+        }
+        this.sysUserDao.updateTeams(memberNames,memberCode);
+    }
+
+    @Override
+    public boolean addTeam(String memberCode, String username) {
+        this.sysUserDao.addTeam(memberCode,username);
+        return false;
     }
 
 
