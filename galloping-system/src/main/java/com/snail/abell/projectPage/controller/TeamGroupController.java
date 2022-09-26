@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.snail.abell.base.ResultCode.TEAM_EXIST_ERROR;
 
@@ -64,6 +67,13 @@ public class TeamGroupController {
         ArrayList<HashMap<String, String>> memberList = teamGroup.getTeamMember();
         teamGroupService.updateTeams(memberList,memberCode);
         return teamGroupService.save(teams);
+    }
+
+    @DeleteMapping("/deleteTeam/{id}")
+    @ApiOperation(value = "删除团队")
+    @Log(description = "删除团队")
+    public boolean deleteTeamGroup(@PathVariable Integer id){
+        return  teamGroupService.removeTeam(id);
     }
 
 }

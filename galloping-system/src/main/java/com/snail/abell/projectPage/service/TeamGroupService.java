@@ -25,4 +25,6 @@ public interface TeamGroupService extends IService<TeamGroup>{
     int insertOrUpdateSelective(TeamGroup record);
 
     void updateTeams(ArrayList<HashMap<String, String>> memberList, String memberCode);
+
+    boolean removeTeam(Integer id);
 }

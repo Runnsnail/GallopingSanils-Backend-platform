@@ -9,10 +9,10 @@
         <option name="generateService" value="true" />
         <option name="generateServiceInterface" value="true" />
         <option name="insertOnDuplicateKey" value="true" />
-        <option name="javaMapperPackage" value="mapper" />
+        <option name="javaMapperPackage" value="com.snail.abell.projectPage.entity" />
         <option name="javaMapperPath" value="$PROJECT_DIR$/galloping-system/src/main/java" />
         <option name="javaModelPackage" value="com.snail.abell.projectPage.entity" />
-        <option name="javaModelPath" value="D:\GallopingSanils\galloping-system\src\main\java\com\snail\abell\projectPage\entity" />
+        <option name="javaModelPath" value="D:\GallopingSanils\galloping-system\src\main\java" />
         <option name="lastDatabaseCrudChooseModuleName" value="galloping-system" />
         <option name="lombokDataAnnotation" value="true" />
         <option name="mapperAnnotaion" value="true" />
@@ -21,10 +21,10 @@
             <entry key="galloping-system">
               <value>
                 <UserPackageAndPathInfoByModule>
-                  <option name="javaMapperPackage" value="mapper" />
+                  <option name="javaMapperPackage" value="com.snail.abell.projectPage.entity" />
                   <option name="javaMapperPath" value="$PROJECT_DIR$/galloping-system/src/main/java" />
                   <option name="javaModelPacakge" value="com.snail.abell.projectPage.entity" />
-                  <option name="javaModelPath" value="D:\GallopingSanils\galloping-system\src\main\java\com\snail\abell\projectPage\entity" />
+                  <option name="javaModelPath" value="D:\GallopingSanils\galloping-system\src\main\java" />
                   <option name="javaServiceInterfacePackage" value="com.snail.abell.projectPage.service" />
                   <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/galloping-system/src/main/java" />
                   <option name="javaServicePackage" value="com.snail.abell.projectPage.service.impl" />
@@ -40,6 +40,22 @@
         <option name="p3CComment" value="true" />
         <option name="tableGenerateConfigs">
           <map>
+            <entry key="galloping_snail:project">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="Project" />
+                  <option name="moduleName" value="galloping-system" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
             <entry key="galloping_snail:team_group">
               <value>
                 <TableGenerateConfig>
