@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snail.abell.projectPage.dao.ProjectMapper">
+  <resultMap id="BaseResultMap" type="com.snail.abell.projectPage.entity.Project">
+    <!--@mbg.generated-->
+    <!--@Table galloping_snail.project-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="rating" jdbcType="INTEGER" property="rating" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    <result column="card_title" jdbcType="VARCHAR" property="cardTitle" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, author, image, rating, description, card_title, `level`
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update galloping_snail.project
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="author = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.author,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="image = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.image,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="rating = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.rating,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.description,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="card_title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.cardTitle,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`level` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.level,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update galloping_snail.project
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="author = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.author != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.author,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="image = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.image != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.image,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="rating = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.rating != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.rating,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.description != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.description,jdbcType=LONGVARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="card_title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.cardTitle != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.cardTitle,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`level` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.level != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.level,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.project
+    (`name`, author, image, rating, description, card_title, `level`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.name,jdbcType=VARCHAR}, #{item.author,jdbcType=VARCHAR}, #{item.image,jdbcType=VARCHAR},
+        #{item.rating,jdbcType=INTEGER}, #{item.description,jdbcType=LONGVARCHAR}, #{item.cardTitle,jdbcType=VARCHAR},
+        #{item.level,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.snail.abell.projectPage.entity.Project" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `name`,
+      author,
+      image,
+      rating,
+      description,
+      card_title,
+      `level`,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{name,jdbcType=VARCHAR},
+      #{author,jdbcType=VARCHAR},
+      #{image,jdbcType=VARCHAR},
+      #{rating,jdbcType=INTEGER},
+      #{description,jdbcType=LONGVARCHAR},
+      #{cardTitle,jdbcType=VARCHAR},
+      #{level,jdbcType=VARCHAR},
+    </trim>
+    on duplicate key update
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      `name` = #{name,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      rating = #{rating,jdbcType=INTEGER},
+      description = #{description,jdbcType=LONGVARCHAR},
+      card_title = #{cardTitle,jdbcType=VARCHAR},
+      `level` = #{level,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.snail.abell.projectPage.entity.Project" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null and name != ''">
+        `name`,
+      </if>
+      <if test="author != null and author != ''">
+        author,
+      </if>
+      <if test="image != null and image != ''">
+        image,
+      </if>
+      <if test="rating != null">
+        rating,
+      </if>
+      <if test="description != null and description != ''">
+        description,
+      </if>
+      <if test="cardTitle != null and cardTitle != ''">
+        card_title,
+      </if>
+      <if test="level != null and level != ''">
+        `level`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null and name != ''">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null and author != ''">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null and image != ''">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="rating != null">
+        #{rating,jdbcType=INTEGER},
+      </if>
+      <if test="description != null and description != ''">
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="cardTitle != null and cardTitle != ''">
+        #{cardTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null and level != ''">
+        #{level,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null and name != ''">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null and author != ''">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null and image != ''">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="rating != null">
+        rating = #{rating,jdbcType=INTEGER},
+      </if>
+      <if test="description != null and description != ''">
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="cardTitle != null and cardTitle != ''">
+        card_title = #{cardTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null and level != ''">
+        `level` = #{level,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

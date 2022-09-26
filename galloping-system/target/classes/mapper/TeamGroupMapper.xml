@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snail.abell.projectPage.dao.TeamGroupMapper">
+  <resultMap id="BaseResultMap" type="com.snail.abell.projectPage.entity.TeamGroup">
+    <!--@mbg.generated-->
+    <!--@Table galloping_snail.team_group-->
+    <id column="team_id" jdbcType="INTEGER" property="teamId" />
+    <result column="team_name" jdbcType="VARCHAR" property="teamName" />
+    <result column="card_title" jdbcType="VARCHAR" property="cardTitle" />
+    <result column="team_description" jdbcType="VARCHAR" property="teamDescription" />
+    <result column="team_responsibility" jdbcType="VARCHAR" property="teamResponsibility" />
+    <result column="member" jdbcType="VARCHAR" property="teamMember" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="team_mail" jdbcType="VARCHAR" property="teamMail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    team_id, team_name, card_title, team_description, team_responsibility, `member`,
+    create_time, team_mail
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update galloping_snail.team_group
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="team_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.teamName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="card_title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.cardTitle,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="team_description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.teamDescription,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="team_responsibility = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.teamResponsibility,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`member` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.member,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="team_mail = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.teamMail,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+    </trim>
+    where team_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.teamId,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update galloping_snail.team_group
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="team_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.teamName != null">
+            when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.teamName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="card_title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.cardTitle != null">
+            when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.cardTitle,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="team_description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.teamDescription != null">
+            when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.teamDescription,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="team_responsibility = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.teamResponsibility != null">
+            when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.teamResponsibility,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`member` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.member != null">
+            when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.member,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="team_mail = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.teamMail != null">
+            when team_id = #{item.teamId,jdbcType=INTEGER} then #{item.teamMail,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where team_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.teamId,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="team_id" keyProperty="teamId" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.team_group
+    (team_name, card_title, team_description, team_responsibility, `member`, create_time,
+      team_mail)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.teamName,jdbcType=VARCHAR}, #{item.cardTitle,jdbcType=VARCHAR}, #{item.teamDescription,jdbcType=VARCHAR},
+        #{item.teamResponsibility,jdbcType=VARCHAR}, #{item.member,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+        #{item.teamMail,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="team_id" keyProperty="teamId" parameterType="com.snail.abell.projectPage.entity.TeamGroup" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.team_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="teamId != null">
+        team_id,
+      </if>
+      team_name,
+      card_title,
+      team_description,
+      team_responsibility,
+      `member`,
+      create_time,
+      team_mail,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="teamId != null">
+        #{teamId,jdbcType=INTEGER},
+      </if>
+      #{teamName,jdbcType=VARCHAR},
+      #{cardTitle,jdbcType=VARCHAR},
+      #{teamDescription,jdbcType=VARCHAR},
+      #{teamResponsibility,jdbcType=VARCHAR},
+      #{member,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{teamMail,jdbcType=VARCHAR},
+    </trim>
+    on duplicate key update
+    <trim suffixOverrides=",">
+      <if test="teamId != null">
+        team_id = #{teamId,jdbcType=INTEGER},
+      </if>
+      team_name = #{teamName,jdbcType=VARCHAR},
+      card_title = #{cardTitle,jdbcType=VARCHAR},
+      team_description = #{teamDescription,jdbcType=VARCHAR},
+      team_responsibility = #{teamResponsibility,jdbcType=VARCHAR},
+      `member` = #{member,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      team_mail = #{teamMail,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="team_id" keyProperty="teamId" parameterType="com.snail.abell.projectPage.entity.TeamGroup" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.team_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="teamId != null">
+        team_id,
+      </if>
+      <if test="teamName != null and teamName != ''">
+        team_name,
+      </if>
+      <if test="cardTitle != null and cardTitle != ''">
+        card_title,
+      </if>
+      <if test="teamDescription != null and teamDescription != ''">
+        team_description,
+      </if>
+      <if test="teamResponsibility != null and teamResponsibility != ''">
+        team_responsibility,
+      </if>
+      <if test="member != null and member != ''">
+        `member`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="teamMail != null and teamMail != ''">
+        team_mail,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="teamId != null">
+        #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="teamName != null and teamName != ''">
+        #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardTitle != null and cardTitle != ''">
+        #{cardTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="teamDescription != null and teamDescription != ''">
+        #{teamDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="teamResponsibility != null and teamResponsibility != ''">
+        #{teamResponsibility,jdbcType=VARCHAR},
+      </if>
+      <if test="member != null and member != ''">
+        #{member,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="teamMail != null and teamMail != ''">
+        #{teamMail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update
+    <trim suffixOverrides=",">
+      <if test="teamId != null">
+        team_id = #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="teamName != null and teamName != ''">
+        team_name = #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardTitle != null and cardTitle != ''">
+        card_title = #{cardTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="teamDescription != null and teamDescription != ''">
+        team_description = #{teamDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="teamResponsibility != null and teamResponsibility != ''">
+        team_responsibility = #{teamResponsibility,jdbcType=VARCHAR},
+      </if>
+      <if test="member != null and member != ''">
+        `member` = #{member,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="teamMail != null and teamMail != ''">
+        team_mail = #{teamMail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
