@@ -13,7 +13,7 @@
         <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result property="projectName" column="project_name"/>
-        <collection property="pageElementList" column="id" ofType="com.snail.abell.webUI.entity.TPageElement"
+        <collection property="pageElementList" column="id" ofType="com.snail.abell.entity.TPageElement"
                     fetchType="eager" select="com.rabbit.dao.PageElementMapper.findByPageId"/>
     </resultMap>
 

@@ -1,7 +1,7 @@
 package com.snail.abell.permission.vo;
 
 import com.snail.abell.projectPage.entity.TProjectPage;
-import com.snail.abell.webUI.entity.TPageElement;
+import com.snail.abell.entity.TPageElement;
 import lombok.Data;
 
 import java.util.List;

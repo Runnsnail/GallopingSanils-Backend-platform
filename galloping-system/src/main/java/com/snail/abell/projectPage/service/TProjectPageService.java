@@ -3,6 +3,7 @@ package com.snail.abell.projectPage.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.snail.abell.permission.vo.ProjectPageDto;
+import com.snail.abell.projectPage.Vo.ProjectPageVo;
 import com.snail.abell.projectPage.entity.TProjectPage;
 
 import java.util.List;
@@ -63,7 +64,7 @@ public interface  TProjectPageService extends IService<TProjectPage>{
 
   void copyPageById(Long id);
 
-  List<TProjectPage> pageQuery(Page<TProjectPage> page, TProjectPage projectPage);
+  Page<TProjectPage> pageQuery(Page<TProjectPage> page, ProjectPageVo projectPage);
 
   List<ProjectPageDto> findDtoByProjectId(Long id);
 

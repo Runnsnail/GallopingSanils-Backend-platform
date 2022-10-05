@@ -25,9 +25,9 @@
         <module name="galloping-system" />
         <module name="galloping-ui" />
         <module name="galloping-app" />
-        <module name="galloping-api" />
         <module name="galloping-logging" />
         <module name="galloping-common" />
+        <module name="galloping-api" />
       </profile>
     </annotationProcessing>
   </component>

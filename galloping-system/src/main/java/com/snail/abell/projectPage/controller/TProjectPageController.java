@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.snail.abell.apiInterface.ResponseResult;
 import com.snail.abell.exception.BizException;
 import com.snail.abell.permission.vo.ProjectPageDto;
+import com.snail.abell.projectPage.Vo.ProjectPageVo;
 import com.snail.abell.projectPage.entity.TProjectPage;
 import com.snail.abell.projectPage.service.TProjectPageService;
 import com.snail.abell.utils.SecurityUtils;
@@ -37,9 +38,9 @@ public class TProjectPageController {
 
     @GetMapping("/listPage")
     @ApiOperation("项目页面查询")
-    public List<TProjectPage> getPageList(@RequestParam(value = "pageNum") Integer pageNum, @RequestParam(value = "pageSize") Integer pageSum, TProjectPage projectPage) {
-        Page<TProjectPage> page = new Page<>(pageNum, pageSum);
-        List<TProjectPage> projectPageList = tProjectPageService.pageQuery(page, projectPage);
+    public Page<TProjectPage> getPageList(ProjectPageVo projectPage) {
+        Page<TProjectPage> page = new Page<>(projectPage.getPage(), projectPage.getPerPage());
+        Page<TProjectPage> projectPageList = tProjectPageService.pageQuery(page, projectPage);
         return projectPageList;
     }
 

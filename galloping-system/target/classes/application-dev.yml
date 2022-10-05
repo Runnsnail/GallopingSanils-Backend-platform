@@ -118,6 +118,16 @@ swagger:
 ip:
   local-parsing: true
 
+minio:
+  endpoint: http://116.62.219.238:9000
+  port: 9000
+  accessKey: admin
+  secretKey: abell1692178653@qq.com
+  secure: false
+  bucket-name: commons # 桶名 我这是给出了一个默认桶名
+  image-size: 10485760 # 我在这里设定了 图片文件的最大大小
+  file-size: 1073741824 # 此处是设定了文件的最大大小
+
 # 文件存储路径
 file:
   mac:

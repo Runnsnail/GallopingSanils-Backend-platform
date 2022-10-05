@@ -5,13 +5,14 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.snail.abell.dao.TPageElementDao;
+import com.snail.abell.entity.TPageElement;
 import com.snail.abell.permission.dto.ProjectPageDtoMapper;
 import com.snail.abell.permission.vo.ProjectPageDto;
+import com.snail.abell.projectPage.Vo.ProjectPageVo;
 import com.snail.abell.projectPage.dao.TProjectPageDao;
 import com.snail.abell.projectPage.entity.TProjectPage;
 import com.snail.abell.projectPage.service.TProjectPageService;
-import com.snail.abell.webUI.dao.TPageElementDao;
-import com.snail.abell.webUI.entity.TPageElement;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class TProjectPageServiceImpl extends ServiceImpl<TProjectPageDao, TProje
      * 查询多条数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     @Override
@@ -130,17 +131,18 @@ public class TProjectPageServiceImpl extends ServiceImpl<TProjectPageDao, TProje
     }
 
     @Override
-    public List<TProjectPage> pageQuery(Page<TProjectPage> page, TProjectPage projectPage) {
+    public Page<TProjectPage> pageQuery(Page<TProjectPage> page, ProjectPageVo projectPage) {
         QueryWrapper<TProjectPage> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("createBy");
-        if (null == projectPage) {
-         return tProjectPageDao.selectPage(page,queryWrapper).getRecords();
+        queryWrapper.orderByDesc("create_time");
+        if (StringUtils.isEmpty(String.valueOf(projectPage.getProjectId()))) {
+            projectPage.setProjectId(2);
         }
-        if(StringUtils.isNotEmpty(projectPage.getPageName())){
-            queryWrapper.like("pageName",projectPage.getPageName());
+        queryWrapper.eq("project_id", projectPage.getProjectId());
+        if (StringUtils.isNotEmpty(projectPage.getQ())) {
+            queryWrapper.like("pageName", projectPage.getQ());
         }
 
-        return tProjectPageDao.selectPage(page,queryWrapper).getRecords();
+        return tProjectPageDao.selectPage(page, queryWrapper);
     }
 
     @Override
@@ -155,12 +157,13 @@ public class TProjectPageServiceImpl extends ServiceImpl<TProjectPageDao, TProje
 
     @Override
     public List<ProjectPageDto> findDtoByProjectIdAndPageName(Long projectId, String pageName) {
-        return this.projectPageDtoMapper.findDtoByProjectIdAndPageName( projectId,  pageName);    }
+        return this.projectPageDtoMapper.findDtoByProjectIdAndPageName(projectId, pageName);
+    }
 
 
     @Override
     public List<ProjectPageDto> findDtoByProjectIdAndPageNameAndIdNot(Long projectId, String pageName, Long id) {
-        return this.projectPageDtoMapper.findDtoByProjectIdAndPageNameAndIdNot( projectId,  pageName, id);
+        return this.projectPageDtoMapper.findDtoByProjectIdAndPageNameAndIdNot(projectId, pageName, id);
     }
 
     private String generateNewPageName(Long projectId, String pageName) {

@@ -19,13 +19,13 @@ import javax.annotation.Resource;
 @Api(tags = "项目页面")
 @RestController
 @ResponseResult
-@RequestMapping("/ProjectPage")
+@RequestMapping("/ProjectMember")
 public class ProjectController {
 
     @Resource
     private ProjectService projectService;
 
-    @GetMapping("/ProjectsPageList")
+    @GetMapping("/ProjectsMemberList")
     @ApiOperation("项目页面查询")
     @Log(description = "项目页面查询")
     public Page<Project> getPageList( ProjectVo projectVo) {

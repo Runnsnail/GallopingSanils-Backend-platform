@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.snail.abell.webUI.dao.TTestsuiteUiDao">
+<mapper namespace="com.snail.abell.dao.TTestsuiteUiDao">
 
-    <resultMap id="BaseResultMap" type="com.snail.abell.webUI.entity.TTestsuiteUi">
+    <resultMap id="BaseResultMap" type="com.snail.abell.entity.TTestsuiteUi">
         <!--@Table t_testsuite_ui-->
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
