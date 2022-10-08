@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snail.abell.dao.TStepUiNewDao">
+
+    <resultMap id="BaseResultMap" type="com.snail.abell.entity.TStepUiNew">
+        <!--@Table t_step_ui_new-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="actionType" column="action_type" jdbcType="VARCHAR"/>
+        <result property="action" column="action" jdbcType="VARCHAR"/>
+        <result property="actionRemark" column="action_remark" jdbcType="VARCHAR"/>
+        <result property="testcaseId" column="testcase_id" jdbcType="INTEGER"/>
+        <result property="pageId" column="page_id" jdbcType="INTEGER"/>
+        <result property="elementId" column="element_id" jdbcType="INTEGER"/>
+        <result property="optionData" column="option_data" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, name, action_type, action, action_remark, testcase_id, page_id, element_id, option_data, type, create_by, create_time, update_by, update_time, sort
+        from galloping_snail.t_step_ui_new
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, name, action_type, action, action_remark, testcase_id, page_id, element_id, option_data, type, create_by, create_time, update_by, update_time, sort
+        from galloping_snail.t_step_ui_new
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, name, action_type, action, action_remark, testcase_id, page_id, element_id, option_data, type, create_by, create_time, update_by, update_time, sort
+        from galloping_snail.t_step_ui_new
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="actionType != null and actionType != ''">
+                and action_type = #{actionType}
+            </if>
+            <if test="action != null and action != ''">
+                and action = #{action}
+            </if>
+            <if test="actionRemark != null and actionRemark != ''">
+                and action_remark = #{actionRemark}
+            </if>
+            <if test="testcaseId != null">
+                and testcase_id = #{testcaseId}
+            </if>
+            <if test="pageId != null">
+                and page_id = #{pageId}
+            </if>
+            <if test="elementId != null">
+                and element_id = #{elementId}
+            </if>
+            <if test="optionData != null and optionData != ''">
+                and option_data = #{optionData}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into galloping_snail.t_step_ui_new(name, action_type, action, action_remark, testcase_id, page_id, element_id, option_data, type, create_by, create_time, update_by, update_time, sort)
+        values (#{name}, #{actionType}, #{action}, #{actionRemark}, #{testcaseId}, #{pageId}, #{elementId}, #{optionData}, #{type}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{sort})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update galloping_snail.t_step_ui_new
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="actionType != null and actionType != ''">
+                action_type = #{actionType},
+            </if>
+            <if test="action != null and action != ''">
+                action = #{action},
+            </if>
+            <if test="actionRemark != null and actionRemark != ''">
+                action_remark = #{actionRemark},
+            </if>
+            <if test="testcaseId != null">
+                testcase_id = #{testcaseId},
+            </if>
+            <if test="pageId != null">
+                page_id = #{pageId},
+            </if>
+            <if test="elementId != null">
+                element_id = #{elementId},
+            </if>
+            <if test="optionData != null and optionData != ''">
+                option_data = #{optionData},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from galloping_snail.t_step_ui_new where id = #{id}
+    </delete>
+
+</mapper>

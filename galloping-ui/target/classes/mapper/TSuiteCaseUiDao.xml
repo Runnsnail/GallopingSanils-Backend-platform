@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snail.abell.dao.TSuiteCaseUiDao">
+
+    <resultMap id="BaseResultMap" type="com.snail.abell.entity.TSuiteCaseUi">
+        <!--@Table t_suite_case_ui-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="suiteId" column="suite_id" jdbcType="INTEGER"/>
+        <result property="caseId" column="case_id" jdbcType="INTEGER"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="isValid" column="is_valid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, suite_id, case_id, sort, is_valid
+        from galloping_snail.t_suite_case_ui
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, suite_id, case_id, sort, is_valid
+        from galloping_snail.t_suite_case_ui
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, suite_id, case_id, sort, is_valid
+        from galloping_snail.t_suite_case_ui
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="suiteId != null">
+                and suite_id = #{suiteId}
+            </if>
+            <if test="caseId != null">
+                and case_id = #{caseId}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+            <if test="isValid != null">
+                and is_valid = #{isValid}
+            </if>
+        </where>
+    </select>
+    <select id="findMaxSortBySuiteId" resultType="java.lang.Integer">
+        select max(sort) as maxsort
+        from t_suite_case_ui
+        where suite_id=#{suiteId,jdbcType=BIGINT}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into galloping_snail.t_suite_case_ui(suite_id, case_id, sort, is_valid)
+        values (#{suiteId}, #{caseId}, #{sort}, #{isValid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update galloping_snail.t_suite_case_ui
+        <set>
+            <if test="suiteId != null">
+                suite_id = #{suiteId},
+            </if>
+            <if test="caseId != null">
+                case_id = #{caseId},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="isValid != null">
+                is_valid = #{isValid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from galloping_snail.t_suite_case_ui where id = #{id}
+    </delete>
+
+</mapper>
