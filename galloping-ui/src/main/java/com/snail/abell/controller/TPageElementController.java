@@ -1,14 +1,14 @@
 package com.snail.abell.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.snail.abell.Vo.EditElementVo;
 import com.snail.abell.Vo.ElementVo;
-import com.snail.abell.Vo.PageElementVo;
 import com.snail.abell.apiInterface.ResponseResult;
+import com.snail.abell.entity.TPageElement;
 import com.snail.abell.exception.BizException;
 import com.snail.abell.exception.EntityNotFoundException;
 import com.snail.abell.logInterface.Log;
 import com.snail.abell.service.TPageElementService;
-import com.snail.abell.entity.TPageElement;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 import static com.snail.abell.base.ResultCode.PAGEELEMENT_EXIST_ERROR;
 
@@ -45,7 +46,7 @@ public class TPageElementController {
      * @return 单条数据
      */
     @GetMapping("/selectOne")
-    public TPageElement selectOne(Long id) {
+    public TPageElement selectOne(Integer id) {
         return this.pageElementService.queryById(id);
     }
 
@@ -89,10 +90,11 @@ public class TPageElementController {
         return pageElementService.save(pageElement);
     }
 
-    @PutMapping("/edit")
+    @PostMapping ("/edit")
     @ApiOperation(value = "编辑")
     @Log(description = "编辑")
-    public boolean editPageElement(@RequestBody TPageElement pageElement) {
+    public boolean editPageElement(@RequestBody Map<String, TPageElement> param) {
+        TPageElement pageElement = param.get("params");
         if (StringUtils.isEmpty(pageElement.getElementName()) || StringUtils.isEmpty(pageElement.getByType()) || StringUtils.isEmpty(pageElement.getByValue())) {
             throw new EntityNotFoundException(TPageElement.class,"ElementName",pageElement.getElementName());
         }
@@ -102,38 +104,40 @@ public class TPageElementController {
         if (pageElements.size() > 0) {
             throw  new BizException(PAGEELEMENT_EXIST_ERROR);
         }
-        return pageElementService.updateById(pageElement);
+        return pageElementService.updateElement(pageElement);
     }
 
-    @PostMapping("/remove")
+    @GetMapping ("/remove/{id}")
     @ApiOperation(value = "删除")
     @Log(description = "删除")
-    public boolean delPageElement(@RequestBody TPageElement pageElement) {
-        return pageElementService.removeById(pageElement.getId());
+    public boolean delPageElement(@PathVariable Integer id) {
+        return pageElementService.removeById(id);
     }
 
     @PostMapping("/batchMoveElements")
     @ApiOperation(value = "批量删除")
     @Log(description = "批量删除")
-    public boolean batchDeleteElements(@RequestBody List<TPageElement> pageElements) {
-        return pageElementService.batchRemoveById(pageElements);
+    public boolean batchDeleteElements(@RequestBody Map<String,List<EditElementVo>> param) {
+        List<EditElementVo> editElementVos = param.get("params");
+        return pageElementService.batchRemoveById(editElementVos);
     }
 
 
     @GetMapping("/copyElemenById/{id}")
     @ApiOperation(value = "通过id复制元素")
     @Log(description = "通过id复制元素")
-    public boolean copyElemenById(@PathVariable Long id) {
-        pageElementService.copyElemenById(id);
+    public boolean copyElemenById(@PathVariable Integer id) {
+
         return pageElementService.copyElemenById(id);
     }
 
     @PostMapping("/batchSaveElements")
     @ApiOperation(value = "批量保存")
     @Log(description = "批量保存")
-    public boolean batchSaveElements(@RequestBody List<PageElementVo> pageElementVos) {
+    public boolean batchSaveElements(@RequestBody Map<String,List<EditElementVo>> param) {
 
-        return pageElementService.saveOrUpdateBatchVO(pageElementVos);
+        List<EditElementVo> editElementVos = param.get("params");
+        return pageElementService.saveOrUpdateBatchVO(editElementVos);
     }
 
 }

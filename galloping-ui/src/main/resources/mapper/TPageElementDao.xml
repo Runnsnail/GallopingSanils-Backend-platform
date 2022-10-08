@@ -5,7 +5,7 @@
     <resultMap id="BaseResultMap" type="com.snail.abell.entity.TPageElement">
         <!--@Table t_page_element-->
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="pageId" column="page_id" jdbcType="INTEGER"/>
+        <result property="pageId" column="page_id" jdbcType="BIGINT"/>
         <result property="elementName" column="element_name" jdbcType="VARCHAR"/>
         <result property="byType" column="by_type" jdbcType="VARCHAR"/>
         <result property="byValue" column="by_value" jdbcType="VARCHAR"/>
@@ -148,4 +148,10 @@
         </foreach>
     </insert>
 
+    <delete id="deleteBatchPageIds" parameterType="java.util.List">
+        delete from galloping_snail.t_page_element where page_id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

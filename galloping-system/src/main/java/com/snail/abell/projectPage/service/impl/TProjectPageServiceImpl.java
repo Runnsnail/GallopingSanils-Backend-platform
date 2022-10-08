@@ -139,7 +139,7 @@ public class TProjectPageServiceImpl extends ServiceImpl<TProjectPageDao, TProje
         }
         queryWrapper.eq("project_id", projectPage.getProjectId());
         if (StringUtils.isNotEmpty(projectPage.getQ())) {
-            queryWrapper.like("pageName", projectPage.getQ());
+            queryWrapper.like("page_name", projectPage.getQ());
         }
 
         return tProjectPageDao.selectPage(page, queryWrapper);

@@ -1,19 +1,22 @@
 package com.snail.abell.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.snail.abell.Vo.EditElementVo;
 import com.snail.abell.Vo.ElementVo;
-import com.snail.abell.Vo.PageElementVo;
-import com.snail.abell.dto.PageElementMapper;
-import com.snail.abell.utils.StringUtils;
 import com.snail.abell.dao.TPageElementDao;
+import com.snail.abell.dto.EditElementMapper;
+import com.snail.abell.dto.PageElementMapper;
 import com.snail.abell.entity.TPageElement;
 import com.snail.abell.service.TPageElementService;
+import com.snail.abell.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +35,8 @@ public class TPageElementServiceImpl extends ServiceImpl<TPageElementDao,TPageEl
     private TPageElementService pageElementService;
     @Autowired
     private PageElementMapper pageElementMapper;
+    @Autowired
+    private EditElementMapper editElementMapper;
 
 
     /**
@@ -41,7 +46,7 @@ public class TPageElementServiceImpl extends ServiceImpl<TPageElementDao,TPageEl
      * @return 实例对象
      */
     @Override
-    public TPageElement queryById(Long id) {
+    public TPageElement queryById(Integer id) {
         return this.PageElementDao.queryById(id);
     }
 
@@ -105,26 +110,37 @@ public class TPageElementServiceImpl extends ServiceImpl<TPageElementDao,TPageEl
     }
 
     @Override
-    public boolean copyElemenById(Long id) {
-        TPageElement pageElement = PageElementDao.queryById(id);
+    public boolean copyElemenById(Integer id) {
+        TPageElement pageElement = PageElementDao.selectById(id);
         if (pageElement == null) {
             throw new IllegalArgumentException("该页面元素已删除");
         }
         String newElementName = "NEW" + pageElement.getElementName();
         pageElement.setElementName(newElementName);
+        pageElement.setId(null);
+        pageElement.setCreateTime(DateUtil.date(Calendar.getInstance()));
        return PageElementDao.insert(pageElement) >0;
     }
 
     @Override
-    public boolean batchRemoveById(List<TPageElement> pageElements) {
-        List<Long> idList = pageElements.stream().map(TPageElement::getPageId).collect(Collectors.toList());
+    public boolean batchRemoveById(List<EditElementVo> pageElements) {
+        List<Integer> idList = pageElements.stream().map(EditElementVo::getId).collect(Collectors.toList());
         return PageElementDao.deleteBatchIds(idList)>0;
     }
 
     @Override
-    public boolean saveOrUpdateBatchVO(List<PageElementVo> pageElementVos) {
-        List<TPageElement> pageElementVoList =pageElementVos.stream().map(pageElementMapper::toDto).collect(Collectors.toList());
+    public boolean saveOrUpdateBatchVO(List<EditElementVo> editElementVos) {
+        editElementVos.stream().forEach(EditElementVo -> EditElementVo.setCreateTime(DateUtil.date()));
+        List<TPageElement> pageElementVoList = EditElementMapper.INSTANCT.toPageElementsList(editElementVos);
         return pageElementService.saveOrUpdateBatch(pageElementVoList);
+    }
+
+    @Override
+    public boolean updateElement(TPageElement pageElement) {
+
+
+
+        return pageElementService.saveOrUpdate(pageElement);
     }
 
 

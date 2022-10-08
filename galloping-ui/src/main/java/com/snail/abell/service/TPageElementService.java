@@ -2,8 +2,8 @@ package com.snail.abell.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.snail.abell.Vo.EditElementVo;
 import com.snail.abell.Vo.ElementVo;
-import com.snail.abell.Vo.PageElementVo;
 import com.snail.abell.entity.TPageElement;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public interface TPageElementService extends IService<TPageElement>{
      * @param id 主键
      * @return 实例对象
      */
-    TPageElement queryById(Long id);
+    TPageElement queryById(Integer id);
 
     /**
      * 查询多条数据
@@ -58,10 +58,12 @@ public interface TPageElementService extends IService<TPageElement>{
 
   Page<TPageElement> pageQuery(Page<TPageElement> page,  ElementVo elementVo);
 
-    boolean copyElemenById(Long id);
+    boolean copyElemenById(Integer id);
 
 
-  boolean batchRemoveById(List<TPageElement> pageElements);
+  boolean batchRemoveById(List<EditElementVo> pageElements);
 
-  boolean saveOrUpdateBatchVO(List<PageElementVo> pageElementVos);
+  boolean saveOrUpdateBatchVO(List<EditElementVo> pageElementVos);
+
+  boolean updateElement(TPageElement pageElement);
 }

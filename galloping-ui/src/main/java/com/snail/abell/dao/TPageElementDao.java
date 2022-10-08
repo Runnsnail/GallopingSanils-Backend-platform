@@ -19,7 +19,7 @@ public interface TPageElementDao extends BaseMapper<TPageElement>{
      * @param id 主键
      * @return 实例对象
      */
-    TPageElement queryById(Long id);
+    TPageElement queryById(Integer id);
 
     /**
      * 查询指定行数据
@@ -67,4 +67,11 @@ public interface TPageElementDao extends BaseMapper<TPageElement>{
     List<TPageElement> findByPageId(@Param("projectId")Long id);
 
     void insertList(List<TPageElement> pageElements);
+
+    /**
+     * 根据pageId批量删除
+     * @param idList
+     * @return num
+     */
+    void deleteBatchPageIds(List<Long> idList);
 }

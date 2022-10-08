@@ -5,13 +5,14 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Abell
- * @date 2022/10/4
+ * @date 2022/10/6
  */
 @Data
-public class PageElementVo extends BaseDTO implements Serializable {
+public class EditElementVo extends BaseDTO implements Serializable {
 
     @ApiModelProperty("id")
     private Integer id;
@@ -35,4 +36,9 @@ public class PageElementVo extends BaseDTO implements Serializable {
     @ApiModelProperty("备注")
     private String remark;
 
+    @ApiModelProperty("updateBy")
+    private String updateBy;
+
+    @ApiModelProperty("updateTime")
+    private Date updateTime;
 }
