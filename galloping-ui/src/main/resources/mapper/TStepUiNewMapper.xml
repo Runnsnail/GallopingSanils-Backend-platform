@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snail.abell.dao.TStepUiNewMapper">
+  <resultMap id="BaseResultMap" type="com.snail.abell.entity.TStepUiNew">
+    <!--@mbg.generated-->
+    <!--@Table galloping_snail.t_step_ui_new-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="action_type" jdbcType="VARCHAR" property="actionType" />
+    <result column="action" jdbcType="VARCHAR" property="action" />
+    <result column="testcase_id" jdbcType="VARCHAR" property="testcaseId" />
+    <result column="page_id" jdbcType="BIGINT" property="pageId" />
+    <result column="element_id" jdbcType="BIGINT" property="elementId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="sort" jdbcType="BIGINT" property="sort" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="variant" jdbcType="VARCHAR" property="variant" />
+    <result column="is_enable" jdbcType="INTEGER" property="isEnable" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.snail.abell.entity.TStepUiNew">
+    <!--@mbg.generated-->
+    <!--@Table galloping_snail.t_step_ui_new-->
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+    <result column="option_data" jdbcType="LONGVARCHAR" property="optionData" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, action_type, `action`, testcase_id, page_id, element_id, `type`, create_by,
+    create_time, update_by, update_time, sort, icon, `variant`, is_enable
+  </sql>
+  <sql id="Blob_Column_List">
+    <!--@mbg.generated-->
+    remark, option_data
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update galloping_snail.t_step_ui_new
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.name,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="action_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.actionType,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`action` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.action,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="testcase_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.testcaseId,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="page_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.pageId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="element_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.elementId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.type,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="create_by = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.createBy,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_by = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.updateBy,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="sort = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.sort,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="icon = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.icon,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`variant` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.variant,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="is_enable = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.isEnable,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+      <trim prefix="remark = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.remark,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="option_data = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.optionData,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update galloping_snail.t_step_ui_new
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.name,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="action_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.actionType != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.actionType,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`action` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.action != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.action,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="testcase_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.testcaseId != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.testcaseId,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="page_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.pageId != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.pageId,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="element_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.elementId != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.elementId,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.type != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.type,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_by = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createBy != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.createBy,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_by = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateBy != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.updateBy,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="sort = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.sort != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.sort,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="icon = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.icon != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.icon,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`variant` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.variant != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.variant,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_enable = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isEnable != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.isEnable,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="remark = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.remark != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.remark,jdbcType=LONGVARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="option_data = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.optionData != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.optionData,jdbcType=LONGVARCHAR}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.t_step_ui_new
+    (`name`, action_type, `action`, testcase_id, page_id, element_id, `type`, create_by,
+      create_time, update_by, update_time, sort, icon, `variant`, is_enable, remark,
+      option_data)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.name,jdbcType=VARCHAR}, #{item.actionType,jdbcType=VARCHAR}, #{item.action,jdbcType=VARCHAR},
+        #{item.testcaseId,jdbcType=VARCHAR}, #{item.pageId,jdbcType=BIGINT}, #{item.elementId,jdbcType=BIGINT},
+        #{item.type,jdbcType=INTEGER}, #{item.createBy,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+        #{item.updateBy,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.sort,jdbcType=BIGINT},
+        #{item.icon,jdbcType=VARCHAR}, #{item.variant,jdbcType=VARCHAR}, #{item.isEnable,jdbcType=TINYINT},
+        #{item.remark,jdbcType=LONGVARCHAR}, #{item.optionData,jdbcType=LONGVARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdates" keyColumn="id" keyProperty="id" parameterType="com.snail.abell.entity.TStepUiNew" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.t_step_ui_new
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `name`,
+      action_type,
+      `action`,
+      testcase_id,
+      page_id,
+      element_id,
+      `type`,
+      create_by,
+      create_time,
+      update_by,
+      update_time,
+      sort,
+      icon,
+      `variant`,
+      is_enable,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      #{name,jdbcType=VARCHAR},
+      #{actionType,jdbcType=VARCHAR},
+      #{action,jdbcType=VARCHAR},
+      #{testcaseId,jdbcType=VARCHAR},
+      #{pageId,jdbcType=BIGINT},
+      #{elementId,jdbcType=BIGINT},
+      #{type,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP},
+      #{sort,jdbcType=BIGINT},
+      #{icon,jdbcType=VARCHAR},
+      #{variant,jdbcType=VARCHAR},
+      #{isEnable,jdbcType=TINYINT},
+    </trim>
+    on duplicate key update
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      `name` = #{name,jdbcType=VARCHAR},
+      action_type = #{actionType,jdbcType=VARCHAR},
+      `action` = #{action,jdbcType=VARCHAR},
+      testcase_id = #{testcaseId,jdbcType=VARCHAR},
+      page_id = #{pageId,jdbcType=BIGINT},
+      element_id = #{elementId,jdbcType=BIGINT},
+      `type` = #{type,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      sort = #{sort,jdbcType=BIGINT},
+      icon = #{icon,jdbcType=VARCHAR},
+      `variant` = #{variant,jdbcType=VARCHAR},
+      is_enable = #{isEnable,jdbcType=TINYINT};
+    </trim>
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+      select LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+
+
+  <select id="findByTestcaseId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_step_ui_new
+    where testcase_id=#{testcaseId,jdbcType=VARCHAR}
+    order by sort
+  </select>
+
+  <insert id="insertOrUpdateWithBLOBs" keyColumn="id" keyProperty="id" parameterType="com.snail.abell.entity.TStepUiNew" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.t_step_ui_new
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `name`,
+      action_type,
+      `action`,
+      testcase_id,
+      page_id,
+      element_id,
+      `type`,
+      create_by,
+      create_time,
+      update_by,
+      update_time,
+      sort,
+      icon,
+      `variant`,
+      is_enable,
+      remark,
+      option_data,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      #{name,jdbcType=VARCHAR},
+      #{actionType,jdbcType=VARCHAR},
+      #{action,jdbcType=VARCHAR},
+      #{testcaseId,jdbcType=VARCHAR},
+      #{pageId,jdbcType=BIGINT},
+      #{elementId,jdbcType=BIGINT},
+      #{type,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP},
+      #{sort,jdbcType=BIGINT},
+      #{icon,jdbcType=VARCHAR},
+      #{variant,jdbcType=VARCHAR},
+      #{isEnable,jdbcType=TINYINT},
+      #{remark,jdbcType=LONGVARCHAR},
+      #{optionData,jdbcType=LONGVARCHAR},
+    </trim>
+    on duplicate key update
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      `name` = #{name,jdbcType=VARCHAR},
+      action_type = #{actionType,jdbcType=VARCHAR},
+      `action` = #{action,jdbcType=VARCHAR},
+      testcase_id = #{testcaseId,jdbcType=VARCHAR},
+      page_id = #{pageId,jdbcType=BIGINT},
+      element_id = #{elementId,jdbcType=BIGINT},
+      `type` = #{type,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      sort = #{sort,jdbcType=BIGINT},
+      icon = #{icon,jdbcType=VARCHAR},
+      `variant` = #{variant,jdbcType=VARCHAR},
+      is_enable = #{isEnable,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=LONGVARCHAR},
+      option_data = #{optionData,jdbcType=LONGVARCHAR},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.snail.abell.entity.TStepUiNew" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.t_step_ui_new
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null and name != ''">
+        `name`,
+      </if>
+      <if test="actionType != null and actionType != ''">
+        action_type,
+      </if>
+      <if test="action != null and action != ''">
+        `action`,
+      </if>
+      <if test="testcaseId != null">
+        testcase_id,
+      </if>
+      <if test="pageId != null">
+        page_id,
+      </if>
+      <if test="elementId != null">
+        element_id,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="createBy != null and createBy != ''">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null and updateBy != ''">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="icon != null and icon != ''">
+        icon,
+      </if>
+      <if test="variant != null and variant != ''">
+        `variant`,
+      </if>
+      <if test="isEnable != null">
+        is_enable,
+      </if>
+      <if test="remark != null and remark != ''">
+        remark,
+      </if>
+      <if test="optionData != null and optionData != ''">
+        option_data,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null and name != ''">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="actionType != null and actionType != ''">
+        #{actionType,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null and action != ''">
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="testcaseId != null">
+        #{testcaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="pageId != null">
+        #{pageId,jdbcType=BIGINT},
+      </if>
+      <if test="elementId != null">
+        #{elementId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null and createBy != ''">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null and updateBy != ''">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=BIGINT},
+      </if>
+      <if test="icon != null and icon != ''">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="variant != null and variant != ''">
+        #{variant,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null">
+        #{isEnable,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null and remark != ''">
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="optionData != null and optionData != ''">
+        #{optionData,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+    on duplicate key update
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null and name != ''">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="actionType != null and actionType != ''">
+        action_type = #{actionType,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null and action != ''">
+        `action` = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="testcaseId != null">
+        testcase_id = #{testcaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="pageId != null">
+        page_id = #{pageId,jdbcType=BIGINT},
+      </if>
+      <if test="elementId != null">
+        element_id = #{elementId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null and createBy != ''">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null and updateBy != ''">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=BIGINT},
+      </if>
+      <if test="icon != null and icon != ''">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="variant != null and variant != ''">
+        `variant` = #{variant,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null">
+        is_enable = #{isEnable,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null and remark != ''">
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="optionData != null and optionData != ''">
+        option_data = #{optionData,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

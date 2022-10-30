@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snail.abell.dao.CaseStepMapper">
+  <resultMap id="BaseResultMap" type="com.snail.abell.entity.CaseStep">
+    <!--@mbg.generated-->
+    <!--@Table galloping_snail.case_step-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="case_id" jdbcType="VARCHAR" property="caseId" />
+    <result column="step_id" jdbcType="INTEGER" property="stepId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, case_id, step_id
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update galloping_snail.case_step
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="case_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.caseId,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="step_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.stepId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update galloping_snail.case_step
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="case_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.caseId != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.caseId,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="step_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.stepId != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.stepId,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.case_step
+    (case_id, step_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.caseId,jdbcType=VARCHAR}, #{item.stepId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.snail.abell.entity.CaseStep" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.case_step
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      case_id,
+      step_id,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{caseId,jdbcType=VARCHAR},
+      #{stepId,jdbcType=INTEGER},
+    </trim>
+    on duplicate key update
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      case_id = #{caseId,jdbcType=VARCHAR},
+      step_id = #{stepId,jdbcType=INTEGER},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.snail.abell.entity.CaseStep" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into galloping_snail.case_step
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="caseId != null">
+        case_id,
+      </if>
+      <if test="stepId != null">
+        step_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="caseId != null">
+        #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="stepId != null">
+        #{stepId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="caseId != null">
+        case_id = #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="stepId != null">
+        step_id = #{stepId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
