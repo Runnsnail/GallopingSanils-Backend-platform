@@ -6,6 +6,7 @@
         <option name="addSchemaName" value="true" />
         <option name="addSerializeUid" value="true" />
         <option name="batchInsert" value="true" />
+        <option name="checkBlobColumn" value="true" />
         <option name="generateService" value="true" />
         <option name="generateServiceInterface" value="true" />
         <option name="insertOnDuplicateKey" value="true" />
@@ -40,6 +41,22 @@
         <option name="p3CComment" value="true" />
         <option name="tableGenerateConfigs">
           <map>
+            <entry key="galloping_snail:case_step">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="CaseStep" />
+                  <option name="moduleName" value="galloping-system" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
             <entry key="galloping_snail:project">
               <value>
                 <TableGenerateConfig>
@@ -47,6 +64,22 @@
                   <option name="generatedKey" value="id" />
                   <option name="insertOnDuplicateKey" value="true" />
                   <option name="javaModelName" value="Project" />
+                  <option name="moduleName" value="galloping-system" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="galloping_snail:t_step_ui_new">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="TStepUiNew" />
                   <option name="moduleName" value="galloping-system" />
                   <option name="sequenceColumn" value="" />
                   <option name="sequenceId" value="" />

@@ -1,25 +1,27 @@
 package com.snail.abell.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.snail.abell.Vo.PageSuitsVo;
+import com.snail.abell.Vo.TestSuitMetaVo;
+import com.snail.abell.Vo.TestSuitUiVo;
 import com.snail.abell.apiInterface.ResponseResult;
-import com.snail.abell.entity.TSuiteCaseUi;
-import com.snail.abell.exception.BizException;
-import com.snail.abell.utils.SecurityUtils;
-import com.snail.abell.dto.SuiteUiDto;
-import com.snail.abell.dto.SuiteUiMapper;
 import com.snail.abell.dto.TestUiDto;
+import com.snail.abell.entity.TSuiteCaseUi;
 import com.snail.abell.entity.TTestsuiteUi;
+import com.snail.abell.exception.BizException;
+import com.snail.abell.logInterface.Log;
 import com.snail.abell.service.TTestcaseUiNewService;
 import com.snail.abell.service.TTestsuiteUiService;
+import com.snail.abell.utils.SecurityUtils;
+import com.snail.abell.utils.TreeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.snail.abell.base.ResultCode.SUITCASE_EXIST_ERROR;
 
@@ -33,7 +35,7 @@ import static com.snail.abell.base.ResultCode.SUITCASE_EXIST_ERROR;
 @Validated
 @ResponseResult
 @RestController
-@RequestMapping("tTestsuiteUi")
+@RequestMapping("/tTestsuiteUi")
 public class TTestsuiteUiController {
     /**
      * 服务对象
@@ -42,7 +44,6 @@ public class TTestsuiteUiController {
     private TTestsuiteUiService testsuiteUiService;
     @Autowired
     private TTestcaseUiNewService testcaseUiNewService;
-    private SuiteUiMapper suiteUiMapper;
 
     /**
      * 通过主键查询单条数据
@@ -58,17 +59,23 @@ public class TTestsuiteUiController {
 
     /**
      *
-     * @param pageNum
-     * @param pageSize
-     * @param testcaseUi
+     * @param pageSuitsVo
      * @return  分页数据
      */
-    @GetMapping("/listPage")
-    @ApiOperation(value = "获取分页带参列表")
-    public List<SuiteUiDto> getPageList(@RequestParam(value = "pageNum") int pageNum, @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "serchData") TTestsuiteUi testcaseUi) {
-        Page<TTestsuiteUi> page = new Page<>(pageNum, pageSize);
-        List<TTestsuiteUi> testsuitesList = testsuiteUiService.pageQuery(page, testcaseUi);
-        return testsuitesList.stream().map(suiteUiMapper::toDto).collect(Collectors.toList());
+    @GetMapping("/listTree")
+    @ApiOperation(value = "获取tree列表")
+    @Log(description = "获取迭代用例集")
+    public List<TestSuitUiVo> getPageList(PageSuitsVo pageSuitsVo) {
+        List<TestSuitUiVo> suitUiDtoList = testsuiteUiService.pageQuery( pageSuitsVo);
+        return TreeUtils.generateTrees(suitUiDtoList);
+    }
+
+    @DeleteMapping("/remove/{id}")
+    @ApiOperation(value = "删除")
+    @Log(description = "删除用例集")
+    public boolean deleteSuits( @PathVariable Long id ) {
+
+        return  testsuiteUiService.removeById(id);
     }
 
     /**
@@ -78,13 +85,15 @@ public class TTestsuiteUiController {
      */
     @GetMapping("/listByProjectId/{id}")
     @ApiOperation(value = "获取列表")
-    public List<SuiteUiDto> listByProjectId(@PathVariable long id) {
-        List<SuiteUiDto> suiteUiDtoList = testsuiteUiService.listByProjectId(id);
+    @Log(description = "根据项目获取列表")
+    public List<TestSuitUiVo> listByProjectId(@PathVariable long id) {
+        List<TestSuitUiVo> suiteUiDtoList = testsuiteUiService.listByProjectId(id);
         return suiteUiDtoList;
     }
 
     @GetMapping("/listCaseById/{id}")
     @ApiOperation(value = "获取列表")
+    @Log(description = "获取列表")
     public List<TestUiDto> listCaseById(@PathVariable long id) {
         return testcaseUiNewService.selectDtoBySuiteId(id);
     }
@@ -92,34 +101,40 @@ public class TTestsuiteUiController {
 
     @PostMapping("/add")
     @ApiOperation(value = "新增")
-    public boolean savaTTestsuiteUi(@RequestBody TTestsuiteUi suiteUi) {
-        List<TTestsuiteUi> testsuiteUis = testsuiteUiService.selectByNameAndProjectId(suiteUi.getName(), suiteUi.getProjectId());
+    @Log(description = "新增")
+    public boolean savaTTestsuiteUi(@RequestBody TestSuitMetaVo suiteUi) {
+        List<TTestsuiteUi> testsuiteUis = testsuiteUiService.selectByNameAndProjectId(suiteUi.getLabel(), suiteUi.getProjectId());
         if (testsuiteUis.size() > 0) {
             throw  new BizException(SUITCASE_EXIST_ERROR);
         }
-        suiteUi.setUpdateBy(SecurityUtils.getCurrentUsername());
-        suiteUi.setCreateBy(SecurityUtils.getCurrentUsername());
-        return testsuiteUiService.save(suiteUi);
+        TTestsuiteUi newTestsuiteUi = new TTestsuiteUi();
+        BeanUtils.copyProperties(suiteUi,newTestsuiteUi);
+        newTestsuiteUi.setName(suiteUi.getLabel());
+        newTestsuiteUi.setCreateBy(SecurityUtils.getCurrentUsername());
+        return testsuiteUiService.save(newTestsuiteUi);
     }
 
-    @PutMapping("/edit")
+    @PostMapping("/edit")
     @ApiOperation(value = "编辑")
-    public boolean editTTestsuiteUi(@RequestBody TTestsuiteUi testsuiteUi) {
-        List<TTestsuiteUi> testsuiteUis = testsuiteUiService.selectByNameAndProjectIdAndIdNot(testsuiteUi.getName(), testsuiteUi.getProjectId(), testsuiteUi.getId());
+    @Log(description = "编辑")
+    public boolean editTTestsuiteUi(@RequestBody TestSuitMetaVo testsuiteUi) {
+        List<TTestsuiteUi> testsuiteUis = testsuiteUiService.selectByNameAndProjectIdAndIdNot(testsuiteUi.getLabel(), testsuiteUi.getProjectId(), testsuiteUi.getId());
         if (testsuiteUis.size() > 0) {
-            throw  new BizException(SUITCASE_EXIST_ERROR);        }
-        testsuiteUi.setUpdateBy(SecurityUtils.getCurrentUsername());
-        return testsuiteUiService.updateById(testsuiteUi);
+            throw  new BizException(SUITCASE_EXIST_ERROR);}
+
+        return testsuiteUiService.updateSuit(testsuiteUi);
     }
 
     @PostMapping("/remove")
     @ApiOperation(value = "删除")
+    @Log(description = "删除")
     public boolean delTTestsuiteUi(@RequestBody TTestsuiteUi testsuiteUi) {
         return testsuiteUiService.deleteById(testsuiteUi.getId());
     }
 
     @PostMapping("/updateCaseSort")
     @ApiOperation(value = "更新用例排序")
+    @Log(description = "更新用例排序")
     public boolean updateCaseSort(@RequestBody List<TSuiteCaseUi> suiteCaseUis) {
 
         return testsuiteUiService.updateCaseSort(suiteCaseUis);
@@ -127,6 +142,7 @@ public class TTestsuiteUiController {
 
     @PostMapping("/addCaseToSuite")
     @ApiOperation(value = "把用例加入用例集")
+    @Log(description = "把用例加入用例集")
     public boolean addCaseToBusiness(@RequestBody List<TSuiteCaseUi> suiteCaseUis) {
         return testsuiteUiService.addCaseToSuite(suiteCaseUis);
     }

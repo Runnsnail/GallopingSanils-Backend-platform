@@ -67,8 +67,12 @@ spring:
 
 mybatis-plus:
   configuration:
+  global-config:
+    db-config:
+      id-type: AUTO
   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启SQL语句打印
   mapper-locations: classpath:mapper/*.xml
+
 
 
 

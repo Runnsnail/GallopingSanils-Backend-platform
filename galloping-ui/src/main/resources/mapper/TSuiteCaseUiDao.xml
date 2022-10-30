@@ -8,7 +8,7 @@
         <result property="suiteId" column="suite_id" jdbcType="INTEGER"/>
         <result property="caseId" column="case_id" jdbcType="INTEGER"/>
         <result property="sort" column="sort" jdbcType="INTEGER"/>
-        <result property="isValid" column="is_valid" jdbcType="INTEGER"/>
+        <result property="isValid" column="is_valid" jdbcType="TINYINT"/>
     </resultMap>
 
     <!--查询单个-->

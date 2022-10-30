@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserAuthenticationProvider userAuthenticationProvider;
 
     /**
-     * 加密方式
+     * 加密方式F
      * @Author Abell
      */
     @Bean

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.snail.abell.dao.TTestcaseUiNewDao">
-
     <resultMap id="BaseResultMap" type="com.snail.abell.entity.TTestcaseUiNew">
         <!--@Table t_testcase_ui_new-->
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
         <result property="envId" column="env_id" jdbcType="INTEGER"/>
+        <result property="suiteId" column="suite_id" jdbcType="INTEGER"/>
         <result property="projectId" column="project_id" jdbcType="INTEGER"/>
         <result property="timoutTime" column="timout_time" jdbcType="INTEGER"/>
+        <result property="teamId" column="team_id" jdbcType="INTEGER"/>
         <result property="failContinue" column="fail_continue" jdbcType="INTEGER"/>
         <result property="flags" column="flags" jdbcType="VARCHAR"/>
         <result property="params" column="params" jdbcType="VARCHAR"/>
@@ -20,27 +22,84 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <resultMap id="DTOResultMap" type="com.snail.abell.dto.TestCasesDto">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="author" column="author" jdbcType="VARCHAR"/>
+        <result property="envName" column="envName" jdbcType="VARCHAR"/>
+        <result property="projectName" column="projectName" jdbcType="VARCHAR"/>
+        <result property="teamName" column="teamName" jdbcType="VARCHAR"/>
+    </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
-        select
-          id, name, env_id, project_id, timout_time, fail_continue, flags, params, case_vars, case_type, remark, create_by, update_by, create_time, update_time
+        select id,
+               name,
+               env_id,
+               project_id,
+               timout_time,
+        team_id,
+        suite_id,
+               fail_continue,
+               flags,
+               status,
+               params,
+               case_vars,
+               case_type,
+               remark,
+               create_by,
+               update_by,
+               create_time,
+               update_time
         from galloping_snail.t_testcase_ui_new
         where id = #{id}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
-        select
-          id, name, env_id, project_id, timout_time, fail_continue, flags, params, case_vars, case_type, remark, create_by, update_by, create_time, update_time
+        select id,
+               name,
+               env_id,
+               project_id,
+               timout_time,
+        team_id,
+        suite_id,
+               fail_continue,
+               flags,
+               params,
+               status,
+               case_vars,
+               case_type,
+               remark,
+               create_by,
+               update_by,
+               create_time,
+               update_time
         from galloping_snail.t_testcase_ui_new
         limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
-        select
-          id, name, env_id, project_id, timout_time, fail_continue, flags, params, case_vars, case_type, remark, create_by, update_by, create_time, update_time
+        select id,
+               name,
+               env_id,
+               project_id,
+               timout_time,
+        team_id,
+        suite_id,
+               fail_continue,
+               flags,
+               params,
+               case_vars,
+               case_type,
+               status,
+               remark,
+               create_by,
+               update_by,
+               create_time,
+               update_time
         from galloping_snail.t_testcase_ui_new
         <where>
             <if test="id != null">
@@ -52,11 +111,20 @@
             <if test="envId != null">
                 and env_id = #{envId}
             </if>
+            <if test="suiteId != null">
+                and suite_id = #{suiteId}
+            </if>
             <if test="projectId != null">
                 and project_id = #{projectId}
             </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
             <if test="timoutTime != null">
                 and timout_time = #{timoutTime}
+            </if>
+            <if test="teamId != null">
+                and team_id = #{teamId}
             </if>
             <if test="failContinue != null">
                 and fail_continue = #{failContinue}
@@ -93,8 +161,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into galloping_snail.t_testcase_ui_new(name, env_id, project_id, timout_time, fail_continue, flags, params, case_vars, case_type, remark, create_by, update_by, create_time, update_time)
-        values (#{name}, #{envId}, #{projectId}, #{timoutTime}, #{failContinue}, #{flags}, #{params}, #{caseVars}, #{caseType}, #{remark}, #{createBy}, #{updateBy}, #{createTime}, #{updateTime})
+        insert into galloping_snail.t_testcase_ui_new(name, env_id, project_id,suite_id, status, timout_time,team_id, fail_continue,
+                                                      flags,
+                                                      params, case_vars, case_type, remark, create_by, update_by,
+                                                      create_time, update_time)
+        values (#{name}, #{envId}, #{projectId},#{suiteId}, #{status}, #{timoutTime}, #{teamId}, #{failContinue}, #{flags}, #{params},
+                #{caseVars},
+                #{caseType}, #{remark}, #{createBy}, #{updateBy}, #{createTime}, #{updateTime})
     </insert>
 
     <!--通过主键修改数据-->
@@ -110,8 +183,17 @@
             <if test="projectId != null">
                 project_id = #{projectId},
             </if>
+            <if test="suiteId != null">
+                suite_id = #{suiteId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
             <if test="timoutTime != null">
                 timout_time = #{timoutTime},
+            </if>
+            <if test="teamId != null">
+                team_id = #{teamId},
             </if>
             <if test="failContinue != null">
                 fail_continue = #{failContinue},
@@ -149,7 +231,29 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from galloping_snail.t_testcase_ui_new where id = #{id}
+        delete
+        from galloping_snail.t_testcase_ui_new
+        where id = #{id}
     </delete>
 
+    <select id="selectPageList" resultMap="DTOResultMap">
+        SELECT cu.id,
+               cu.`name`,
+               cu.`status`,
+               cu.create_by  as author,
+               te.`name`     as envName,
+               pr.`name`     as projectName,
+               pr.card_title as teamName
+        FROM `t_testcase_ui_new` as cu
+                     LEFT JOIN t_env as te ON te.id = cu.env_id
+                     LEFT JOIN project as pr ON pr.id = cu.project_id
+                     LEFT JOIN sys_user su ON cu.create_by = su.username
+        <where>
+            1 = 1
+            <if test="suiteId != null and suiteId != ''">
+                and cu.suite_id = #{suiteId}
+            </if>
+        </where>
+        ${ew.customSqlSegment}
+    </select>
 </mapper>

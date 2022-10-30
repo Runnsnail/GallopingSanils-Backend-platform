@@ -1,16 +1,22 @@
 package com.snail.abell.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.snail.abell.exception.BizException;
+import com.snail.abell.Vo.PageSuitsVo;
+import com.snail.abell.Vo.TestSuitMetaVo;
+import com.snail.abell.Vo.TestSuitUiVo;
 import com.snail.abell.dao.TSuiteCaseUiDao;
 import com.snail.abell.dao.TTestsuiteUiDao;
-import com.snail.abell.dto.SuiteUiDto;
-import com.snail.abell.dto.SuiteUiMapper;
+import com.snail.abell.dto.TestSuitUiMapper;
 import com.snail.abell.entity.TSuiteCaseUi;
 import com.snail.abell.entity.TTestsuiteUi;
+import com.snail.abell.exception.BizException;
 import com.snail.abell.service.TTestsuiteUiService;
+import com.snail.abell.utils.SecurityUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,7 +40,9 @@ public class TTestsuiteUiServiceImpl extends ServiceImpl<TTestsuiteUiDao,TTestsu
     @Resource
     private TTestsuiteUiService testsuiteUiService;
 
-    private  SuiteUiMapper suiteUiMapper;
+    @Qualifier("testSuitUiMapperImpl")
+    @Autowired
+    private TestSuitUiMapper suiteMapper;
 
     /**
      * 通过ID查询单条数据
@@ -95,17 +103,24 @@ public class TTestsuiteUiServiceImpl extends ServiceImpl<TTestsuiteUiDao,TTestsu
     }
 
     @Override
-    public List<TTestsuiteUi> pageQuery(Page<TTestsuiteUi> page, TTestsuiteUi testcaseUi) {
+    public List<TestSuitUiVo> pageQuery(PageSuitsVo testcaseUi) {
         QueryWrapper<TTestsuiteUi> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("id");
-        List<TTestsuiteUi> testsuitesList = tTestsuiteUiDao.selectPage(page,queryWrapper).getRecords();
-        return testsuitesList;
+        queryWrapper.orderByDesc("create_time");
+        if (null==testcaseUi.getIsLeaf()) {
+            queryWrapper.eq("is_leaf",false);
+        }
+        if (StringUtils.isNotEmpty(testcaseUi.getQ())) {
+            queryWrapper.like("name", testcaseUi.getQ());
+        }
+        List<TTestsuiteUi> testSuitesList = testsuiteUiService.list(queryWrapper);
+
+        return testSuitesList.stream().map(suiteMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<SuiteUiDto> listByProjectId(long id) {
+    public List<TestSuitUiVo> listByProjectId(long id) {
         List<TTestsuiteUi> testsuiteUiList = testsuiteUiService.lambdaQuery().eq(TTestsuiteUi::getId,id).list();
-        List<SuiteUiDto> suiteUiDtoList = testsuiteUiList.stream().map(suiteUiMapper::toDto).collect(Collectors.toList());
+        List<TestSuitUiVo> suiteUiDtoList = testsuiteUiList.stream().map(suiteMapper::toDto).collect(Collectors.toList());
         return suiteUiDtoList;
     }
 
@@ -158,5 +173,12 @@ public class TTestsuiteUiServiceImpl extends ServiceImpl<TTestsuiteUiDao,TTestsu
             throw new BizException(DELECT_FAILED);
         }
         return flag;
+    }
+
+    @Override
+    public boolean updateSuit(TestSuitMetaVo testsuiteUi) {
+        LambdaUpdateWrapper<TTestsuiteUi> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        lambdaUpdateWrapper.eq(TTestsuiteUi::getId,testsuiteUi.getId()).set(TTestsuiteUi::getName,testsuiteUi.getLabel()).set(TTestsuiteUi::getUpdateBy, SecurityUtils.getCurrentUsername());
+        return tTestsuiteUiDao.update(null,lambdaUpdateWrapper)>0;
     }
 }

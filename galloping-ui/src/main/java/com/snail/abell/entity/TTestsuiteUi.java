@@ -1,5 +1,8 @@
 package com.snail.abell.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,7 +11,6 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * (TTestsuiteUi)表实体类
@@ -21,8 +23,8 @@ import java.util.List;
 @ApiModel(description = "测试用例集")
 @SuppressWarnings("serial")
 public class TTestsuiteUi extends Model<TTestsuiteUi> implements Serializable {
-    private static final long serialVersionUID = -59585539252183271L;
-
+    private static final long serialVersionUID = -59585539258183271L;
+    @TableId(value = "id", type = IdType.INPUT)
     @ApiModelProperty("用例集ID")
     private Long id;
 
@@ -33,13 +35,14 @@ public class TTestsuiteUi extends Model<TTestsuiteUi> implements Serializable {
     private Long projectId;
 
     @ApiModelProperty("父级ID")
+    @TableField(value = "parentId")
     private Long parentId;
 
     @ApiModelProperty("排序")
     private String sort;
 
     @ApiModelProperty("0：代表文件夹，1：代表测试用例")
-    private Integer type;
+    private Boolean isLeaf;
 
     @ApiModelProperty("创建人")
     private String createBy;
@@ -53,8 +56,6 @@ public class TTestsuiteUi extends Model<TTestsuiteUi> implements Serializable {
     @ApiModelProperty("修改时间")
     private Date updateTime;
 
-    @ApiModelProperty("用例子集")
-    private List<TTestsuiteUi> children;
 
 
 }

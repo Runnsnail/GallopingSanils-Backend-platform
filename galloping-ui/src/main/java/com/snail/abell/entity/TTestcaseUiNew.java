@@ -31,17 +31,26 @@ public class TTestcaseUiNew extends Model<TTestcaseUiNew> implements Serializabl
     @ApiModelProperty("环境id")
     private Long envId;
 
+    @ApiModelProperty("用例集id")
+    private Long suiteId;
+
     @ApiModelProperty("$column.comment")
     private Long projectId;
 
     @ApiModelProperty("超时时间，单位分")
     private Long timoutTime;
 
+    @ApiModelProperty("环境id")
+    private Long teamId;
+
     @ApiModelProperty("失败了是否继续0：不继续，1：继续")
     private Integer failContinue;
 
     @ApiModelProperty("标签")
     private String flags;
+
+    @ApiModelProperty("标签")
+    private String status;
 
     @ApiModelProperty("业务名参数")
     private String params;

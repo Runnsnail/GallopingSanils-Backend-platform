@@ -1,8 +1,14 @@
 package com.snail.abell.dao;
 
-import com.snail.abell.entity.TTestcaseUiNew;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.snail.abell.dto.TestCasesDto;
+import com.snail.abell.entity.TTestcaseUiNew;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -11,7 +17,7 @@ import java.util.List;
  * @author Abell
  * @since 2022-06-26 11:09:50
  */
-public interface TTestcaseUiNewDao extends BaseMapper<TTestcaseUiNew>{
+public interface TTestcaseUiNewDao extends BaseMapper<TTestcaseUiNew> {
 
     /**
      * 通过ID查询单条数据
@@ -25,7 +31,7 @@ public interface TTestcaseUiNewDao extends BaseMapper<TTestcaseUiNew>{
      * 查询指定行数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     List<TTestcaseUiNew> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
@@ -45,6 +51,7 @@ public interface TTestcaseUiNewDao extends BaseMapper<TTestcaseUiNew>{
      * @param tTestcaseUiNew 实例对象
      * @return 影响行数
      */
+    @Override
     int insert(TTestcaseUiNew tTestcaseUiNew);
 
     /**
@@ -63,4 +70,12 @@ public interface TTestcaseUiNewDao extends BaseMapper<TTestcaseUiNew>{
      */
     int deleteById(Long id);
 
+    /**
+     *
+     * @param page
+     * @param suiteId
+     * @param queryWrapper
+     * @return 分页数据
+     */
+    IPage<TestCasesDto> selectPageList(@Param("suiteId") Integer suiteId, Page<TestCasesDto> page, @Param(Constants.WRAPPER) Wrapper<TestCasesDto> queryWrapper );
 }

@@ -15,33 +15,77 @@ import java.time.format.DateTimeFormatter;
 public class SerialUtil {
 
 
+    /**
+     * 流水号抬头
+     */
+    private final static String STR = "LSH";
+    /**
+     * 流水号格式
+     */
+    private final static String CS = "CA";
+    /**
+     * 流水号格式
+     */
+    private final static String ST = "CA";
 
-        /**
-         * 流水号抬头
-         */
-        private final static String STR = "LSH";
-        /**
-         * 流水号格式
-         */
-        private final static String FORMAT_CODE = "0000";
 
+    /**
+     * 生成流水号
+     * 实际业务需要检查数据库是否存在
+     *
+     * @return {@link String}
+     */
+    public static String nextValue() {
 
-        /**
-         * 生成流水号
-         * 实际业务需要检查数据库是否存在
-         * @return {@link String}
-         */
-        public static String nextValue() {
+        LocalDateTime now = LocalDateTime.now();
+        // 格式在这里定义
+        String pattern = "yyyyMMdd";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        String date = formatter.format(now);
+        String count = RandomUtil.randomNumbers(5);
+        ;
+        // 最终结果
+        String result = STR + date + count;
+        return result;
+    }
 
-            LocalDateTime now = LocalDateTime.now();
-            // 格式在这里定义
-            String pattern = "yyyyMMdd";
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-            String date = formatter.format(now);
-            String count = RandomUtil.randomNumbers(5);;
-            // 最终结果
-            String result = STR + date + count;
-            return result;
-        }
+    /**
+     * 生成流水号
+     * 实际业务需要检查数据库是否存在
+     *
+     * @return {@link String}
+     */
+    public static String generateCaseId() {
 
+        LocalDateTime now = LocalDateTime.now();
+        // 格式在这里定义
+        String pattern = "yyyyMMdd";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        String date = formatter.format(now);
+        String count = RandomUtil.randomNumbers(5);
+        ;
+        // 最终结果
+        String result = CS + date + count;
+        return result;
+    }
+
+    /**
+     * 生成流水号
+     * 实际业务需要检查数据库是否存在
+     *
+     * @return {@link String}
+     */
+    public static String generateStepId() {
+
+        LocalDateTime now = LocalDateTime.now();
+        // 格式在这里定义
+        String pattern = "yyyyMMdd";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        String date = formatter.format(now);
+        String count = RandomUtil.randomNumbers(5);
+        ;
+        // 最终结果
+        String result = ST + date + count;
+        return result;
+    }
 }

@@ -61,12 +61,11 @@ public class TProjectPageController {
 
     @PostMapping("/add")
     @ApiOperation(value = "新增")
-    public boolean savaProjectPage(@RequestBody TProjectPage projectPage) {
+    public boolean savaProjectPage( @RequestBody @Validated TProjectPage projectPage) {
         List<ProjectPageDto> projectPages = tProjectPageService.findDtoByProjectIdAndPageName(projectPage.getProjectId(), projectPage.getPageName());
         if (projectPages.size() > 0) {
             throw new BizException(PROJECT_NOT_EXIST_ERROR);
         }
-        projectPage.setUpdateBy(SecurityUtils.getCurrentUsername());
         projectPage.setCreateBy(SecurityUtils.getCurrentUsername());
         tProjectPageService.insertSelective(projectPage);
         return true;
@@ -84,11 +83,11 @@ public class TProjectPageController {
         return true;
     }
 
-    @PostMapping("/remove")
+    @DeleteMapping("/remove/{id}")
     @ApiOperation(value = "删除")
-    public boolean delProjectPage(@RequestBody TProjectPage projectPage) {
-        tProjectPageService.deleteByPrimaryKey(projectPage.getId());
-        return true;
+    public boolean delProjectPage( @PathVariable Long id ) {
+
+        return  tProjectPageService.removeById(id);
     }
 
     @GetMapping("/copyPageById/{id}")

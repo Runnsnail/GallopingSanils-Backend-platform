@@ -1,10 +1,15 @@
 package com.snail.abell.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.snail.abell.Vo.CaseIdVo;
+import com.snail.abell.apiInterface.ResponseResult;
+import com.snail.abell.dto.TestCasesDto;
+import com.snail.abell.dto.TestUiDto;
 import com.snail.abell.entity.TTestcaseUiNew;
 import com.snail.abell.exception.BizException;
-import com.snail.abell.dto.TestUiDto;
+import com.snail.abell.logInterface.Log;
 import com.snail.abell.service.TTestcaseUiNewService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +30,7 @@ import static com.snail.abell.base.ResultCode.TESTSTEP_EDIT_ERROR;
 @Api(tags = "WebUI测试用例执行")
 @Validated
 @RestController
+@ResponseResult
 @RequestMapping("/TestcaseUiNew")
 public class TestCaseUiController {
 
@@ -47,16 +53,18 @@ public class TestCaseUiController {
     }
 
 
-    @GetMapping("/listPage")
-    @ApiOperation(value = "获取分页带参列表")
-    public List<TTestcaseUiNew> getPageList(@RequestParam(value = "pageNum") int pageNum, @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "serchData") TTestcaseUiNew testcaseUiNew) {
-        Page<TTestcaseUiNew> page = new Page<>(pageNum, pageSize);
-        List<TTestcaseUiNew> testcaseUiNewList = testcaseUiNewService.pageQuery(page, testcaseUiNew);
+    @GetMapping("/listCasesPage")
+    @ApiOperation(value = "获取分页带参测试用例列表")
+    @Log(description="获取分页带参测试用例列表")
+    public IPage<TestCasesDto> getPageList(CaseIdVo caseIdVo) {
+        Page<TestCasesDto> page = new Page<>(caseIdVo.getPage(), caseIdVo.getPerPage());
+        IPage<TestCasesDto> testcaseUiNewList = testcaseUiNewService.pageQuery(page, caseIdVo);
         return testcaseUiNewList;
     }
 
     @GetMapping("/listByProjectId/{id}")
     @ApiOperation(value = "获取列表")
+    @Log(description="获取列表")
     public List<TTestcaseUiNew> listByProjectId(@PathVariable long id) {
         List<TTestcaseUiNew> testcaseUiNews = testcaseUiNewService.lambdaQuery().eq(TTestcaseUiNew::getId, id).list();
         return testcaseUiNews;
@@ -64,6 +72,7 @@ public class TestCaseUiController {
 
     @GetMapping("/listCaseById/{id}")
     @ApiOperation(value = "查询测试用例集")
+    @Log(description="查询测试用例集")
     public List<TestUiDto> listCaseById(@PathVariable long id) {
         return testcaseUiNewService.selectDtoBySuiteId(id);
     }
@@ -71,6 +80,7 @@ public class TestCaseUiController {
 
     @GetMapping("/allBusiness/{id}")
     @ApiOperation(value = "查询测试业务集")
+    @Log(description="查询测试业务集")
     public List<TTestcaseUiNew> getList(@PathVariable Long id) {
         List<TTestcaseUiNew> testcaseUiNews = testcaseUiNewService.lambdaQuery().eq(TTestcaseUiNew::getId, id).
                 eq(TTestcaseUiNew::getCaseType, 2L).list();
@@ -80,6 +90,7 @@ public class TestCaseUiController {
 
     @PostMapping("/add")
     @ApiOperation(value = "新增测试用例")
+    @Log(description="新增测试用例")
     public TTestcaseUiNew savaProject(@RequestBody TestUiDto testcaseUi) {
 
         return testcaseUiNewService.add(testcaseUi);
@@ -87,6 +98,7 @@ public class TestCaseUiController {
 
     @PutMapping("/edit")
     @ApiOperation(value = "编辑测试用例")
+    @Log(description="编辑测试用例")
     public TTestcaseUiNew editProject(@RequestBody TestUiDto testcaseUi) {
         if (testcaseUi.getTestSteps().size() == 0) {
             throw new BizException(TESTSTEP_EDIT_ERROR);
@@ -94,15 +106,17 @@ public class TestCaseUiController {
         return testcaseUiNewService.update(testcaseUi);
     }
 
-    @PostMapping("/remove")
+    @DeleteMapping("/deleteCase/{caseId}")
     @ApiOperation(value = "删除测试用例")
-    public boolean delProject(@RequestBody TTestcaseUiNew testcaseUi) {
+    @Log(description="删除测试用例")
+    public boolean delProject(@PathVariable Long caseId) {
 
-        return testcaseUiNewService.deleteById(testcaseUi.getId());
+        return testcaseUiNewService.deleteById(caseId);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "通过id查询用例")
+    @Log(description="通过id查询用例")
     public TTestcaseUiNew getById(@PathVariable Long id) {
         LambdaQueryWrapper<TTestcaseUiNew> queryWrapper = new LambdaQueryWrapper();
         queryWrapper.eq(TTestcaseUiNew::getId,id).eq(TTestcaseUiNew::getCaseType,1);

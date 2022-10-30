@@ -2,10 +2,15 @@ package com.snail.abell.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.snail.abell.Vo.CaseIdVo;
 import com.snail.abell.dao.TStepUiNewDao;
 import com.snail.abell.dao.TTestcaseUiNewDao;
+import com.snail.abell.dao.TTestcaseUiNewDtoMapper;
+import com.snail.abell.dao.TestCaseUiMapper;
+import com.snail.abell.dto.TestCasesDto;
 import com.snail.abell.dto.TestUiDto;
 import com.snail.abell.entity.TStepUiNew;
 import com.snail.abell.entity.TTestcaseUiNew;
@@ -13,8 +18,8 @@ import com.snail.abell.exception.BizException;
 import com.snail.abell.service.TStepUiNewService;
 import com.snail.abell.service.TTestcaseUiNewService;
 import com.snail.abell.utils.SecurityUtils;
-import com.snail.abell.dao.TTestcaseUiNewDtoMapper;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +42,8 @@ import static com.snail.abell.base.ResultCode.TESTSUIT_EXIST_ERROR;
 public class TTestcaseUiNewServiceImpl extends ServiceImpl<TTestcaseUiNewDao, TTestcaseUiNew> implements TTestcaseUiNewService {
     @Resource
     private TTestcaseUiNewDao tTestcaseUiNewDao;
+    @Resource
+    private TestCaseUiMapper testCaseUiMapper;
     @Resource
     private TTestcaseUiNewDtoMapper testUiDtoMapper;
     @Resource
@@ -105,11 +112,19 @@ public class TTestcaseUiNewServiceImpl extends ServiceImpl<TTestcaseUiNewDao, TT
     }
 
     @Override
-    public List<TTestcaseUiNew> pageQuery(Page<TTestcaseUiNew> page, TTestcaseUiNew testcaseUiNew) {
-        QueryWrapper<TTestcaseUiNew> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("createBy");
-        List<TTestcaseUiNew> testcaseUiNewList = tTestcaseUiNewDao.selectPage(page,queryWrapper).getRecords();
-        return testcaseUiNewList;
+    public IPage<TestCasesDto> pageQuery(Page<TestCasesDto> page, CaseIdVo caseIdVo) {
+        QueryWrapper<TestCasesDto> queryWrapper = new QueryWrapper<>();
+        if (StringUtils.isNotBlank(caseIdVo.getQ())) {
+            queryWrapper.like("cu.`name`",caseIdVo.getQ());
+      }
+        if (StringUtils.isNotBlank(caseIdVo.getStatus())) {
+            queryWrapper.lambda().eq(TestCasesDto::getStatus,caseIdVo.getStatus());
+        }
+            queryWrapper.eq("suite_id",caseIdVo.getSuitId());
+
+        queryWrapper.orderByDesc(caseIdVo.getSortDesc(),caseIdVo.getSortBy());
+
+        return testCaseUiMapper.selectPagesList(page,queryWrapper);
     }
 
     @Override
@@ -131,7 +146,7 @@ public class TTestcaseUiNewServiceImpl extends ServiceImpl<TTestcaseUiNewDao, TT
         List<TStepUiNew> testSteps = testcaseUiDto.getTestSteps();
         for (TStepUiNew tStepUiNew : testSteps) {
             tStepUiNew.setId(null);
-            tStepUiNew.setTestcaseId(testcaseUiDto.getId());
+            tStepUiNew.setTestcaseId(testcaseUiDto.getId().toString());
         }
         try {
             String s = stepUiNewService.savaStep(testSteps);
@@ -161,7 +176,7 @@ public class TTestcaseUiNewServiceImpl extends ServiceImpl<TTestcaseUiNewDao, TT
         if (CollectionUtil.isNotEmpty(stepUiNews)) {
             for (TStepUiNew stepUiNew : stepUiNews) {
                 stepUiNew.setId(null);
-                stepUiNew.setTestcaseId(tTestcaseUiNew.getId());
+                stepUiNew.setTestcaseId(tTestcaseUiNew.getId().toString());
             }
             stepUiNewService.saveBatch(stepUiNews);
         }

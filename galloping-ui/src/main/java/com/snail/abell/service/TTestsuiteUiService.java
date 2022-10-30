@@ -1,9 +1,10 @@
 package com.snail.abell.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.snail.abell.Vo.PageSuitsVo;
+import com.snail.abell.Vo.TestSuitMetaVo;
+import com.snail.abell.Vo.TestSuitUiVo;
 import com.snail.abell.entity.TSuiteCaseUi;
-import com.snail.abell.dto.SuiteUiDto;
 import com.snail.abell.entity.TTestsuiteUi;
 
 import java.util.List;
@@ -56,9 +57,9 @@ public interface TTestsuiteUiService extends IService<TTestsuiteUi>{
      */
     boolean deleteById(Long id);
 
-    List<TTestsuiteUi> pageQuery(Page<TTestsuiteUi> page, TTestsuiteUi testcaseUi);
+  List<TestSuitUiVo> pageQuery(PageSuitsVo testcaseUi);
 
-    List<SuiteUiDto> listByProjectId(long id);
+  List<TestSuitUiVo> listByProjectId(long id);
 
   List<TTestsuiteUi> selectByNameAndProjectId(String name, Long projectId);
 
@@ -69,4 +70,6 @@ public interface TTestsuiteUiService extends IService<TTestsuiteUi>{
   boolean addCaseToSuite(List<TSuiteCaseUi> suiteCaseUis);
 
   boolean deleteByCaseId(Long id);
+
+  boolean updateSuit(TestSuitMetaVo testsuiteUi);
 }
