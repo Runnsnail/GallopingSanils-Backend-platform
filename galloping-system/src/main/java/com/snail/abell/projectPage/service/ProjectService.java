@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.snail.abell.projectPage.Vo.ProjectVo;
 import com.snail.abell.projectPage.entity.Project;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 /**
  * @author Abell
@@ -25,4 +27,5 @@ public interface ProjectService extends IService<Project>{
 
     Page<Project> pageQuery(Page<Project> page, ProjectVo projectVo);
 
+    ArrayList<HashMap<String, String>> getProjectNameList();
 }

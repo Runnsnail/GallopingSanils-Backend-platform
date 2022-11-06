@@ -27,4 +27,6 @@ public interface TeamGroupService extends IService<TeamGroup>{
     void updateTeams(ArrayList<HashMap<String, String>> memberList, String memberCode);
 
     boolean removeTeam(Integer id);
+
+    ArrayList<HashMap<String, String>> getTeamNameList();
 }

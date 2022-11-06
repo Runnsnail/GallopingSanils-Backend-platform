@@ -6,6 +6,7 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="caseId" column="case_id" jdbcType="VARCHAR"/>
         <result property="envId" column="env_id" jdbcType="INTEGER"/>
         <result property="suiteId" column="suite_id" jdbcType="INTEGER"/>
         <result property="projectId" column="project_id" jdbcType="INTEGER"/>
@@ -41,6 +42,7 @@
                timout_time,
         team_id,
         suite_id,
+        case_id,
                fail_continue,
                flags,
                status,
@@ -65,6 +67,7 @@
                timout_time,
         team_id,
         suite_id,
+        case_id,
                fail_continue,
                flags,
                params,
@@ -89,6 +92,7 @@
                timout_time,
         team_id,
         suite_id,
+        case_id,
                fail_continue,
                flags,
                params,
@@ -116,6 +120,9 @@
             </if>
             <if test="projectId != null">
                 and project_id = #{projectId}
+            </if>
+            <if test="caseId != null">
+                and case_id = #{caseId}
             </if>
             <if test="status != null">
                 and status = #{status}
@@ -161,11 +168,11 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into galloping_snail.t_testcase_ui_new(name, env_id, project_id,suite_id, status, timout_time,team_id, fail_continue,
+        insert into galloping_snail.t_testcase_ui_new(name, env_id, project_id,suite_id,case_id ,status, timout_time,team_id, fail_continue,
                                                       flags,
                                                       params, case_vars, case_type, remark, create_by, update_by,
                                                       create_time, update_time)
-        values (#{name}, #{envId}, #{projectId},#{suiteId}, #{status}, #{timoutTime}, #{teamId}, #{failContinue}, #{flags}, #{params},
+        values (#{name}, #{envId}, #{projectId},#{suiteId},#{caseId}, #{status}, #{timoutTime}, #{teamId}, #{failContinue}, #{flags}, #{params},
                 #{caseVars},
                 #{caseType}, #{remark}, #{createBy}, #{updateBy}, #{createTime}, #{updateTime})
     </insert>
@@ -185,6 +192,9 @@
             </if>
             <if test="suiteId != null">
                 suite_id = #{suiteId},
+            </if>
+            <if test="caseId != null">
+                case_id = #{caseId},
             </if>
             <if test="status != null">
                 status = #{status},

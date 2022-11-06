@@ -21,5 +21,7 @@ public class CaseStepVo {
 
     private String testcaseId;
 
+    private String remark;
+
 
 }

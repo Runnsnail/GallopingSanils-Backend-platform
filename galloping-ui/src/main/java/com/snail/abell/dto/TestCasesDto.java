@@ -17,6 +17,8 @@ public class TestCasesDto {
 
     private String status;
 
+    private String caseId;
+
     private String author;
 
     private String envName;

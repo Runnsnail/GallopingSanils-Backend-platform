@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author Abell
@@ -46,5 +48,12 @@ public class ProjectController {
     public boolean saveProject(@RequestBody Project projectData) {
 
         return projectService.saveOrUpdate(projectData);
+    }
+
+    @GetMapping("/getProjectNameList")
+    @ApiOperation("查询项目Project信息")
+    @Log(description = "查询项目Project信息")
+    public ArrayList<HashMap<String, String>> getProjectNameList() {
+        return projectService.getProjectNameList();
     }
 }

@@ -27,5 +27,5 @@ public interface TStepUiNewService extends IService<TStepUiNew>{
 
     List<TStepUiNew> getStepsByCaseId(String caseId);
 
-    Boolean addCaseStep(CaseStepVo caseStepVo);
+    String addCaseStep(CaseStepVo caseStepVo);
 }

@@ -35,7 +35,7 @@ public class TStepUiNewController {
     @PostMapping("/addCaseStep")
     @ApiOperation(value = "修改測試步骤")
     @Log(description = "修改測試步骤")
-    public Boolean addCaseStep(@RequestBody CaseStepVo caseStepVo){
+    public String addCaseStep(@RequestBody CaseStepVo caseStepVo){
         return tStepUiNewService.addCaseStep(caseStepVo);
     }
 

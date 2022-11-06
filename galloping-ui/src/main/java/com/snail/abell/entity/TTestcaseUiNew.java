@@ -1,8 +1,12 @@
 package com.snail.abell.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,9 +23,12 @@ import java.util.Date;
 @Data
 @ApiModel(description = "")
 @SuppressWarnings("serial")
+@Builder
+@AllArgsConstructor
 public class TTestcaseUiNew extends Model<TTestcaseUiNew> implements Serializable {
     private static final long serialVersionUID = -97200253539647309L;
 
+    @TableId(value = "id", type = IdType.INPUT)
     @ApiModelProperty("$column.comment")
     private Long id;
 
@@ -49,6 +56,9 @@ public class TTestcaseUiNew extends Model<TTestcaseUiNew> implements Serializabl
     @ApiModelProperty("标签")
     private String flags;
 
+    @ApiModelProperty("用例ID")
+    private String caseId;
+
     @ApiModelProperty("标签")
     private String status;
 
@@ -75,4 +85,7 @@ public class TTestcaseUiNew extends Model<TTestcaseUiNew> implements Serializabl
 
     @ApiModelProperty("$column.comment")
     private Date updateTime;
+
+    public TTestcaseUiNew() {
+    }
 }

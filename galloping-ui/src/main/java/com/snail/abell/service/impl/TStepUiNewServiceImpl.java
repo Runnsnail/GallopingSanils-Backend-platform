@@ -93,19 +93,21 @@ public class TStepUiNewServiceImpl extends ServiceImpl<TStepUiNewMapper, TStepUi
     }
 
     @Override
-    public Boolean addCaseStep(CaseStepVo caseStepVo) {
+    public String addCaseStep(CaseStepVo caseStepVo) {
         TStepUiNew stepUiNew = new TStepUiNew();
+        String caseCode;
         if(caseStepVo.getTestcaseId().equals("1")){
-            String caseCode = SerialUtil.generateCaseId();
+            caseCode = SerialUtil.generateCaseId();
             caseStepVo.setTestcaseId(caseCode);
         }
         BeanUtils.copyProperties(caseStepVo,stepUiNew);
 
-        Boolean flaBoolean =  stepUiNewService.saveOrUpdate(stepUiNew);
+        stepUiNewService.saveOrUpdate(stepUiNew);
         TStepUiNew newCaseStep = stepUiNewService.lambdaQuery().orderByDesc(TStepUiNew::getId).last("limit 1").one();
         //同步更新用例与步骤映射
         CaseStep caseStep = CaseStep.builder().id(null).stepId(newCaseStep.getId()).caseId(stepUiNew.getTestcaseId()).build();
+        caseCode = caseStep.getCaseId();
         caseStepService.saveOrUpdate(caseStep);
-        return flaBoolean ;
+        return caseCode ;
     }
 }

@@ -48,6 +48,7 @@ public interface TStepUiNewDao extends BaseMapper<TStepUiNew>{
      * @param tStepUiNew 实例对象
      * @return 影响行数
      */
+    @Override
     int insert(TStepUiNew tStepUiNew);
 
     /**

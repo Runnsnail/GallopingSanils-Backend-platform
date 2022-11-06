@@ -1,5 +1,6 @@
 package com.snail.abell.projectPage.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.snail.abell.exception.BizException;
 import com.snail.abell.permission.dao.SysUserDao;
@@ -74,4 +75,19 @@ public class TeamGroupServiceImpl extends ServiceImpl<TeamGroupMapper, TeamGroup
         sysUserDao.updateTeams(memberNameList, null);
         return teamGroupService.removeById(id);
     }
+
+    @Override
+    public ArrayList<HashMap<String, String>> getTeamNameList() {
+        ArrayList<HashMap<String, String>> teamNamesList = new ArrayList<HashMap<String, String>>();
+        QueryWrapper<TeamGroup> queryWrapper = new QueryWrapper<>();
+        List<TeamGroup> menuList = this.teamGroupService.list(queryWrapper);
+        for (TeamGroup teamGroup:menuList) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("label",teamGroup.getCardTitle());
+            map.put("value",teamGroup.getTeamId().toString());
+            teamNamesList.add(map);
+        }
+        return teamNamesList;
+    }
+
 }

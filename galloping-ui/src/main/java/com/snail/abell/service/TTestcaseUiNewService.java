@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.snail.abell.Vo.CaseIdVo;
+import com.snail.abell.dto.TestCaseMetoDto;
 import com.snail.abell.dto.TestCasesDto;
 import com.snail.abell.dto.TestUiDto;
 import com.snail.abell.entity.TTestcaseUiNew;
@@ -69,4 +70,5 @@ public interface TTestcaseUiNewService extends IService<TTestcaseUiNew>{
 
   TTestcaseUiNew businesstoCase(Long id);
 
+  Boolean addOrEditCases(TestCaseMetoDto caseMeto);
 }

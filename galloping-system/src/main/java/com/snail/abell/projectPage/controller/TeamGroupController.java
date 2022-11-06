@@ -50,6 +50,13 @@ public class TeamGroupController {
         return map;
     }
 
+    @GetMapping("/getTeamNameList")
+    @ApiOperation("查询团队信息")
+    @Log(description = "查询团队信息")
+    public ArrayList<HashMap<String, String>> getTeamNameList() {
+        return teamGroupService.getTeamNameList();
+    }
+
     @PostMapping("/addTeam")
     @ApiOperation(value = "新增团队")
     @Log(description = "新增团队")

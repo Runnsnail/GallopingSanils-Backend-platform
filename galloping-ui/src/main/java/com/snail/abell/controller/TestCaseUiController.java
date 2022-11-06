@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.snail.abell.Vo.CaseIdVo;
 import com.snail.abell.apiInterface.ResponseResult;
+import com.snail.abell.dto.TestCaseMetoDto;
 import com.snail.abell.dto.TestCasesDto;
 import com.snail.abell.dto.TestUiDto;
 import com.snail.abell.entity.TTestcaseUiNew;
 import com.snail.abell.exception.BizException;
 import com.snail.abell.logInterface.Log;
+import com.snail.abell.service.TEnvService;
 import com.snail.abell.service.TTestcaseUiNewService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.snail.abell.base.ResultCode.TESTSTEP_EDIT_ERROR;
@@ -40,6 +44,10 @@ public class TestCaseUiController {
      */
     @Resource
     private TTestcaseUiNewService testcaseUiNewService;
+
+
+    @Resource
+    private TEnvService envService;
 
     /**
      * 通过主键查询单条数据
@@ -86,6 +94,14 @@ public class TestCaseUiController {
                 eq(TTestcaseUiNew::getCaseType, 2L).list();
 
         return testcaseUiNews;
+    }
+
+    @PostMapping("/addOrEdit")
+    @ApiOperation(value = "新增测试用例")
+    @Log(description="新增测试用例")
+    public Boolean addOrEditCases(@RequestBody TestCaseMetoDto caseMeto) {
+
+        return testcaseUiNewService.addOrEditCases(caseMeto);
     }
 
     @PostMapping("/add")
@@ -145,6 +161,16 @@ public class TestCaseUiController {
     public TTestcaseUiNew businesstoCase(@PathVariable Long id) {
         return testcaseUiNewService.businesstoCase(id);
     }
+
+    @GetMapping("/getUiEnv")
+    @ApiOperation("查询UI环境信息")
+    @Log(description = "查询UI环境信息")
+    public ArrayList<HashMap<String, String>> getUiEnv() {
+        ArrayList<HashMap<String, String>> envList = envService.getUiEnv();
+        return envList;
+    }
+
+
 
 
 }

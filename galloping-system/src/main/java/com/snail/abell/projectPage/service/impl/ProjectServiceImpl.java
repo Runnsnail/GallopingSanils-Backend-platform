@@ -10,6 +10,8 @@ import com.snail.abell.projectPage.service.ProjectService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 /**
  * @author Abell
@@ -20,6 +22,8 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     @Resource
     private ProjectMapper projectMapper;
+    @Resource
+    private ProjectService projectService;
 
     @Override
     public int updateBatch(List<Project> list) {
@@ -58,5 +62,19 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
             listPage = projectMapper.selectPage(page,queryWrapper);
         }
         return listPage;
+    }
+
+    @Override
+    public ArrayList<HashMap<String, String>> getProjectNameList() {
+        ArrayList<HashMap<String, String>> projectMapArrayList = new ArrayList<HashMap<String, String>>();
+        QueryWrapper<Project> queryWrapper = new QueryWrapper<>();
+        List<Project> menuList = projectService.list(queryWrapper);
+        for (Project project:menuList) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("label",project.getName());
+            map.put("value",project.getId().toString());
+            projectMapArrayList.add(map);
+        }
+        return projectMapArrayList;
     }
 }

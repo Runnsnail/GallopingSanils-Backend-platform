@@ -11,10 +11,10 @@
         <option name="generateServiceInterface" value="true" />
         <option name="insertOnDuplicateKey" value="true" />
         <option name="javaMapperPackage" value="com.snail.abell.projectPage.entity" />
-        <option name="javaMapperPath" value="$PROJECT_DIR$/galloping-system/src/main/java" />
+        <option name="javaMapperPath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
         <option name="javaModelPackage" value="com.snail.abell.projectPage.entity" />
-        <option name="javaModelPath" value="D:\GallopingSanils\galloping-system\src\main\java" />
-        <option name="lastDatabaseCrudChooseModuleName" value="galloping-system" />
+        <option name="javaModelPath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
+        <option name="lastDatabaseCrudChooseModuleName" value="galloping-ui" />
         <option name="lombokDataAnnotation" value="true" />
         <option name="mapperAnnotaion" value="true" />
         <option name="moduleNameToPackageAndPathMap">
@@ -32,6 +32,22 @@
                   <option name="javaServicePath" value="$PROJECT_DIR$/galloping-system/src/main/java" />
                   <option name="xmlPackage" value="mapper" />
                   <option name="xmlPath" value="$PROJECT_DIR$/galloping-system/src/main/resources" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
+            <entry key="galloping-ui">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.snail.abell.projectPage.entity" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
+                  <option name="javaModelPacakge" value="com.snail.abell.projectPage.entity" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
+                  <option name="javaServiceInterfacePackage" value="com.snail.abell.projectPage.service" />
+                  <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
+                  <option name="javaServicePackage" value="com.snail.abell.projectPage.service.impl" />
+                  <option name="javaServicePath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
+                  <option name="xmlPackage" value="mapper" />
+                  <option name="xmlPath" value="$PROJECT_DIR$/galloping-ui/src/main/resources" />
                 </UserPackageAndPathInfoByModule>
               </value>
             </entry>
@@ -65,6 +81,22 @@
                   <option name="insertOnDuplicateKey" value="true" />
                   <option name="javaModelName" value="Project" />
                   <option name="moduleName" value="galloping-system" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="galloping_snail:t_env">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="TEnv" />
+                  <option name="moduleName" value="galloping-ui" />
                   <option name="sequenceColumn" value="" />
                   <option name="sequenceId" value="" />
                   <option name="updateBatch" value="true" />
@@ -116,7 +148,7 @@
         <option name="useSwagger" value="true" />
         <option name="userMybatisPlus" value="true" />
         <option name="xmlMapperPackage" value="mapper" />
-        <option name="xmlMapperPath" value="$PROJECT_DIR$/galloping-system/src/main/resources" />
+        <option name="xmlMapperPath" value="$PROJECT_DIR$/galloping-ui/src/main/resources" />
       </ProjectProfile>
     </option>
   </component>
