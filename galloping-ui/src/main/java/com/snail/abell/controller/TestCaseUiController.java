@@ -127,7 +127,7 @@ public class TestCaseUiController {
     @Log(description="删除测试用例")
     public boolean delProject(@PathVariable Long caseId) {
 
-        return testcaseUiNewService.deleteById(caseId);
+        return testcaseUiNewService.removeCase(caseId);
     }
 
     @GetMapping("/{id}")

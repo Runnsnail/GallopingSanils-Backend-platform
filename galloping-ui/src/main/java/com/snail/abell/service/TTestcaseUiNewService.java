@@ -71,4 +71,6 @@ public interface TTestcaseUiNewService extends IService<TTestcaseUiNew>{
   TTestcaseUiNew businesstoCase(Long id);
 
   Boolean addOrEditCases(TestCaseMetoDto caseMeto);
+
+  boolean removeCase(Long caseId);
 }
