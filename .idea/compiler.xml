@@ -7,7 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <processorPath>
+        <processorPath useClasspath="false">
           <entry name="$PROJECT_DIR$/../Program Files/Myrespority/repository/org/mapstruct/mapstruct-processor/1.3.0.Final/mapstruct-processor-1.3.0.Final.jar" />
           <entry name="$PROJECT_DIR$/../Program Files/Myrespority/repository/com/jolira/hickory/1.0.0/hickory-1.0.0.jar" />
           <entry name="$PROJECT_DIR$/../Program Files/Myrespority/repository/org/mapstruct/mapstruct/1.3.0.Final/mapstruct-1.3.0.Final.jar" />
@@ -25,9 +25,9 @@
         <module name="galloping-system" />
         <module name="galloping-ui" />
         <module name="galloping-app" />
+        <module name="galloping-api" />
         <module name="galloping-logging" />
         <module name="galloping-common" />
-        <module name="galloping-api" />
       </profile>
     </annotationProcessing>
   </component>

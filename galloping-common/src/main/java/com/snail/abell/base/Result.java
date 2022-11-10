@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author Abell
+ */
 @Data
 public class Result<T> implements Serializable {
     private Integer code;

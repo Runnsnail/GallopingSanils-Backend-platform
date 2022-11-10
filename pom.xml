@@ -137,6 +137,19 @@
             <version>${log4jdbc.version}</version>
         </dependency>
 
+        <!-- Testng  -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.9.10</version>
+        </dependency>
+        <!-- Selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+
         <!--对象转换 -->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -240,7 +253,19 @@
             <artifactId>xercesImpl</artifactId>
             <version>2.12.2</version>
         </dependency>
+        <!--反射依赖-->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.12</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>2.1.1</version>
+            <optional>true</optional>
+        </dependency>
         <!--Mybatis-plus依赖-->
         <dependency>
             <groupId>com.baomidou</groupId>
