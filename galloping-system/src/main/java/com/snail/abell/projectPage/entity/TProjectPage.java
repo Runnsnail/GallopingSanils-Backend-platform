@@ -1,6 +1,7 @@
 package com.snail.abell.projectPage.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,10 +27,10 @@ public class TProjectPage extends Model<TProjectPage> implements Serializable {
     private static final long serialVersionUID = -49660032716850494L;
 
     @ApiModelProperty("id")
+    @TableId(value = "id",type = IdType.INPUT)
     private Long id;
 
     @ApiModelProperty("projectId")
-    @TableField(select = false,exist = false)
     private Long projectId;
 
     @ApiModelProperty("页面名称")

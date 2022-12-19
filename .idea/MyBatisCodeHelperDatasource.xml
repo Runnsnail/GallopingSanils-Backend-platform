@@ -5,11 +5,9 @@
       <ProjectProfile>
         <option name="addSchemaName" value="true" />
         <option name="addSerializeUid" value="true" />
-        <option name="batchInsert" value="true" />
         <option name="checkBlobColumn" value="true" />
         <option name="generateService" value="true" />
         <option name="generateServiceInterface" value="true" />
-        <option name="insertOnDuplicateKey" value="true" />
         <option name="javaMapperPackage" value="com.snail.abell.projectPage.entity" />
         <option name="javaMapperPath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
         <option name="javaModelPackage" value="com.snail.abell.projectPage.entity" />
@@ -54,9 +52,23 @@
           </map>
         </option>
         <option name="mybatisPlusStaticField" value="false" />
+        <option name="noJdbcType" value="true" />
         <option name="p3CComment" value="true" />
         <option name="tableGenerateConfigs">
           <map>
+            <entry key="galloping_snail:case_param">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="CaseParam" />
+                  <option name="moduleName" value="galloping-ui" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
             <entry key="galloping_snail:case_step">
               <value>
                 <TableGenerateConfig>
@@ -143,8 +155,6 @@
             </entry>
           </map>
         </option>
-        <option name="updateBatch" value="true" />
-        <option name="updateBatchSelective" value="true" />
         <option name="useSwagger" value="true" />
         <option name="userMybatisPlus" value="true" />
         <option name="xmlMapperPackage" value="mapper" />

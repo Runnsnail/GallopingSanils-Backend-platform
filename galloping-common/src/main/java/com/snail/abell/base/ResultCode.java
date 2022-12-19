@@ -24,6 +24,10 @@ public enum ResultCode {
     TEAM_EXIST_ERROR(10011,"团队已存在"),
     TEAM_NOT_EXIST_ERROR(10012,"团队不存在"),
     TESTCASE_EXIST_ERROR(10013,"测试用例已存在"),
+
+    /* 用例状态吗 */
+    SCEN_EXIST_ERROR(20001,"场景执行失败"),
+    DRIVER_EXIST_ERROR(20002,"浏览器驱动初始化失败，请选择正确的驱动"),
     ;
 
     private Integer code;

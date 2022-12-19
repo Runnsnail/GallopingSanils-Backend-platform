@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @date 2022/09/04
  */
 @Data
+@SuppressWarnings("all")
 public class ErrorResult implements Serializable {
   private Integer code;
   private String message;

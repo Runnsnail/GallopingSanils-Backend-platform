@@ -26,13 +26,13 @@ public class AnnotationSelectorStrategyFactory {
     }
 
     /**
-     * 通过map获取税策略，当增加新的税策略时无需修改代码，对修改封闭，对扩展开放，遵循开闭原则
+     * 通过map获取策略，当增加新的策略时无需修改代码，对修改封闭，对扩展开放，遵循开闭原则
      * @param selectorType  选择类型
      * @return 返回策略
      * @throws Exception 抛出异常
      */
     public static SelectorStrategy getSelectorStrategy(SelectorType selectorType) throws Exception {
-        // 当增加新的税类型时，需要修改代码，同时增加圈复杂度
+        // 当增加新的类型时，需要修改代码，同时增加圈复杂度
         if (selectorStrategyMap.containsKey(selectorType)) {
             return selectorStrategyMap.get(selectorType);
         } else {
@@ -53,10 +53,10 @@ public class AnnotationSelectorStrategyFactory {
 
             if (taxStrategyClassSet != null) {
                 for (Class<?> clazz: taxStrategyClassSet) {
-                    // 找到税类型注解，自动完成税策略注册
+                    // 找到类型注解，自动完成策略注册
                     if (clazz.isAnnotationPresent(SelectorTypeAnnotation.class)) {
-                        SelectorTypeAnnotation taxTypeAnnotation = clazz.getAnnotation(SelectorTypeAnnotation.class);
-                        SelectorType selectorType = taxTypeAnnotation.selectorType();
+                        SelectorTypeAnnotation selectorTypeAnnotation = clazz.getAnnotation(SelectorTypeAnnotation.class);
+                        SelectorType selectorType = selectorTypeAnnotation.selectorType();
                         selectorStrategyMap.put(selectorType, (SelectorStrategy)clazz.newInstance());
                     }
                 }

@@ -40,31 +40,6 @@ public interface TProjectPageDao extends BaseMapper<TProjectPage>{
      */
     List<TProjectPage> queryAll(TProjectPage tProjectPage);
 
-    /**
-     * 新增数据
-     *
-     * @param tProjectPage 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(TProjectPage tProjectPage);
-
-    /**
-     * 修改数据
-     *
-     * @param tProjectPage 实例对象
-     * @return 影响行数
-     */
-    int update(TProjectPage tProjectPage);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Long id);
-
     void insertSelective(TProjectPage projectPage);
 
     void updateByPrimaryKey(TProjectPage projectPage);

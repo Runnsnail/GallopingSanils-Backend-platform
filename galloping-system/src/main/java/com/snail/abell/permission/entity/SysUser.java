@@ -1,5 +1,7 @@
 package com.snail.abell.permission.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,6 +25,7 @@ public class SysUser extends Model<SysUser> implements Serializable {
     private static final long serialVersionUID = -95057445747590609L;
 
     @ApiModelProperty("ID")
+    @TableId(value = "user_id",type = IdType.INPUT)
     private Long userId;
 
     @ApiModelProperty("部门名称")

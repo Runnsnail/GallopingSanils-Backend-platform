@@ -63,7 +63,7 @@ public class SysQuartzLogServiceImpl extends ServiceImpl<SysQuartzLogDao,SysQuar
      */
     @Override
     public SysQuartzLog update(SysQuartzLog sysQuartzLog) {
-        this.sysQuartzLogDao.update(sysQuartzLog);
+        this.sysQuartzLogDao.updateById(sysQuartzLog);
         return this.queryById(sysQuartzLog.getLogId());
     }
 

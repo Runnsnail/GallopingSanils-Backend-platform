@@ -42,30 +42,6 @@ public interface SysProjectDao extends BaseMapper<SysProject>{
      */
     List<SysProject> queryAll(SysProject sysProject);
 
-    /**
-     * 新增数据
-     *
-     * @param sysProject 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(SysProject sysProject);
-
-    /**
-     * 修改数据
-     *
-     * @param sysProject 实例对象
-     * @return 影响行数
-     */
-    int update(SysProject sysProject);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(Long id);
 
 
 }

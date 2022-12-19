@@ -78,11 +78,6 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into galloping_snail.t_project_page(project_id, page_name, is_enable, remark, create_by, create_time, update_by, update_time)
-        values (#{projectId}, #{pageName}, #{isEnable}, #{remark}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
-    </insert>
 
     <!--新增所有列-->
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.snail.abell.projectPage.entity.TProjectPage"
@@ -129,37 +124,6 @@
             </if>
         </trim>
     </insert>
-    <!--通过主键修改数据-->
-    <update id="update">
-        update galloping_snail.t_project_page
-        <set>
-            <if test="projectId != null">
-                project_id = #{projectId},
-            </if>
-            <if test="pageName != null and pageName != ''">
-                page_name = #{pageName},
-            </if>
-            <if test="isEnable != null">
-                is_enable = #{isEnable},
-            </if>
-            <if test="remark != null and remark != ''">
-                remark = #{remark},
-            </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                update_by = #{updateBy},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
     <update id="updateByPrimaryKey" parameterType="com.snail.abell.projectPage.entity.TProjectPage">
         update t_project_page
         set project_id = #{projectId,jdbcType=INTEGER},
@@ -171,10 +135,6 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from galloping_snail.t_project_page where id = #{id}
-    </delete>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from galloping_snail.t_project_page where id = #{id,javaType=INTEGER}
     </delete>

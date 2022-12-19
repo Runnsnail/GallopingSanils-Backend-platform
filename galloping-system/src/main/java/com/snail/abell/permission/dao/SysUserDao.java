@@ -44,31 +44,6 @@ public interface SysUserDao extends BaseMapper<SysUser>{
      */
     List<SysUser> queryAll(SysUser sysUser);
 
-    /**
-     * 新增数据
-     *
-     * @param sysUser 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(SysUser sysUser);
-
-    /**
-     * 修改数据
-     *
-     * @param sysUser 实例对象
-     * @return 影响行数
-     */
-    int update(SysUser sysUser);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param userId 主键
-     * @return 影响行数
-     */
-    int deleteById(Long userId);
-
     List<SysRole> selectSysRoleByUserId(Long userId);
 
     List<SysMenu> selectSysMenuByUserId(Long userId);

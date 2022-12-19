@@ -63,7 +63,7 @@ public class SysUsersRolesServiceImpl extends ServiceImpl<SysUsersRolesDao,SysUs
      */
     @Override
     public SysUsersRoles update(SysUsersRoles sysUsersRoles) {
-        this.sysUsersRolesDao.update(sysUsersRoles);
+        this.sysUsersRolesDao.updateById(sysUsersRoles);
         return this.queryById(sysUsersRoles.getUserId());
     }
 

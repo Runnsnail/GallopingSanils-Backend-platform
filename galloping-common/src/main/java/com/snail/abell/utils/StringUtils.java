@@ -1,5 +1,5 @@
 /*
- *  Copyright 
+ *  Copyright
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@ import java.net.UnknownHostException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Abell
@@ -86,6 +88,21 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
 
         return sb.toString();
+    }
+
+    /**
+     *
+     */
+    public static String changeString(String var) {
+        Pattern regex = Pattern.compile("\\$\\{(.*?)}");
+        Matcher matcher = regex.matcher(var);
+        String name = null;
+
+        while (matcher.find()) {
+            String varKey = matcher.group(1);
+            name = varKey.substring(2,matcher.group().length()-2);
+        }
+        return name;
     }
 
     /**
@@ -196,7 +213,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      */
     public static String getLocalCityInfo(String ip) {
         IpInfo ipInfo = IP_SEARCHER.memorySearch(ip);
-        if(ipInfo != null){
+        if (ipInfo != null) {
             return ipInfo.getAddress();
         }
         return null;
@@ -232,10 +249,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         try {
             InetAddress candidateAddress = null;
             // 遍历所有的网络接口
-            for (Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces(); interfaces.hasMoreElements();) {
+            for (Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces(); interfaces.hasMoreElements(); ) {
                 NetworkInterface anInterface = interfaces.nextElement();
                 // 在所有的接口下再遍历IP
-                for (Enumeration<InetAddress> inetAddresses = anInterface.getInetAddresses(); inetAddresses.hasMoreElements();) {
+                for (Enumeration<InetAddress> inetAddresses = anInterface.getInetAddresses(); inetAddresses.hasMoreElements(); ) {
                     InetAddress inetAddr = inetAddresses.nextElement();
                     // 排除loopback类型地址
                     if (!inetAddr.isLoopbackAddress()) {

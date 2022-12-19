@@ -67,7 +67,7 @@ public class SysProjectServiceImpl extends ServiceImpl<SysProjectDao,SysProject>
      */
     @Override
     public SysProject update(SysProject sysProject) {
-        this.sysProjectDao.update(sysProject);
+        this.sysProjectDao.updateById(sysProject);
         return this.queryById(sysProject.getId());
     }
 

@@ -19,7 +19,9 @@
     <result column="sort" jdbcType="BIGINT" property="sort" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="variant" jdbcType="VARCHAR" property="variant" />
-    <result column="is_enable" jdbcType="INTEGER" property="isEnable" />
+    <result column="is_enable" jdbcType="TINYINT" property="isEnable" />
+    <result column="waite" jdbcType="INTEGER" property="waite" />
+    <result column="counts" jdbcType="INTEGER" property="counts" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.snail.abell.entity.TStepUiNew">
     <!--@mbg.generated-->
@@ -30,7 +32,7 @@
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, `name`, action_type, `action`, testcase_id, page_id, element_id, `type`, create_by,
-    create_time, update_by, update_time, sort, icon, `variant`, is_enable
+    create_time, update_by, update_time, sort, icon, `variant`, is_enable,waite,counts
   </sql>
   <sql id="Blob_Column_List">
     <!--@mbg.generated-->
@@ -63,6 +65,16 @@
       <trim prefix="page_id = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           when id = #{item.id,jdbcType=BIGINT} then #{item.pageId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="counts = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.counts,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="waite = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.waite,jdbcType=INTEGER}
         </foreach>
       </trim>
       <trim prefix="element_id = case" suffix="end,">
@@ -170,6 +182,20 @@
           </if>
         </foreach>
       </trim>
+      <trim prefix="counts = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.counts != null">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.counts,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="waite = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.waite != null">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.waite,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
       <trim prefix="element_id = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           <if test="item.elementId != null">
@@ -265,7 +291,7 @@
     insert into galloping_snail.t_step_ui_new
     (`name`, action_type, `action`, testcase_id, page_id, element_id, `type`, create_by,
       create_time, update_by, update_time, sort, icon, `variant`, is_enable, remark,
-      option_data)
+      option_data,waite,counts)
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.name,jdbcType=VARCHAR}, #{item.actionType,jdbcType=VARCHAR}, #{item.action,jdbcType=VARCHAR},
@@ -273,7 +299,7 @@
         #{item.type,jdbcType=INTEGER}, #{item.createBy,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
         #{item.updateBy,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.sort,jdbcType=BIGINT},
         #{item.icon,jdbcType=VARCHAR}, #{item.variant,jdbcType=VARCHAR}, #{item.isEnable,jdbcType=TINYINT},
-        #{item.remark,jdbcType=LONGVARCHAR}, #{item.optionData,jdbcType=LONGVARCHAR})
+        #{item.remark,jdbcType=LONGVARCHAR}, #{item.optionData,jdbcType=LONGVARCHAR},#{item.waite,jdbcType=INTEGER},#{item.counts,jdbcType=INTEGER})
     </foreach>
   </insert>
   <insert id="insertOrUpdates" keyColumn="id" keyProperty="id" parameterType="com.snail.abell.entity.TStepUiNew" useGeneratedKeys="true">
@@ -298,6 +324,8 @@
       icon,
       `variant`,
       is_enable,
+      waite,
+      counts,
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -319,6 +347,8 @@
       #{icon,jdbcType=VARCHAR},
       #{variant,jdbcType=VARCHAR},
       #{isEnable,jdbcType=TINYINT},
+      #{waite,jdbcType=INTEGER},
+      #{counts,jdbcType=INTEGER},
     </trim>
     on duplicate key update
     <trim suffixOverrides=",">
@@ -339,7 +369,9 @@
       sort = #{sort,jdbcType=BIGINT},
       icon = #{icon,jdbcType=VARCHAR},
       `variant` = #{variant,jdbcType=VARCHAR},
-      is_enable = #{isEnable,jdbcType=TINYINT};
+      is_enable = #{isEnable,jdbcType=TINYINT},
+      waite= #{waite,jdbcType=INTEGER},
+      counts= #{counts,jdbcType=INTEGER};
     </trim>
     <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
       select LAST_INSERT_ID()
@@ -379,6 +411,8 @@
       is_enable,
       remark,
       option_data,
+      waite,
+      counts,
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -402,6 +436,8 @@
       #{isEnable,jdbcType=TINYINT},
       #{remark,jdbcType=LONGVARCHAR},
       #{optionData,jdbcType=LONGVARCHAR},
+      #{waite,jdbcType=INTEGER},
+      #{counts,jdbcType=INTEGER},
     </trim>
     on duplicate key update
     <trim suffixOverrides=",">
@@ -425,6 +461,8 @@
       is_enable = #{isEnable,jdbcType=TINYINT},
       remark = #{remark,jdbcType=LONGVARCHAR},
       option_data = #{optionData,jdbcType=LONGVARCHAR},
+      waite= #{waite,jdbcType=INTEGER},
+      counts= #{counts,jdbcType=INTEGER},
     </trim>
   </insert>
   <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.snail.abell.entity.TStepUiNew" useGeneratedKeys="true">
@@ -448,6 +486,12 @@
       </if>
       <if test="pageId != null">
         page_id,
+      </if>
+      <if test="waite != null">
+        waite,
+      </if>
+      <if test="counts != null">
+        counts,
       </if>
       <if test="elementId != null">
         element_id,
@@ -506,6 +550,12 @@
       <if test="pageId != null">
         #{pageId,jdbcType=BIGINT},
       </if>
+      <if test="waite != null">
+        #{waite,jdbcType=INTEGER},
+      </if>
+      <if test="counts != null">
+        #{counts,jdbcType=INTEGER},
+      </if>
       <if test="elementId != null">
         #{elementId,jdbcType=BIGINT},
       </if>
@@ -562,6 +612,12 @@
       </if>
       <if test="pageId != null">
         page_id = #{pageId,jdbcType=BIGINT},
+      </if>
+      <if test="waite != null">
+        waite = #{waite,jdbcType=INTEGER},
+      </if>
+      <if test="counts != null">
+        counts = #{counts,jdbcType=INTEGER},
       </if>
       <if test="elementId != null">
         element_id = #{elementId,jdbcType=BIGINT},

@@ -42,29 +42,5 @@ public interface SysRolesMenusDao extends BaseMapper<SysRolesMenus>{
      */
     List<SysRolesMenus> queryAll(SysRolesMenus sysRolesMenus);
 
-    /**
-     * 新增数据
-     *
-     * @param sysRolesMenus 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(SysRolesMenus sysRolesMenus);
-
-    /**
-     * 修改数据
-     *
-     * @param sysRolesMenus 实例对象
-     * @return 影响行数
-     */
-    int update(SysRolesMenus sysRolesMenus);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param menuId 主键
-     * @return 影响行数
-     */
-    int deleteById(Long menuId);
 
 }

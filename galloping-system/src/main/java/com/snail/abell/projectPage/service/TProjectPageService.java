@@ -6,6 +6,8 @@ import com.snail.abell.permission.vo.ProjectPageDto;
 import com.snail.abell.projectPage.Vo.ProjectPageVo;
 import com.snail.abell.projectPage.entity.TProjectPage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -74,4 +76,6 @@ public interface  TProjectPageService extends IService<TProjectPage>{
 
 
   List<ProjectPageDto> findDtoByProjectIdAndPageNameAndIdNot(Long projectId, String pageName, Long id);
+
+    ArrayList<HashMap<String, String>> getPageNameList();
 }

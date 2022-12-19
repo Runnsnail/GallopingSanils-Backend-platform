@@ -95,7 +95,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
      */
     @Override
     public SysMenu update(SysMenu sysMenu) {
-        this.sysMenuDao.update(sysMenu);
+        this.sysMenuDao.updateById(sysMenu);
         return this.queryById(sysMenu.getMenuId());
     }
 

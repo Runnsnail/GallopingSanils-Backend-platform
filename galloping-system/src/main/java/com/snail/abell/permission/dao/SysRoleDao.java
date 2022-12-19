@@ -42,29 +42,4 @@ public interface SysRoleDao extends BaseMapper<SysRole>{
      */
     List<SysRole> queryAll(SysRole sysRole);
 
-    /**
-     * 新增数据
-     *
-     * @param sysRole 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(SysRole sysRole);
-
-    /**
-     * 修改数据
-     *
-     * @param sysRole 实例对象
-     * @return 影响行数
-     */
-    int update(SysRole sysRole);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param roleId 主键
-     * @return 影响行数
-     */
-    int deleteById(Long roleId);
-
 }

@@ -42,29 +42,6 @@ public interface SysMenuDao extends BaseMapper<SysMenu>{
      */
     List<SysMenu> queryAll(SysMenu sysMenu);
 
-    /**
-     * 新增数据
-     *
-     * @param sysMenu 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(SysMenu sysMenu);
 
-    /**
-     * 修改数据
-     *
-     * @param sysMenu 实例对象
-     * @return 影响行数
-     */
-    int update(SysMenu sysMenu);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param menuId 主键
-     * @return 影响行数
-     */
-    int deleteById(Long menuId);
 
 }

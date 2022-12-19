@@ -42,29 +42,6 @@ public interface SysLogDao extends BaseMapper<SysLog>{
      */
     List<SysLog> queryAll(SysLog sysLog);
 
-    /**
-     * 新增数据
-     *
-     * @param sysLog 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(SysLog sysLog);
 
-    /**
-     * 修改数据
-     *
-     * @param sysLog 实例对象
-     * @return 影响行数
-     */
-    int update(SysLog sysLog);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param logId 主键
-     * @return 影响行数
-     */
-    int deleteById(Long logId);
 
 }

@@ -63,7 +63,7 @@ public class SysUsersJobsServiceImpl extends ServiceImpl<SysUsersJobsDao,SysUser
      */
     @Override
     public SysUsersJobs update(SysUsersJobs sysUsersJobs) {
-        this.sysUsersJobsDao.update(sysUsersJobs);
+        this.sysUsersJobsDao.updateById(sysUsersJobs);
         return this.queryById(sysUsersJobs.getUserId());
     }
 

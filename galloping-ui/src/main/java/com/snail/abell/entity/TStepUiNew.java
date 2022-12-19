@@ -45,11 +45,11 @@ public class TStepUiNew implements Serializable {
     private String action;
 
     @TableField(value = "testcase_id")
-    @ApiModelProperty(value="")
+    @ApiModelProperty(value="测试用例ID")
     private String testcaseId;
 
     @TableField(value = "page_id")
-    @ApiModelProperty(value="")
+    @ApiModelProperty(value="页面ID")
     private Long pageId;
 
     /**
@@ -96,7 +96,7 @@ public class TStepUiNew implements Serializable {
 
     @TableField(value = "is_enable")
     @ApiModelProperty(value="")
-    private Integer isEnable;
+    private boolean isEnable;
 
     /**
      * 关键字描述
@@ -109,5 +109,13 @@ public class TStepUiNew implements Serializable {
     @ApiModelProperty(value="")
     private String optionData;
 
-    private static final long serialVersionUID = 1L;
+    @TableField(value = "waite")
+    @ApiModelProperty(value="等待时间")
+    private Integer waite;
+
+    @TableField(value = "counts")
+    @ApiModelProperty(value="点击次数")
+    private Integer counts;
+
+    private static final long serialVersionUID = 145355354545L;
 }

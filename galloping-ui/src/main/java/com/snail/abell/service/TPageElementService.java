@@ -6,6 +6,8 @@ import com.snail.abell.Vo.EditElementVo;
 import com.snail.abell.Vo.ElementVo;
 import com.snail.abell.entity.TPageElement;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -66,4 +68,6 @@ public interface TPageElementService extends IService<TPageElement>{
   boolean saveOrUpdateBatchVO(List<EditElementVo> pageElementVos);
 
   boolean updateElement(TPageElement pageElement);
+
+    ArrayList<HashMap<String, String>> getPageElementList(Long id);
 }

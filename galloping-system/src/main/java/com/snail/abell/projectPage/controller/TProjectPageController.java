@@ -3,6 +3,7 @@ package com.snail.abell.projectPage.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.snail.abell.apiInterface.ResponseResult;
 import com.snail.abell.exception.BizException;
+import com.snail.abell.logInterface.Log;
 import com.snail.abell.permission.vo.ProjectPageDto;
 import com.snail.abell.projectPage.Vo.ProjectPageVo;
 import com.snail.abell.projectPage.entity.TProjectPage;
@@ -14,6 +15,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.snail.abell.base.ResultCode.PROJECT_NOT_EXIST_ERROR;
@@ -58,6 +61,13 @@ public class TProjectPageController {
 
     }
 
+    @GetMapping("/listByPageId")
+    @ApiOperation(value = "通过页面id取页面数组")
+    @Log(description = "通过页面id取页面数组")
+    public ArrayList<HashMap<String, String>> listByPageId() {
+
+        return tProjectPageService.getPageNameList();
+    }
 
     @PostMapping("/add")
     @ApiOperation(value = "新增")

@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -141,6 +143,19 @@ public class TPageElementServiceImpl extends ServiceImpl<TPageElementDao,TPageEl
 
 
         return pageElementService.saveOrUpdate(pageElement);
+    }
+
+    @Override
+    public ArrayList<HashMap<String, String>> getPageElementList(Long id) {
+        ArrayList<HashMap<String, String>> pageElementList = new ArrayList<HashMap<String, String>>();
+        List<TPageElement> elementList = pageElementService.lambdaQuery().eq(TPageElement::getPageId,id).list();
+        for (TPageElement pageElement:elementList) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("value",pageElement.getId().toString());
+            map.put("text",pageElement.getElementName());
+            pageElementList.add(map);
+        }
+        return pageElementList;
     }
 
 

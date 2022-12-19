@@ -42,29 +42,5 @@ public interface SysQuartzJobDao extends BaseMapper<SysQuartzJob>{
      */
     List<SysQuartzJob> queryAll(SysQuartzJob sysQuartzJob);
 
-    /**
-     * 新增数据
-     *
-     * @param sysQuartzJob 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(SysQuartzJob sysQuartzJob);
-
-    /**
-     * 修改数据
-     *
-     * @param sysQuartzJob 实例对象
-     * @return 影响行数
-     */
-    int update(SysQuartzJob sysQuartzJob);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param jobId 主键
-     * @return 影响行数
-     */
-    int deleteById(Long jobId);
 
 }

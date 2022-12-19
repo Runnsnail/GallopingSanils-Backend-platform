@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,6 +38,8 @@ public class TProjectPageServiceImpl extends ServiceImpl<TProjectPageDao, TProje
     private TPageElementDao tPageElementDao;
     @Autowired
     private ProjectPageDtoMapper projectPageDtoMapper;
+    @Resource
+    private TProjectPageService ProjectPageService;
 
     /**
      * 通过ID查询单条数据
@@ -80,7 +84,7 @@ public class TProjectPageServiceImpl extends ServiceImpl<TProjectPageDao, TProje
      */
     @Override
     public TProjectPage update(TProjectPage tProjectPage) {
-        this.tProjectPageDao.update(tProjectPage);
+        this.tProjectPageDao.updateById(tProjectPage);
         return this.queryById(tProjectPage.getId());
     }
 
@@ -164,6 +168,19 @@ public class TProjectPageServiceImpl extends ServiceImpl<TProjectPageDao, TProje
     @Override
     public List<ProjectPageDto> findDtoByProjectIdAndPageNameAndIdNot(Long projectId, String pageName, Long id) {
         return this.projectPageDtoMapper.findDtoByProjectIdAndPageNameAndIdNot(projectId, pageName, id);
+    }
+
+    @Override
+    public ArrayList<HashMap<String, String>> getPageNameList() {
+        ArrayList<HashMap<String, String>> pageNameList = new ArrayList<HashMap<String, String>>();
+        List<TProjectPage> pageList = ProjectPageService.list();
+        for (TProjectPage pageElement:pageList) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("value",pageElement.getId().toString());
+            map.put("text",pageElement.getPageName());
+            pageNameList.add(map);
+        }
+        return pageNameList;
     }
 
     private String generateNewPageName(Long projectId, String pageName) {

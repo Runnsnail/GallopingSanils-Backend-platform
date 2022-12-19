@@ -42,29 +42,4 @@ public interface SysUsersRolesDao extends BaseMapper<SysUsersRoles>{
      */
     List<SysUsersRoles> queryAll(SysUsersRoles sysUsersRoles);
 
-    /**
-     * 新增数据
-     *
-     * @param sysUsersRoles 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(SysUsersRoles sysUsersRoles);
-
-    /**
-     * 修改数据
-     *
-     * @param sysUsersRoles 实例对象
-     * @return 影响行数
-     */
-    int update(SysUsersRoles sysUsersRoles);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param userId 主键
-     * @return 影响行数
-     */
-    int deleteById(Long userId);
-
 }

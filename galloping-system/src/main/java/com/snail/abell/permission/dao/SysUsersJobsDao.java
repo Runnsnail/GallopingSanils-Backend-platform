@@ -42,29 +42,5 @@ public interface SysUsersJobsDao extends BaseMapper<SysUsersJobs>{
      */
     List<SysUsersJobs> queryAll(SysUsersJobs sysUsersJobs);
 
-    /**
-     * 新增数据
-     *
-     * @param sysUsersJobs 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(SysUsersJobs sysUsersJobs);
-
-    /**
-     * 修改数据
-     *
-     * @param sysUsersJobs 实例对象
-     * @return 影响行数
-     */
-    int update(SysUsersJobs sysUsersJobs);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param userId 主键
-     * @return 影响行数
-     */
-    int deleteById(Long userId);
 
 }

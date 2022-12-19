@@ -15,7 +15,7 @@ public class CaseStepVo {
 
     private String name;
 
-    private Integer isEnable;
+    private boolean isEnable;
 
     private String actionType;
 

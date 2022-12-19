@@ -2,19 +2,12 @@ package com.snail.abell.permission.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.snail.abell.permission.dao.SysRoleDao;
-import com.snail.abell.permission.dto.UserDto;
 import com.snail.abell.permission.entity.SysRole;
 import com.snail.abell.permission.service.SysRoleService;
-import com.snail.abell.utils.StringUtils;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 角色表(SysRole)表服务实现类
@@ -70,7 +63,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao,SysRole> implemen
      */
     @Override
     public SysRole update(SysRole sysRole) {
-        this.sysRoleDao.update(sysRole);
+        this.sysRoleDao.updateById(sysRole);
         return this.queryById(sysRole.getRoleId());
     }
 

@@ -16,6 +16,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +74,14 @@ public class TPageElementController {
     public List<TPageElement> getlistProjectId(@PathVariable Long id) {
         List<TPageElement> projectPages = pageElementService.lambdaQuery().eq(TPageElement::getPageId,id).list();
         return projectPages;
+    }
+
+    @GetMapping("/listByPageId/{id}")
+    @ApiOperation(value = "通过页面id取元素数组")
+    @Log(description = "通过页面id取元素数组")
+    public ArrayList<HashMap<String, String>> listByPageId(@PathVariable Long id) {
+
+        return pageElementService.getPageElementList(id);
     }
 
     @PostMapping("/add")

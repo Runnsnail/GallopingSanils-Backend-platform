@@ -42,29 +42,5 @@ public interface SysQuartzLogDao extends BaseMapper<SysQuartzLog>{
      */
     List<SysQuartzLog> queryAll(SysQuartzLog sysQuartzLog);
 
-    /**
-     * 新增数据
-     *
-     * @param sysQuartzLog 实例对象
-     * @return 影响行数
-     */
-    @Override
-    int insert(SysQuartzLog sysQuartzLog);
-
-    /**
-     * 修改数据
-     *
-     * @param sysQuartzLog 实例对象
-     * @return 影响行数
-     */
-    int update(SysQuartzLog sysQuartzLog);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param logId 主键
-     * @return 影响行数
-     */
-    int deleteById(Long logId);
 
 }

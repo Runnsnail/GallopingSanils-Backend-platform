@@ -70,7 +70,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao,SysUser> implemen
      */
     @Override
     public SysUser update(SysUser sysUser) {
-        this.sysUserDao.update(sysUser);
+        sysUserDao.updateById(sysUser);
         return this.queryById(sysUser.getUserId());
     }
 

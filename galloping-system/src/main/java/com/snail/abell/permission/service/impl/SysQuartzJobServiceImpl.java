@@ -63,7 +63,7 @@ public class SysQuartzJobServiceImpl extends ServiceImpl<SysQuartzJobDao,SysQuar
      */
     @Override
     public SysQuartzJob update(SysQuartzJob sysQuartzJob) {
-        this.sysQuartzJobDao.update(sysQuartzJob);
+        this.sysQuartzJobDao.updateById(sysQuartzJob);
         return this.queryById(sysQuartzJob.getJobId());
     }
 

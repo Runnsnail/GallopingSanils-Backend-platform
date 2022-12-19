@@ -39,23 +39,4 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
-        insert into galloping_snail.sys_users_jobs()
-        values ()
-    </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update galloping_snail.sys_users_jobs
-        <set>
-        </set>
-        where user_id = #{userId}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from galloping_snail.sys_users_jobs where user_id = #{userId}
-    </delete>
-
 </mapper>

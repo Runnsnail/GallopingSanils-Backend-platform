@@ -63,7 +63,7 @@ public class SysRolesMenusServiceImpl extends ServiceImpl<SysRolesMenusDao,SysRo
      */
     @Override
     public SysRolesMenus update(SysRolesMenus sysRolesMenus) {
-        this.sysRolesMenusDao.update(sysRolesMenus);
+        this.sysRolesMenusDao.updateById(sysRolesMenus);
         return this.queryById(sysRolesMenus.getMenuId());
     }
 

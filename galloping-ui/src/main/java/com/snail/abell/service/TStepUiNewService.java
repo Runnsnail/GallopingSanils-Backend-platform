@@ -2,6 +2,7 @@ package com.snail.abell.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.snail.abell.Vo.CaseStepVo;
+import com.snail.abell.dto.StepMessageDto;
 import com.snail.abell.entity.TStepUiNew;
 
 import java.util.List;
@@ -28,4 +29,8 @@ public interface TStepUiNewService extends IService<TStepUiNew>{
     List<TStepUiNew> getStepsByCaseId(String caseId);
 
     String addCaseStep(CaseStepVo caseStepVo);
+
+    StepMessageDto getStepById(Integer stepId);
+
+    Boolean updateSortBatch(List<TStepUiNew> stepsList);
 }
