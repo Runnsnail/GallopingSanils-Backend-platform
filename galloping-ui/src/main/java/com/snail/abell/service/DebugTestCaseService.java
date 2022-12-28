@@ -18,5 +18,5 @@ public interface DebugTestCaseService {
      */
     public boolean runTestCase(Map<String,String> context);
 
-    public boolean isExcBusiness(TStepUiNew stepUiNew, Map<String, String> caseVars,Map<String, String> context);
+    public boolean isExcBusiness(TStepUiNew stepUiNew,Map<String, String> context);
 }

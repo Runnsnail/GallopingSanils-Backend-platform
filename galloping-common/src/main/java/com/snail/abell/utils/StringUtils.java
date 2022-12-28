@@ -94,13 +94,16 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      *
      */
     public static String changeString(String var) {
-        Pattern regex = Pattern.compile("\\$\\{(.*?)}");
+        String rule = "\\$\\{(.*?)}";
+        Pattern regex = Pattern.compile(rule);
         Matcher matcher = regex.matcher(var);
         String name = null;
 
-        while (matcher.find()) {
+        if (matcher.find()) {
             String varKey = matcher.group(1);
             name = varKey.substring(2,matcher.group().length()-2);
+        }else {
+            name = var;
         }
         return name;
     }
