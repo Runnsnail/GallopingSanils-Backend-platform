@@ -14,7 +14,8 @@ public enum ActionType {
     ELEMENTTYPE("元素操作"),
     COOKERTYPE("Cooker操作"),
     SCENTYPE("场景导入"),
-    ALTERTYPE("弹窗操作"),;
+    ALTERTYPE("弹窗操作"),
+    API("Api操作");
 
 
     private String message;

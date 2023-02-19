@@ -22,6 +22,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -121,7 +122,10 @@ public class TStepUiNewServiceImpl extends ServiceImpl<TStepUiNewMapper, TStepUi
             caseStepVo.setTestcaseId(caseCode);
         }
         BeanUtils.copyProperties(caseStepVo, stepUiNew);
-
+        List<CaseStep> caseStepList = caseStepService.lambdaQuery().eq(CaseStep::getCaseId, caseStepVo.getTestcaseId()).list();
+        List<Integer> stepIds = caseStepList.stream().map(CaseStep::getStepId).collect(Collectors.toList());
+        stepUiNew.setSort((long) (Collections.max(stepIds)+1));
+        stepUiNew.setEnable(true);
         stepUiNewService.saveOrUpdate(stepUiNew);
         TStepUiNew newCaseStep = stepUiNewService.lambdaQuery().orderByDesc(TStepUiNew::getId).last("limit 1").one();
         //同步更新用例与步骤映射

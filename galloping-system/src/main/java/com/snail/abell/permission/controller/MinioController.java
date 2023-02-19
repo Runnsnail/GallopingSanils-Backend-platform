@@ -1,6 +1,6 @@
 package com.snail.abell.permission.controller;
 
-import com.snail.abell.permission.service.MinioService;
+import com.snail.abell.minio.MinioService;
 import com.snail.abell.utils.FileTypeUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +59,7 @@ public class MinioController {
     public Map<String, String> showListObjectNameAndDownloadUrl(@PathVariable String bucketName) {
         Map<String, String> map = new HashMap<>();
         List<String> listObjectNames = minioService.listObjectNames(bucketName);
-        String url = "localhost:8085/minio/download/" + bucketName + "/";
+        String url = "http://116.62.219.238:9000/minio/" + bucketName + "/";
         listObjectNames.forEach(System.out::println);
         for (int i = 0; i < listObjectNames.size(); i++) {
             map.put(listObjectNames.get(i), url + listObjectNames.get(i));

@@ -1,6 +1,8 @@
 package com.snail.abell.service;
 
+import com.snail.abell.base.Result;
 import com.snail.abell.entity.TStepUiNew;
+import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
 
@@ -16,7 +18,7 @@ public interface DebugTestCaseService {
      * @param context
      * @return boolean
      */
-    public boolean runTestCase(Map<String,String> context);
+    public Result runTestCase(Map<String,String> context) throws Exception;
 
-    public boolean isExcBusiness(TStepUiNew stepUiNew,Map<String, String> context);
+    public Result isExcBusiness(TStepUiNew stepUiNew, Map<String, String> context, WebDriver driver,StringBuilder stepLogMessage) throws Exception;
 }

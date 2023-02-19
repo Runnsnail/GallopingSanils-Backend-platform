@@ -2,6 +2,7 @@ package com.snail.abell.elementTypeHandler;
 
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Set;
  * @author Abell
  * @date 2022/11/9
  */
+@Component
 public class CookerHandle {
 
     /**
@@ -31,14 +33,14 @@ public class CookerHandle {
     }
 
     /**
-     * 添加cookie信息
+     * 添加cookies信息
      * @param args cooker信息
      * @param driver 驱动
      */
-    public void addCookie(Map<String, String> args,WebDriver driver) {
+    public void addCookies(Map<String, Object> args,WebDriver driver) {
         Set<String> keys = args.keySet();
         for (String key : keys) {
-            driver.manage().addCookie(new Cookie(key, args.get(key)));
+            driver.manage().addCookie(new Cookie(key, (String) args.get(key)));
         }
     }
     /**
@@ -56,7 +58,7 @@ public class CookerHandle {
      * @param value cookie值
      * @param path  cookie路径
      */
-    public static void addCookie(String name, String value, String path,WebDriver driver) {
+    public static void addCookieByName(String name, String value, String path,WebDriver driver) {
         driver.manage().addCookie(new Cookie(name, value, path));
     }
     /**
@@ -85,7 +87,7 @@ public class CookerHandle {
      *         <li><tt>expiry</tt> <tt>cookie有效期</tt>
      *         </ul>
      */
-    public static Map<String, String> getCookieByName(String name,WebDriver driver) {
+    public static Map<String, String> getCookieByNameAndValue(String name,WebDriver driver) {
         Cookie cookie = driver.manage().getCookieNamed(name);
         if (cookie != null) {
             Map<String, String> map = new HashMap<String, String>();

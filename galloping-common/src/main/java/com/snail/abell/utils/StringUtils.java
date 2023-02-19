@@ -97,15 +97,14 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         String rule = "\\$\\{(.*?)}";
         Pattern regex = Pattern.compile(rule);
         Matcher matcher = regex.matcher(var);
-        String name = null;
+        String targetName = null;
 
         if (matcher.find()) {
-            String varKey = matcher.group(1);
-            name = varKey.substring(2,matcher.group().length()-2);
+             targetName = matcher.group(1);
         }else {
-            name = var;
+            targetName = var;
         }
-        return name;
+        return targetName;
     }
 
     /**

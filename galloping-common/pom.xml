@@ -30,7 +30,14 @@
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
-            <version>8.2.1</version>
+            <version>8.4.3</version>
+        </dependency>
+
+        <!-- spring-file-storage 接入文件存储的工具包 -->
+        <dependency>
+            <groupId>cn.xuyanwu</groupId>
+            <artifactId>spring-file-storage</artifactId>
+            <version>0.5.0</version>
         </dependency>
         <dependency>
             <groupId>eu.bitwalker</groupId>

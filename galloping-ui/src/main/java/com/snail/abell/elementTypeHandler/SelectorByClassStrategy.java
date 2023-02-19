@@ -283,7 +283,7 @@ public class SelectorByClassStrategy implements SelectorStrategy {
     }
 
     @Override
-    public void clickHoldAndRelease(String value, WebDriver driver, Long time) {
+    public void clickHoldAndRelease(String value, WebDriver driver) {
         Actions actions = new Actions(driver);
         actions.clickAndHold(driver.findElement(By.className(value))).perform();
         try {

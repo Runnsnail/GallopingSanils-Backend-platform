@@ -343,5 +343,5 @@ public interface SelectorStrategy {
      * @param driver
      * @param time 时间
      */
-    void clickHoldAndRelease(String value, WebDriver driver,Long time);
+    void clickHoldAndRelease(String value, WebDriver driver);
 }

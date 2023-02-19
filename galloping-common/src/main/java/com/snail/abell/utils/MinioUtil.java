@@ -11,7 +11,10 @@ import io.minio.messages.Item;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -179,6 +182,23 @@ public class MinioUtil {
                                 inputStream, -1, minioProperties.getFileSize())
                         .contentType(fileType)
                         .build());
+    }
+
+    /**
+     * 截图文件上传
+     *
+     * @param bucketName 存储桶
+     * @param file 文件
+     * @param filename 文件名称
+     */
+    @SneakyThrows
+    public void putObjectByFile(String bucketName, File file, String filename) {
+        InputStream inputStream = new FileInputStream(file);
+        minioClient.putObject(
+                PutObjectArgs.builder().bucket(bucketName).object(filename).stream(
+                                inputStream, -1, minioProperties.getFileSize())
+                        .build());
+        inputStream.close();
     }
 
 

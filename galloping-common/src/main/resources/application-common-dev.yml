@@ -1,0 +1,24 @@
+minio:
+  endpoint: http://116.62.219.238:9000
+  port: 9000
+  accessKey: abell
+  secretKey: abell1692178653@qq.com
+  secure: false
+  bucket-name: commons
+  image-size: 10485760 # 图片文件的最大大小
+  file-size: 1073741824 # 文件的最大大小
+
+# 文件存储路径
+file:
+  mac:
+    path: ~/file/
+    avatar: ~/avatar/
+  linux:
+    path: /home/abell/file/
+    avatar: /home/abell/avatar/
+  windows:
+    path: C:\abell\file\
+    avatar: C:\abell\avatar\
+  # 文件大小 /M
+  maxSize: 100
+  avatarMaxSize: 5

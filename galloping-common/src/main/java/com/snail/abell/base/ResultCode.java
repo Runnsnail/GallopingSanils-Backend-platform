@@ -28,6 +28,10 @@ public enum ResultCode {
     /* 用例状态吗 */
     SCEN_EXIST_ERROR(20001,"场景执行失败"),
     DRIVER_EXIST_ERROR(20002,"浏览器驱动初始化失败，请选择正确的驱动"),
+    FAIL_STEP(20003,"测试用例执行失败"),
+    SUCCESS_STEP(20004,"测试用例执行成功"),
+    SKIP_STEP(20005,"忽略步骤执行"),
+    CASEVARIABLE_EXIST_ERROR(20006,"用例变量已存在"),
     ;
 
     private Integer code;

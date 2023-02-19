@@ -1,12 +1,14 @@
 package com.snail.abell.controller;
 
 import com.snail.abell.apiInterface.ResponseResult;
+import com.snail.abell.base.Result;
 import com.snail.abell.logInterface.Log;
 import com.snail.abell.service.DebugTestCaseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +33,7 @@ public class SeleniumGridController {
     @PostMapping("/setUpNode")
     @ApiOperation(value = "debugger测试用例")
     @Log(description = "debugger测试用例")
-    public boolean setUp(Map<String,String> content){
+    public Result setUp(@RequestBody Map<String,String> content) throws Exception {
 
     return debugTestCaseService.runTestCase(content);
     }

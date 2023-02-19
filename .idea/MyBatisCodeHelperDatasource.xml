@@ -13,6 +13,7 @@
         <option name="javaModelPackage" value="com.snail.abell.projectPage.entity" />
         <option name="javaModelPath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
         <option name="lastDatabaseCrudChooseModuleName" value="galloping-ui" />
+        <option name="lombokBuilderAnnotation" value="true" />
         <option name="lombokDataAnnotation" value="true" />
         <option name="mapperAnnotaion" value="true" />
         <option name="moduleNameToPackageAndPathMap">
@@ -42,7 +43,7 @@
                   <option name="javaModelPath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
                   <option name="javaServiceInterfacePackage" value="com.snail.abell.projectPage.service" />
                   <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
-                  <option name="javaServicePackage" value="com.snail.abell.projectPage.service.impl" />
+                  <option name="javaServicePackage" value="com.snail.abell.service" />
                   <option name="javaServicePath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
                   <option name="xmlPackage" value="mapper" />
                   <option name="xmlPath" value="$PROJECT_DIR$/galloping-ui/src/main/resources" />
@@ -51,6 +52,7 @@
             </entry>
           </map>
         </option>
+        <option name="mybatisPlusIdType" value="AUTO" />
         <option name="mybatisPlusStaticField" value="false" />
         <option name="noJdbcType" value="true" />
         <option name="p3CComment" value="true" />
@@ -97,6 +99,31 @@
                   <option name="sequenceId" value="" />
                   <option name="updateBatch" value="true" />
                   <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="galloping_snail:selenium_node">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="SeleniumNode" />
+                  <option name="moduleName" value="galloping-ui" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="galloping_snail:step_ui_log">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="StepUiLog" />
+                  <option name="moduleName" value="galloping-ui" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
                   <option name="useActualColumnName" value="false" />
                 </TableGenerateConfig>
               </value>
@@ -155,6 +182,7 @@
             </entry>
           </map>
         </option>
+        <option name="updateBatchSelective" value="true" />
         <option name="useSwagger" value="true" />
         <option name="userMybatisPlus" value="true" />
         <option name="xmlMapperPackage" value="mapper" />

@@ -2,11 +2,10 @@ package com.snail.abell.elementTypeHandler;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -18,38 +17,39 @@ import java.util.concurrent.TimeUnit;
  * @author Abell
  * @date 2022/11/9
  */
+@Component
 public class BrowserHandle {
 
     private  final Logger logger = LoggerFactory.getLogger(BrowserHandle.class);
     private  long timeOutInSeconds = 10;
-    WebDriver driver = null;
-
-    public  WebDriver initBrowser(String browser) {
-
-        switch (browser) {
-            case "FireFox":
-                System.setProperty("webdriver.gecko.driver", "D:\\2345Downloads\\geckodriver.exe");
-                driver = new FirefoxDriver();
-                break;
-            case "Chrome":
-                System.setProperty("webdriver.chrome.driver", "C:\\Users\\huawei\\Downloads\\chromedriver_win32\\chromedriver.exe");
-                driver = new ChromeDriver();
-                break;
-            default:
-                try {
-                    throw new Exception("浏览器错误!");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-        }
-        return driver;
-    }
+//    WebDriver driver = null;
+//
+//    public  WebDriver initBrowser(String browser) {
+//
+//        switch (browser) {
+//            case "FireFox":
+//                System.setProperty("webdriver.gecko.driver", "D:\\2345Downloads\\geckodriver.exe");
+//                driver = new FirefoxDriver();
+//                break;
+//            case "Chrome":
+//                System.setProperty("webdriver.chrome.driver", "C:\\Users\\huawei\\Downloads\\chromedriver_win32\\chromedriver.exe");
+//                driver = new ChromeDriver();
+//                break;
+//            default:
+//                try {
+//                    throw new Exception("浏览器错误!");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//        }
+//        return driver;
+//    }
 
     /**
      *     指定浏览器打开URL
      */
-    public  WebDriver openBrowser(String browser,String driverUrl) {
-        driver = initBrowser(browser);
+    public  WebDriver openBrowser(String driverUrl,WebDriver driver) {
+
         driver.manage().timeouts().implicitlyWait(timeOutInSeconds, TimeUnit.SECONDS);
         driver.get(driverUrl);
         driver.manage().window().maximize();
@@ -59,47 +59,47 @@ public class BrowserHandle {
     /**
      *     关闭当前浏览器
      */
-    public  void closeCurrentBrowser() {
+    public  void closeCurrentBrowser(WebDriver driver) {
         driver.close();
     }
     /**
      *     关闭所有selenium驱动打开的浏览器
      */
-    public  void closeAllBrowser() {
+    public  void closeAllBrowser(WebDriver driver) {
         driver.quit();
     }
     /**
      *     最大化浏览器
      */
-    public  void maxBrowser() {
+    public  void maxBrowser(WebDriver driver) {
         driver.manage().window().maximize();
     }
 
     /**
      *     自定义设置浏览器尺寸
      */
-    public  void setBrowserSize(int width, int heigth) {
+    public  void setBrowserSize(int width, int heigth,WebDriver driver) {
         driver.manage().window().setSize(new Dimension(width, heigth));
     }
 
     /**
      *     获取网页的title值
      */
-    public String getTitle() {
+    public String getTitle(WebDriver driver) {
         return driver.getTitle();
     }
 
     /**
      *     获取当前url字符串
      */
-    public  String getUrl() {
+    public  String getUrl(WebDriver driver) {
         return driver.getCurrentUrl();
     }
 
     /**
      *    上一个页面(点击浏览器返回)
      */
-    public  void returnToPreviousPage() {
+    public  void returnToPreviousPage(WebDriver driver) {
         driver.navigate().back();
     }
 
@@ -107,14 +107,14 @@ public class BrowserHandle {
      *     下一个页面(如果没有下一个页面则什么都不做)
      *     浏览器上的前进
      */
-    public  void forwardToNextPage() {
+    public  void forwardToNextPage(WebDriver driver) {
         driver.navigate().forward();
     }
 
     /**
      *     刷新页面
      */
-    public  void refreshPage() {
+    public  void refreshPage(WebDriver driver) {
         driver.navigate().refresh();
     }
 
@@ -122,7 +122,7 @@ public class BrowserHandle {
      * 切换iframe
      * @param cssSelector  css选择器
      */
-    public void changeIframe(String cssSelector){
+    public void changeIframe(String cssSelector,WebDriver driver){
         WebElement iframe1 = driver.findElement(By.cssSelector(cssSelector));
         driver.switchTo().frame(iframe1);
     }
@@ -130,14 +130,14 @@ public class BrowserHandle {
     /***
      * 跳出iframe
      */
-    public void jumpIframe(){
+    public void jumpIframe(WebDriver driver){
         driver.switchTo().defaultContent();
     };
 
     /***
      * 当只有两个窗口时进行窗口切换
      */
-    public void changeTwoWindow(){
+    public void changeTwoWindow(WebDriver driver){
         String mainHandle = driver.getWindowHandle();
         Set<String> handles = driver.getWindowHandles();
         for (String hand : handles) {
@@ -152,7 +152,7 @@ public class BrowserHandle {
      * 根据title进行窗口切换
      * @param title
      */
-    public void changeSomeWindow(String title ){
+    public void changeSomeWindow(String title,WebDriver driver ){
         Set<String> handles = driver.getWindowHandles();
         for (String hand : handles) {
             if (driver.switchTo().window(hand).getTitle().equals(title)) {
@@ -166,7 +166,7 @@ public class BrowserHandle {
     /**
      * @deprecated  强制刷新页面
      */
-    public void refresh() {
+    public void refresh(WebDriver driver) {
         Actions ctrl = new Actions(driver);
         ctrl.keyDown(Keys.CONTROL).perform();
         try {
@@ -180,7 +180,7 @@ public class BrowserHandle {
     /**
      *     判断是否加载有JQuery
      */
-    public Boolean jQueryLoaded() {
+    public Boolean jQueryLoaded(WebDriver driver) {
         Boolean loaded;
         JavascriptExecutor js = (JavascriptExecutor) driver;
         try {

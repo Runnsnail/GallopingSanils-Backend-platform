@@ -33,7 +33,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="GallopingSanils" options="" />
+      <module name="GallopingSanils" options="-parameters" />
       <module name="galloping-api" options="-parameters" />
       <module name="galloping-app" options="-parameters" />
       <module name="galloping-common" options="-parameters" />

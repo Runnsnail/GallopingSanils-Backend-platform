@@ -3,6 +3,7 @@ package com.snail.abell.elementTypeHandler;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.springframework.stereotype.Service;
 
 import java.awt.*;
 
@@ -12,6 +13,7 @@ import static org.openqa.selenium.Keys.DELETE;
  * @author Abell
  * @date 2022/11/27
  */
+@Service
 public class KeyboardHandle {
 
 

@@ -28,7 +28,7 @@ public class StepInforDto {
 
     private Long elementId;
 
-    private Long counts;
+    private Integer counts;
 
-    private Long waite;
+    private Integer waite;
 }
