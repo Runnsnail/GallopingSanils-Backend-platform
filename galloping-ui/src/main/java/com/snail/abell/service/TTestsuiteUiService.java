@@ -1,9 +1,10 @@
 package com.snail.abell.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.snail.abell.Vo.PageSuitsVo;
-import com.snail.abell.Vo.TestSuitMetaVo;
-import com.snail.abell.Vo.TestSuitUiVo;
+import com.snail.abell.Vo.*;
+import com.snail.abell.dto.UiExectionDto;
 import com.snail.abell.entity.TSuiteCaseUi;
 import com.snail.abell.entity.TTestsuiteUi;
 
@@ -67,9 +68,17 @@ public interface TTestsuiteUiService extends IService<TTestsuiteUi>{
 
   boolean updateCaseSort(List<TSuiteCaseUi> suiteCaseUis);
 
+  boolean updateSuiteTree(List<SuiteTreeVo> suiteTreeVoList);
+
   boolean addCaseToSuite(List<TSuiteCaseUi> suiteCaseUis);
 
   boolean deleteByCaseId(Long id);
 
   boolean updateSuit(TestSuitMetaVo testsuiteUi);
+
+  IPage<UiExectionDto> pageQueryList(Page<UiExectionDto> page, UiExectionVo uiExectionVo);
+
+  boolean updateByUiExection(EnvVo envVo);
+
+  boolean saveAndCreatJob(TTestsuiteUi newTestsuiteUi) throws Exception;
 }

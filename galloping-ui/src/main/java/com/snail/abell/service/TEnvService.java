@@ -24,4 +24,6 @@ public interface TEnvService extends IService<TEnv>{
     int insertOrUpdateSelective(TEnv record);
 
     ArrayList<HashMap<String, String>> getUiEnv();
+
+    boolean saveOrUpdateByEnv(TEnv env);
 }

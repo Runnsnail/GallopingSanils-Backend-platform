@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snail.abell.dao.CaseUiConditionMapper">
+  <resultMap id="BaseResultMap" type="com.snail.abell.entity.CaseUiCondition">
+    <!--@mbg.generated-->
+    <!--@Table galloping_snail.case__ui_condition-->
+    <id column="id" property="id" />
+    <result column="action" property="action" />
+    <result column="status" property="status" />
+    <result column="type" property="type" />
+    <result column="case_id" property="caseId" />
+    <result column="step_id" property="stepId" />
+    <result column="variable" property="variable" />
+    <result column="var_name" property="variable" />
+    <result column="taget_name" property="tagetName" />
+    <result column="taget_image" property="tagetImage" />
+    <result column="js_content" property="jsContent" />
+    <result column="element_action" property="elementAction" />
+    <result column="element_xpath" property="elementXpath" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `action`, `status`, `type`, case_id, step_id, `variable`, taget_name, taget_image,
+    js_content,element_action,element_xpath,var_name
+  </sql>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update galloping_snail.case__ui_condition
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`action` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.action != null">
+            when id = #{item.id} then #{item.action}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when id = #{item.id} then #{item.status}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.type != null">
+            when id = #{item.id} then #{item.type}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="case_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.caseId != null">
+            when id = #{item.id} then #{item.caseId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="step_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.stepId != null">
+            when id = #{item.id} then #{item.stepId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`variable` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.variable != null">
+            when id = #{item.id} then #{item.variable}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`var_name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.varName != null">
+            when id = #{item.id} then #{item.varName}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="taget_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.tagetName != null">
+            when id = #{item.id} then #{item.tagetName}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="taget_image = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.tagetImage != null">
+            when id = #{item.id} then #{item.tagetImage}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="js_content = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.jsContent != null">
+            when id = #{item.id} then #{item.jsContent}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="element_action = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.elementAction != null">
+            when id = #{item.id} then #{item.elementAction}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="element_xpath = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.elementAction != null">
+            when id = #{item.id} then #{item.elementXpath}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+</mapper>

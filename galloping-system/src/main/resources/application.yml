@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-      active: dev,common-dev
+      active: dev,common-dev,quart-dev
   freemarker:
     check-template-location: false
   jackson:

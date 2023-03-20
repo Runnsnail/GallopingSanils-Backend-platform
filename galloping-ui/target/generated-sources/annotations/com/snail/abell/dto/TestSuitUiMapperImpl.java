@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-12T18:14:32+0800",
+    date = "2023-03-14T10:26:10+0800",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 1.8.0_191 (Oracle Corporation)"
 )
 @Component
@@ -28,6 +28,8 @@ public class TestSuitUiMapperImpl implements TestSuitUiMapper {
         tTestsuiteUi.setParentId( dto.getParentId() );
         tTestsuiteUi.setSort( dto.getSort() );
         tTestsuiteUi.setIsLeaf( dto.getIsLeaf() );
+        tTestsuiteUi.setStatus( dto.getStatus() );
+        tTestsuiteUi.setNotificationType( dto.getNotificationType() );
         tTestsuiteUi.setCreateBy( dto.getCreateBy() );
         tTestsuiteUi.setUpdateBy( dto.getUpdateBy() );
         tTestsuiteUi.setCreateTime( dto.getCreateTime() );
@@ -98,6 +100,8 @@ public class TestSuitUiMapperImpl implements TestSuitUiMapper {
         testSuitUiVo.setParentId( tTestsuiteUi.getParentId() );
         testSuitUiVo.setSort( tTestsuiteUi.getSort() );
         testSuitUiVo.setIsLeaf( tTestsuiteUi.getIsLeaf() );
+        testSuitUiVo.setStatus( tTestsuiteUi.getStatus() );
+        testSuitUiVo.setNotificationType( tTestsuiteUi.getNotificationType() );
 
         return testSuitUiVo;
     }

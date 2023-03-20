@@ -68,4 +68,5 @@ public interface TSuiteCaseUiDao extends BaseMapper<TSuiteCaseUi>{
     int deleteById(Long id);
 
     Integer findMaxSortBySuiteId(@Param("suiteId")Long suiteId);
+
 }

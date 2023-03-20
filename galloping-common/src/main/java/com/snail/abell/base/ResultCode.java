@@ -32,6 +32,7 @@ public enum ResultCode {
     SUCCESS_STEP(20004,"测试用例执行成功"),
     SKIP_STEP(20005,"忽略步骤执行"),
     CASEVARIABLE_EXIST_ERROR(20006,"用例变量已存在"),
+    ASSERTION_FAIL(20007,"断言失败"),
     ;
 
     private Integer code;

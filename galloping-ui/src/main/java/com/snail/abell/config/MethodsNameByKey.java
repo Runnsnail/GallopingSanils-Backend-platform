@@ -65,7 +65,14 @@ public enum MethodsNameByKey {
     WAITFORENABLEDBYXPATHANDCLICK("等待元素可用再点击", "waitForEnabledByXpathAndClick"),
 
     //FileHandleMethod: 处理方法文件方法
-    FLAILED("非input元素上传", "fileUploadByRobot");
+    FLAILED("非input元素上传", "fileUploadByRobot"),
+
+
+    //断言处理
+    ELEMENTISEXIST("判断元素是否存在","exists"),
+    ELEMENTISSHOW("判断元素是否显示","getDisplayState"),
+    ELEMENTISENABLE("判断元素是否可写","getEnableState"),
+    ELEMENTISSELECT("判断元素是否选中","getSelectState");
 
     private String methodName;
 

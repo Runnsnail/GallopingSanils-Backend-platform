@@ -1,9 +1,10 @@
 package com.snail.abell.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.snail.abell.entity.TEnv;
 import com.snail.abell.dao.TEnvMapper;
+import com.snail.abell.entity.TEnv;
 import com.snail.abell.service.TEnvService;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ public class TEnvServiceImpl extends ServiceImpl<TEnvMapper, TEnv> implements TE
 
     @Resource
     private TEnvMapper envMapper;
+    @Resource
+    private TEnvService envService;
 
     @Override
     public int updateBatch(List<TEnv> list) {
@@ -56,4 +59,14 @@ public class TEnvServiceImpl extends ServiceImpl<TEnvMapper, TEnv> implements TE
         }
         return envMapArrayList;
     }
+
+    @Override
+    public boolean saveOrUpdateByEnv(TEnv env) {
+
+        UpdateWrapper<TEnv> updateByEnvVo = new UpdateWrapper<>();
+        updateByEnvVo.eq("name",env.getName());
+
+        return envService.saveOrUpdate(env,updateByEnvVo);
+    }
+
 }

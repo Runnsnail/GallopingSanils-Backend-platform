@@ -2,6 +2,7 @@ package com.snail.abell.minio;
 
 
 import com.snail.abell.config.MinioProperties;
+import com.snail.abell.utils.FileUtil;
 import com.snail.abell.utils.MinioUtil;
 import io.minio.MinioClient;
 import io.minio.messages.Bucket;
@@ -82,6 +83,27 @@ public class MinioServiceImpl implements MinioService {
             e.printStackTrace();
             return "上传失败";
         }
+    }
+
+    @Override
+    public String saveImageByBase(String base64File, String bucketName, String conditionName) {
+
+        InputStream inputStream = FileUtil.base64ConvertPNG(base64File);
+
+        try {
+            bucketName = StringUtils.isNotBlank(bucketName) ? bucketName : minioProperties.getBucketName();
+            if (!this.bucketExists(bucketName)) {
+                this.makeBucket(bucketName);
+            }
+            this.removeObject(bucketName, conditionName);
+            minioUtil.upload(bucketName,conditionName+ ".png",inputStream);
+//            minioProperties.getEndpoint() + "/" + bucketName + "/" + objectName;
+            return minioUtil.getObjectUrl(bucketName,conditionName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "上传失败";
+        }
+
     }
 
     @Override

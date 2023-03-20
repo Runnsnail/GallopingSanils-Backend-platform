@@ -254,6 +254,7 @@ public class TTestcaseUiNewServiceImpl extends ServiceImpl<TTestcaseUiNewDao, TT
     @Override
     @Transactional
     public boolean removeCase(Long caseId) {
+
         LambdaQueryWrapper<TSuiteCaseUi> lambdaQueryWrap = new LambdaQueryWrapper<>();
         lambdaQueryWrap.eq(TSuiteCaseUi::getCaseId,caseId);
         suiteCaseUiService.remove(lambdaQueryWrap);

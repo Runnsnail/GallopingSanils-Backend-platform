@@ -3,9 +3,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/galloping_snail?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&allowMultiQueries=true
-    username: root
-    password: root
+    url: jdbc:mysql://rm-gc7s7650e760gvxm5ko.mysql.cn-chengdu.rds.aliyuncs.com:3306/galloping_snail?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: galloping
+    password: Aa1387192#
     druid:
       # 主库数据源
 #       master:

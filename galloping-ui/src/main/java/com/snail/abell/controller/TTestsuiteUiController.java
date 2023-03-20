@@ -1,10 +1,12 @@
 package com.snail.abell.controller;
 
-import com.snail.abell.Vo.PageSuitsVo;
-import com.snail.abell.Vo.TestSuitMetaVo;
-import com.snail.abell.Vo.TestSuitUiVo;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.snail.abell.Vo.*;
 import com.snail.abell.apiInterface.ResponseResult;
 import com.snail.abell.dto.TestUiDto;
+import com.snail.abell.dto.UiExectionDto;
 import com.snail.abell.entity.TSuiteCaseUi;
 import com.snail.abell.entity.TTestsuiteUi;
 import com.snail.abell.exception.BizException;
@@ -42,6 +44,7 @@ public class TTestsuiteUiController {
      */
     @Resource
     private TTestsuiteUiService testsuiteUiService;
+
     @Autowired
     private TTestcaseUiNewService testcaseUiNewService;
 
@@ -91,6 +94,26 @@ public class TTestsuiteUiController {
         return suiteUiDtoList;
     }
 
+    @GetMapping("/fetchSuitList")
+    @ApiOperation(value = "获取分页带参运行列表")
+    @Log(description="获取分页带参运行列表")
+    public IPage<UiExectionDto> getPageList(UiExectionVo uiExectionVo) {
+        Page<UiExectionDto> page = new Page<>(uiExectionVo.getPage(), uiExectionVo.getPerPage());
+        IPage<UiExectionDto> testcaseUiNewList = testsuiteUiService.pageQueryList(page, uiExectionVo);
+        return testcaseUiNewList;
+    }
+
+    @PostMapping("/updateEnv")
+    @ApiOperation(value = "定时执行时修改环境")
+    @Log(description = "定时执行时修改环境")
+    public boolean editTestsuiteUi(@RequestBody EnvVo envVo) {
+
+
+        return testsuiteUiService.updateByUiExection(envVo);
+    }
+
+
+
     @GetMapping("/listCaseById/{id}")
     @ApiOperation(value = "获取列表")
     @Log(description = "获取列表")
@@ -100,36 +123,48 @@ public class TTestsuiteUiController {
 
 
     @PostMapping("/add")
-    @ApiOperation(value = "新增")
-    @Log(description = "新增")
-    public boolean savaTTestsuiteUi(@RequestBody TestSuitMetaVo suiteUi) {
-        List<TTestsuiteUi> testsuiteUis = testsuiteUiService.selectByNameAndProjectId(suiteUi.getLabel(), suiteUi.getProjectId());
+    @ApiOperation(value = "新增suite节点")
+    @Log(description = "新增suite节点")
+    public boolean savaTTestsuiteUi(@RequestBody TestSuitMetaVo suiteUi) throws Exception {
+        List<TTestsuiteUi> testsuiteUis = testsuiteUiService.selectByNameAndProjectId(suiteUi.getName(), suiteUi.getProjectId());
         if (testsuiteUis.size() > 0) {
             throw  new BizException(SUITCASE_EXIST_ERROR);
         }
         TTestsuiteUi newTestsuiteUi = new TTestsuiteUi();
         BeanUtils.copyProperties(suiteUi,newTestsuiteUi);
-        newTestsuiteUi.setName(suiteUi.getLabel());
+        newTestsuiteUi.setName(suiteUi.getName());
         newTestsuiteUi.setCreateBy(SecurityUtils.getCurrentUsername());
-        return testsuiteUiService.save(newTestsuiteUi);
+        return testsuiteUiService.saveAndCreatJob(newTestsuiteUi);
     }
 
     @PostMapping("/edit")
-    @ApiOperation(value = "编辑")
-    @Log(description = "编辑")
+    @ApiOperation(value = "编辑suite节点")
+    @Log(description = "编辑suite节点")
     public boolean editTTestsuiteUi(@RequestBody TestSuitMetaVo testsuiteUi) {
-        List<TTestsuiteUi> testsuiteUis = testsuiteUiService.selectByNameAndProjectIdAndIdNot(testsuiteUi.getLabel(), testsuiteUi.getProjectId(), testsuiteUi.getId());
+        List<TTestsuiteUi> testsuiteUis = testsuiteUiService.selectByNameAndProjectIdAndIdNot(testsuiteUi.getName(), testsuiteUi.getProjectId(), testsuiteUi.getId());
         if (testsuiteUis.size() > 0) {
             throw  new BizException(SUITCASE_EXIST_ERROR);}
 
         return testsuiteUiService.updateSuit(testsuiteUi);
     }
 
+
+
     @PostMapping("/remove")
-    @ApiOperation(value = "删除")
-    @Log(description = "删除")
+    @ApiOperation(value = "删除suite节点")
+    @Log(description = "删除suite节点")
     public boolean delTTestsuiteUi(@RequestBody TTestsuiteUi testsuiteUi) {
         return testsuiteUiService.deleteById(testsuiteUi.getId());
+    }
+
+
+    @PostMapping("/updateSuiteTree")
+    @ApiOperation(value = "更新SuiteTree排序")
+    @Log(description = "更新SuiteTree排序")
+    public boolean updateSuiteTree(@RequestBody String treeLists) {
+        JSONObject jsonObject = JSONObject.parseObject(treeLists);
+        List<SuiteTreeVo> suiteTreeVoList = JSONObject.parseArray(jsonObject.getJSONArray("treeList").toJSONString(),SuiteTreeVo.class);
+        return testsuiteUiService.updateSuiteTree(suiteTreeVoList);
     }
 
     @PostMapping("/updateCaseSort")

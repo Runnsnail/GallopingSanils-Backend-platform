@@ -16,7 +16,7 @@ public class TestSuitMetaVo implements Serializable {
     private Long id;
 
 
-    private String label;
+    private String name;
 
 
     private Long projectId;

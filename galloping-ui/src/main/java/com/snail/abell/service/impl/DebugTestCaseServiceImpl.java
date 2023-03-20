@@ -3,6 +3,7 @@ package com.snail.abell.service.impl;
 import cn.hutool.core.util.ReflectUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.snail.abell.base.Result;
 import com.snail.abell.config.*;
@@ -11,13 +12,17 @@ import com.snail.abell.elementTypeHandler.*;
 import com.snail.abell.entity.*;
 import com.snail.abell.exception.BizException;
 import com.snail.abell.service.*;
+import com.snail.abell.utils.FindImageRobotUtil;
 import com.snail.abell.utils.SecurityUtils;
 import com.snail.abell.utils.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Service;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
@@ -54,6 +59,8 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
     @Resource
     private CaseStepService caseStepService;
     @Resource
+    private CaseUiConditionService caseUiConditionService;
+    @Resource
     private CaseParamService caseParamService;
     @Resource
     private BrowserHandle browserHandle;
@@ -65,6 +72,7 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
     private FileHandle fileHandle;
     @Resource
     private JavaScriptHandle javaScriptHandle;
+
 
     public Logger log = LogManager.getLogger("TestCaseStep");
 
@@ -80,12 +88,13 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
         String caseId = context.get("caseId");
         DriverFactory.initDriver(browserType);
         WebDriver driver = DriverFactory.getDriver();
-
+//        WebDriver driverListener = new EventFiringWebDriver(driver).register(new GlobalEventListener());
         if (driver == null) {
 
             throw new BizException(DRIVER_EXIST_ERROR);
 
         }
+
         TTestcaseUiNew testcaseUiNew = testcaseUiNewService.lambdaQuery().eq(TTestcaseUiNew::getCaseId, caseId).one();
         List<CaseStep> caseStepList = caseStepService.lambdaQuery().eq(CaseStep::getCaseId, caseId).list();
         List<Integer> stepIds = caseStepList.stream().map(CaseStep::getStepId).collect(Collectors.toList());
@@ -107,14 +116,24 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
             Integer status;
             String imgUrl = null;
 
+            CaseUiCondition conditions = caseUiConditionService.lambdaQuery()
+                    .eq(CaseUiCondition::getCaseId, caseId).eq(CaseUiCondition::getStepId, stepUiNew.getId()).one();
+
+
+            if ( null!=conditions && 0 == conditions.getType()) {
+                stepLogMessage.append("执行前置操作:  " + conditions.getAction() + "\r\n");
+                Result result = runCaseUiCondition(conditions,context,null,driver);
+                stepLogMessage.append("执行前置操作结果  :  " + result.getMessage() + "\r\n");
+            }
             if (stepUiNew.isEnable()) {
 
                 log.info("执行步骤" + stepUiNew.getName() + "---执行第【" + stepUiNew.getSort() + "】步");
                 stepLogMessage.append("执行步骤:  " + stepUiNew.getName() + "\r\n执行第【" + stepUiNew.getSort() + "】步\r\n");
-
+                String screenshotName = stepUiNew.getName() + ".png";
                 try {
 
                     stepResult = isExcBusiness(stepUiNew, context, driver, stepLogMessage);
+                    imgUrl = screenshotsHandle.screenShot(driver, "testcase", screenshotName);
                     status = 0;
                     log.info("执行结果: " + stepResult.getMessage());
 
@@ -122,11 +141,10 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
 
 
                     stepResult = new Result<>(FAIL_STEP, e);
-                    String screenshotName = stepUiNew.getName() + ".png";
                     status = 1;
-                    imgUrl =  screenshotsHandle.screenShot(driver,"testcase",screenshotName);
+                    imgUrl = screenshotsHandle.screenShot(driver, "testcase", screenshotName);
+                    saveExcStepLogs(stepUiNew, stepResult, status, imgUrl);
                     driver.quit();
-                    saveExcStepLogs(stepUiNew, stepResult, status,imgUrl);
                     return stepResult;
                 }
 
@@ -135,14 +153,82 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
                 log.info("忽略执行步骤" + stepUiNew.getName() + "---执行第【" + stepUiNew.getSort() + "】步");
                 stepLogMessage.append("忽略执行步骤" + stepUiNew.getName() + "---执行第【" + stepUiNew.getSort() + "】步\r\n");
                 status = 2;
-                saveExcStepLogs(stepUiNew, stepResult, status,imgUrl);
+                saveExcStepLogs(stepUiNew, stepResult, status, imgUrl);
                 stepResult = new Result<>(SKIP_STEP, stepUiNew.getName());
             }
 
-            saveExcStepLogs(stepUiNew, stepResult, status,imgUrl);
+            if (null!=conditions && 1 == conditions.getType() ) {
+                stepLogMessage.append("执行后置操作:  " + conditions.getAction() + "\r\n");
+                Result result = runCaseUiCondition(conditions,context,imgUrl,driver);
+                stepLogMessage.append("执行后置操作结果  :  " + result.getMessage() + "\r\n");
+            }
+            saveExcStepLogs(stepUiNew, stepResult, status, imgUrl);
         }
         driver.quit();
+        LambdaUpdateWrapper<TTestcaseUiNew> updateWrapper = new LambdaUpdateWrapper();
+        updateWrapper.eq(TTestcaseUiNew::getCaseId,caseId).set(TTestcaseUiNew::getRemark,"success");
+        testcaseUiNewService.update(null,updateWrapper);
         return Result.success("测试用例执行成功!");
+    }
+
+    @Override
+    public Result runCaseUiCondition(CaseUiCondition conditions,Map<String, String> context,String imgUrl,WebDriver driver) throws Exception {
+        String optionsData = getConditionCaseVar(conditions, context);
+        if (conditions.getAction().trim().equals(ActionType.TEXTASSERTION.message())) {
+
+            if (conditions.isStatus()) {
+
+                try {
+                    SoftAssert softAssert = new SoftAssert();
+                    softAssert.assertEquals(optionsData,conditions.getTagetName());
+                }catch (Exception e) {
+                    return new Result<>(ASSERTION_FAIL, "文本断言失败:  " + e);
+                }
+
+            } else {
+
+                try {
+                    Assert.assertEquals(optionsData, conditions.getTagetName());
+                }catch (Exception e) {
+                    return new Result<>(ASSERTION_FAIL,"文本断言失败:  " + e);
+                }
+
+            }
+        }else if (conditions.getAction().trim().equals(ActionType.IMAGEASSERTION.message())&& 1==conditions.getType()){
+
+            String targetUrl = stepUiLogService.lambdaQuery().eq(StepUiLog::getStepId,conditions.getStepId()).one().getImgname();
+
+            Map<String,Object> map = FindImageRobotUtil.findComparePic(targetUrl,conditions.getTagetImage());
+            return Result.success(map.get("message"));
+
+        }else if (conditions.getAction().trim().equals(ActionType.ELEMENTASSERTION.message())){
+
+            Method method = ReflectUtil.getMethodByNameIgnoreCase(SelectorByXpathStrategy.class, getMethodName(conditions.getElementAction()));
+            SelectorByXpathStrategy selectorByXpathStrategy = new SelectorByXpathStrategy();
+
+            try {
+                method.invoke(selectorByXpathStrategy, conditions.getElementXpath(), driver);
+            }catch (Exception e) {
+                return new Result<>(ASSERTION_FAIL, "元素断言失败: "+e);
+            }
+
+        }else if (conditions.getAction().trim().equals(ActionType.JSASSERTION.message())){
+
+            JavascriptExecutor jse= (JavascriptExecutor)driver;
+            try {
+                jse.executeScript(conditions.getJsContent());
+            }catch (Exception e) {
+                return new Result<>(ASSERTION_FAIL,"断言js执行失败:  "+ e);
+            }
+
+        }
+
+        return Result.success("断言成功");
+    }
+
+    @Override
+    public Result runCaseUiAfterCondition(CaseUiCondition conditions,Map<String, String> context) throws Exception {
+        return null;
     }
 
     /**
@@ -195,12 +281,12 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
 
             if (StringUtils.isBlank(selected.getByValue()) && StringUtils.isNotBlank(optionsData)) {
 
-                method.invoke(browserHandle,optionsData, driver);
+                method.invoke(browserHandle, optionsData, driver);
                 strategy.sleep(stepUiNew.getWaite());
 
             } else {
 
-                method.invoke(browserHandle,driver);
+                method.invoke(browserHandle, driver);
 
                 strategy.sleep(stepUiNew.getWaite());
             }
@@ -212,17 +298,17 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
 
                 //解析cooker数据抽离对应的name和value���
                 Map<String, Object> cookerObject = JSON.parseObject(optionsData);
-                method.invoke(cookerHandle,cookerObject, driver);
+                method.invoke(cookerHandle, cookerObject, driver);
                 strategy.sleep(stepUiNew.getWaite());
 
             } else if (StringUtils.isNotBlank(optionsData) && "根据cookie名称删除cookie".equals(stepUiNew.getAction().trim())) {
 
-                method.invoke(cookerHandle,optionsData, driver);
+                method.invoke(cookerHandle, optionsData, driver);
                 strategy.sleep(stepUiNew.getWaite());
 
             } else {
 
-                method.invoke(cookerHandle,driver);
+                method.invoke(cookerHandle, driver);
                 strategy.sleep(stepUiNew.getWaite());
 
             }
@@ -235,17 +321,17 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
 
             if (null != stepUiNew.getCounts()) {
 
-                method.invoke(strategySE.getClass().newInstance(),selected.getByValue(), stepUiNew.getCounts(), driver);
+                method.invoke(strategySE.getClass().newInstance(), selected.getByValue(), stepUiNew.getCounts(), driver);
                 strategy.sleep(stepUiNew.getWaite());
 
             } else if (StringUtils.isNotBlank(optionsData)) {
 
-                method.invoke(strategySE.getClass().newInstance(),selected.getByValue(), optionsData, driver);
+                method.invoke(strategySE.getClass().newInstance(), selected.getByValue(), optionsData, driver);
                 strategy.sleep(stepUiNew.getWaite());
 
             } else {
 
-                method.invoke(strategySE.getClass().newInstance(),selected.getByValue(), driver);
+                method.invoke(strategySE.getClass().newInstance(), selected.getByValue(), driver);
                 strategy.sleep(stepUiNew.getWaite());
 
             }
@@ -261,17 +347,17 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
 
             if (StringUtils.isNotBlank(optionsData)) {
 
-                method.invoke(javaScriptHandle,optionsData, webElement, driver);
+                method.invoke(javaScriptHandle, optionsData, webElement, driver);
                 strategy.sleep(stepUiNew.getWaite());
 
             } else if (StringUtils.isBlank(optionsData) && null != webElement) {
 
-                method.invoke(javaScriptHandle,webElement, driver);
+                method.invoke(javaScriptHandle, webElement, driver);
                 strategy.sleep(stepUiNew.getWaite());
 
             } else {
 
-                method.invoke(javaScriptHandle,driver);
+                method.invoke(javaScriptHandle, driver);
                 strategy.sleep(stepUiNew.getWaite());
 
             }
@@ -279,7 +365,7 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
         } else if (stepUiNew.getActionType().trim().equals(ActionType.ALTERTYPE.message())) {
 
             Method method = ReflectUtil.getMethodByNameIgnoreCase(BrowserHandle.class, getMethodName(stepUiNew.getAction()));
-            method.invoke(browserHandle,driver);
+            method.invoke(browserHandle, driver);
             strategy.sleep(stepUiNew.getWaite());
 
         } else if (stepUiNew.getActionType().trim().equals(ActionType.KETBOARD.message())) {
@@ -290,7 +376,7 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
         } else if (stepUiNew.getActionType().trim().equals(ActionType.MOUSE.message())) {
 
             Method method = ReflectUtil.getMethodByNameIgnoreCase(BrowserHandle.class, getMethodName(stepUiNew.getAction()));
-            method.invoke(browserHandle,selected.getByValue(), driver);
+            method.invoke(browserHandle, selected.getByValue(), driver);
             strategy.sleep(stepUiNew.getWaite());
 
         } else if (stepUiNew.getActionType().trim().equals(ActionType.FILETYPE.message())) {
@@ -299,14 +385,14 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
             if ("input元素上传".equals(stepUiNew.getAction())) {
 
                 Method inputMethod = ReflectUtil.getMethodByNameIgnoreCase(strategySource.getClass(), getMethodName("findElementClearAndSendKeys"));
-                inputMethod.invoke(strategySource.getClass().newInstance(),selected.getByValue(), optionsData, driver);
+                inputMethod.invoke(strategySource.getClass().newInstance(), selected.getByValue(), optionsData, driver);
 
             } else {
 
                 Method inputMethod = ReflectUtil.getMethodByNameIgnoreCase(strategySource.getClass(), getMethodName("findElementClick"));
                 inputMethod.invoke(selected.getByValue(), driver);
                 Method method = ReflectUtil.getMethodByNameIgnoreCase(FileHandle.class, getMethodName(stepUiNew.getAction()));
-                method.invoke(fileHandle,optionsData, selected.getByValue());
+                method.invoke(fileHandle, optionsData, selected.getByValue());
             }
         }
         stepLogMessage.append("测试步骤").append(stepUiNew.getName()).append("执行: 成功");
@@ -326,7 +412,7 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
 
         String param = changeString(var);
 
-        if (param.equals(var)||null ==param) {
+        if (param.equals(var) || null == param) {
             return var;
         } else {
 
@@ -342,26 +428,53 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
     }
 
     /**
+     * 获取用例变量
      *
+     * @param condition 测试条件
+     * @param context   保存有caseId
+     * @return 执行数据
+     */
+    private String getConditionCaseVar(CaseUiCondition condition, Map<String, String> context) {
+
+        String var = condition.getVariable();
+
+        String param = changeString(var);
+
+        if (param.equals(var) || null == param) {
+            return var;
+        } else {
+
+            LambdaQueryWrapper<CaseParam> queryWrapper = new LambdaQueryWrapper<>();
+
+            queryWrapper.eq(CaseParam::getName, param);
+
+            queryWrapper.eq(CaseParam::getCaseid, context.get("caseId"));
+
+            return caseParamService.getOne(queryWrapper).getValue();
+        }
+
+    }
+
+    /**
      * @param stepUiNew 步骤对象
-     * @param result 测试结果
-     * @param status  执行状态 0成功 1失败 2跳过
-     * @param imgUrl minio 地址
+     * @param result    测试结果
+     * @param status    执行状态 0成功 1失败 2跳过
+     * @param imgUrl    minio 地址
      * @return 更新成功
      */
-    private boolean saveExcStepLogs(TStepUiNew stepUiNew, Result result, Integer status,String imgUrl) {
+    private boolean saveExcStepLogs(TStepUiNew stepUiNew, Result result, Integer status, String imgUrl) {
 
-        String logData =  result.getMessage() + ":  " +  result.getData();
+        String logData = result.getMessage() + ":  " + result.getData();
 
         StepUiLog stepUiLog = StepUiLog.builder().stepId(Long.valueOf(stepUiNew.getId())).stepName(stepUiNew.getName())
-                .caseId(stepUiNew.getTestcaseId()).createBy(SecurityUtils.getCurrentUsername()).logDetail( logData)
+                .caseId(stepUiNew.getTestcaseId()).createBy(SecurityUtils.getCurrentUsername()).logDetail(logData)
                 .createTime(new Date()).status(status).endTime(new Date()).imgname(imgUrl).endFlag(Math.toIntExact(stepUiNew.getSort())).build();
 
         UpdateWrapper<StepUiLog> updateWrapper = new UpdateWrapper<StepUiLog>()
-                .eq("case_id",stepUiLog.getCaseId())
-                .eq("step_id",stepUiLog.getStepId());
+                .eq("case_id", stepUiLog.getCaseId())
+                .eq("step_id", stepUiLog.getStepId());
 
-        return  stepUiLogService.saveOrUpdate(stepUiLog,updateWrapper);
+        return stepUiLogService.saveOrUpdate(stepUiLog, updateWrapper);
     }
 
     /**
@@ -384,11 +497,10 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
     }
 
     /**
-     *
      * @param var
      * @return
      */
-    public  String changeString(String var) {
+    public String changeString(String var) {
         String rule = "\\$\\{(.*?)}";
         Pattern regex = Pattern.compile(rule);
         Matcher matcher = regex.matcher(var);
@@ -396,7 +508,7 @@ public class DebugTestCaseServiceImpl implements DebugTestCaseService {
 
         if (matcher.find()) {
             targetName = matcher.group(1);
-        }else {
+        } else {
             targetName = var;
         }
         return targetName;

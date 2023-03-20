@@ -66,6 +66,9 @@ public interface MinioService {
      */
     String putObject(MultipartFile multipartFile, String bucketName, String fileType);
 
+
+    String saveImageByBase(String base64File, String bucketName, String conditionName );
+
     String putScreenImage(File file, String bucketName,String objectName);
 
     /**

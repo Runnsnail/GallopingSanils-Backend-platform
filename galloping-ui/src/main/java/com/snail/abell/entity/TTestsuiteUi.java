@@ -44,6 +44,12 @@ public class TTestsuiteUi extends Model<TTestsuiteUi> implements Serializable {
     @ApiModelProperty("0：代表文件夹，1：代表测试用例")
     private Boolean isLeaf;
 
+    @ApiModelProperty("运行状态")
+    private String status;
+
+    @ApiModelProperty("环境")
+    private Integer notificationType;
+
     @ApiModelProperty("创建人")
     private String createBy;
 

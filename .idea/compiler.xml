@@ -22,8 +22,8 @@
           <entry name="$PROJECT_DIR$/../Program Files/Myrespority/repository/org/springframework/spring-context/4.0.3.RELEASE/spring-context-4.0.3.RELEASE.jar" />
           <entry name="$PROJECT_DIR$/../Program Files/Myrespority/repository/joda-time/joda-time/2.9/joda-time-2.9.jar" />
         </processorPath>
-        <module name="galloping-ui" />
         <module name="galloping-system" />
+        <module name="galloping-ui" />
         <module name="galloping-app" />
         <module name="galloping-api" />
         <module name="galloping-logging" />
@@ -33,7 +33,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="GallopingSanils" options="-parameters" />
+      <module name="GallopingSanils" options="" />
       <module name="galloping-api" options="-parameters" />
       <module name="galloping-app" options="-parameters" />
       <module name="galloping-common" options="-parameters" />

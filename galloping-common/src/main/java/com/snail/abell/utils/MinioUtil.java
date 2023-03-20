@@ -201,6 +201,24 @@ public class MinioUtil {
         inputStream.close();
     }
 
+    /**
+     * 流上传
+     * @param bucketName
+     * @param fileName
+     * @param contentType
+     * @param stream
+     * @return
+     */
+    @SneakyThrows
+    public  void upload(String bucketName,String fileName, InputStream stream) {
+        minioClient.putObject(
+                PutObjectArgs.builder().bucket(bucketName).object(fileName).stream(
+                                stream, -1, minioProperties.getFileSize())
+                        .build());
+        stream.close();
+
+    }
+
 
     /**
      * 文件访问路径

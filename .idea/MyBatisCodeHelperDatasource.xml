@@ -8,6 +8,7 @@
         <option name="checkBlobColumn" value="true" />
         <option name="generateService" value="true" />
         <option name="generateServiceInterface" value="true" />
+        <option name="insertOnDuplicateKey" value="true" />
         <option name="javaMapperPackage" value="com.snail.abell.projectPage.entity" />
         <option name="javaMapperPath" value="$PROJECT_DIR$/galloping-ui/src/main/java" />
         <option name="javaModelPackage" value="com.snail.abell.projectPage.entity" />
@@ -58,6 +59,19 @@
         <option name="p3CComment" value="true" />
         <option name="tableGenerateConfigs">
           <map>
+            <entry key="galloping_snail:case__ui_condition">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="CaseUiCondition" />
+                  <option name="moduleName" value="galloping-ui" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
             <entry key="galloping_snail:case_param">
               <value>
                 <TableGenerateConfig>
@@ -82,6 +96,33 @@
                   <option name="sequenceColumn" value="" />
                   <option name="sequenceId" value="" />
                   <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="galloping_snail:job_and_trigger">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="JobAndTrigger" />
+                  <option name="moduleName" value="galloping-ui" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="galloping_snail:message_send">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="MessageSend" />
+                  <option name="moduleName" value="galloping-ui" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
                   <option name="updateBatchSelective" value="true" />
                   <option name="useActualColumnName" value="false" />
                 </TableGenerateConfig>

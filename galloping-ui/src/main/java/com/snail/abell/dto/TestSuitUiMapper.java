@@ -14,10 +14,12 @@ public interface TestSuitUiMapper extends BaseMapper<TestSuitUiVo, TTestsuiteUi>
 
     @Mappings({
             @Mapping(source = "name", target = "label"),
+            @Mapping(target = "status", ignore = true),
+            @Mapping(target = "notificationType", ignore = true),
             @Mapping(target = "createBy", ignore = true),
             @Mapping(target = "updateBy", ignore = true),
             @Mapping(target = "createTime", ignore = true),
-            @Mapping(target = "updateTime", ignore = true),
+            @Mapping(target = "updateTime", ignore = true)
     })
     @Override
     @Named("toDto")

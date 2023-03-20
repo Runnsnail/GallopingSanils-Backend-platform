@@ -25,7 +25,7 @@ public class TPlanSuiteUiController {
      * 服务对象
      */
     @Resource
-    private TPlanSuiteUiService tPlanSuiteUiService;
+    private TPlanSuiteUiService planSuiteUiService;
 
     /**
      * 通过主键查询单条数据
@@ -35,7 +35,12 @@ public class TPlanSuiteUiController {
      */
     @GetMapping("selectOne")
     public TPlanSuiteUi selectOne(Long id) {
-        return this.tPlanSuiteUiService.queryById(id);
+        return planSuiteUiService.queryById(id);
     }
+
+
+
+
+
 
 }

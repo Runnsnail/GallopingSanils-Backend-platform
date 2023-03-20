@@ -1,5 +1,5 @@
 /*
- *  Copyright 
+ *  Copyright
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Decoder;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -103,6 +104,34 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         }
         return file;
     }
+
+    /**
+     * base64转 InputStream
+     * @param base64
+     * @return
+     */
+    public static InputStream base64ConvertPNG(String base64){
+        BASE64Decoder decoder = new BASE64Decoder();
+        //解码
+        base64 = base64.replaceAll(" ", "+");
+        try {
+
+            byte[] buffer = decoder.decodeBuffer(base64.replace("data:image/jpeg;base64", ""));
+            for(int i = 0;i<buffer.length;i++){
+                if(buffer[i] < 0){
+                    buffer[i] += 256;
+                }
+            }
+            //生成流
+            ByteArrayInputStream stream = new ByteArrayInputStream(buffer);
+            return stream;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 
     /**
      * 获取文件扩展名，不带 .

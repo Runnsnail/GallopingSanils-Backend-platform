@@ -34,6 +34,11 @@ public class TestSuitUiVo extends BaseDTO implements TreeNode<Long>, Serializabl
     private Boolean isLeaf;
 
 
+    private String status;
+
+    private Integer notificationType;
+
+
     private List<TestSuitUiVo> children;
 
 

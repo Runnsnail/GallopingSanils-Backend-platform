@@ -1,8 +1,9 @@
 package com.snail.abell.dao;
 
-import com.snail.abell.entity.TTestsuiteUi;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.snail.abell.entity.TTestsuiteUi;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -38,6 +39,13 @@ public interface TTestsuiteUiDao extends BaseMapper<TTestsuiteUi>{
      * @return 对象列表
      */
     List<TTestsuiteUi> queryAll(TTestsuiteUi tTestsuiteUi);
+
+    /**
+     * 批量更新
+     * @param suiteTreeVoList  接收对象
+     * @return 成功or失败
+     */
+    int updateBatchById (List<TTestsuiteUi> suiteTreeVoList);
 
     /**
      * 新增数据
